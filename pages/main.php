@@ -1,6 +1,7 @@
 <?PHP
 ob_start();
 session_start();
+require('../config/config.php');
 
 ?>
 
@@ -92,8 +93,7 @@ session_start();
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
             <!-- Brand Logo -->
             <a href="../index3.html" class="brand-link">
-                <img src="../dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
-                    style="opacity: .8">
+                <img src="../dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
                 <span class="brand-text font-weight-light">AdminLTE 3</span>
             </a>
 
@@ -112,8 +112,7 @@ session_start();
                 <!-- SidebarSearch Form -->
                 <div class="form-inline">
                     <div class="input-group" data-widget="sidebar-search">
-                        <input class="form-control form-control-sidebar" type="search" placeholder="Search"
-                            aria-label="Search">
+                        <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
                         <div class="input-group-append">
                             <button class="btn btn-sidebar">
                                 <i class="fas fa-search fa-fw"></i>
@@ -124,8 +123,7 @@ session_start();
 
                 <!-- Sidebar Menu -->
                 <nav class="mt-2">
-                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
-                        data-accordion="false">
+                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                         <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
                         <li class="nav-item">
@@ -167,8 +165,8 @@ session_start();
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">
             <?PHP
-      require_once('p1.php');
-      ?>
+            require_once('../content/test.php');
+            ?>
         </div>
 
 
@@ -187,7 +185,7 @@ session_start();
     <script src="../plugins/jquery-ui/jquery-ui.min.js"></script>
     <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
     <script>
-    $.widget.bridge('uibutton', $.ui.button)
+        $.widget.bridge('uibutton', $.ui.button)
     </script>
     <!-- Bootstrap 4 -->
     <script src="../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -242,6 +240,29 @@ session_start();
     <!-- pace-progress -->
     <script src="../plugins/pace-progress/pace.min.js"></script>
 
+
+    <script>
+        $(function() {
+            //Initialize Select2 Elements
+            $('.select2').select2()
+
+            //Initialize Select2 Elements
+            $('.select2bs4').select2({
+                theme: 'bootstrap4'
+            })
+
+            $('.confirm').click(function() {
+                var getTxt = $(this).attr('txtAlert');
+                var text = confirm(getTxt);
+
+                if (text == true) {
+                    return true;
+                } else {
+                    return false;
+                }
+            })
+        })
+    </script>
 
 </body>
 
