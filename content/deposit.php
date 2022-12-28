@@ -5,9 +5,9 @@ if (empty($_SESSION['username'])) {
     exit(0);
 }
 
-echo "<pre>";
-print_r($_POST);
-echo "</pre>";
+// echo "<pre>";
+// print_r($_POST);
+// echo "</pre>";
 
 
 ?>
