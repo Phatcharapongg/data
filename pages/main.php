@@ -1,16 +1,24 @@
 <?PHP
+
+
+//...โค้ดสำหรับเช็คการล้อคอิน ว่าล็อคอินแล้วหรือยัง.....
+if (isset($_SESSION['username']) && $_SESSION['username'] != '') {
+    header("location:" . $_SESSION['uri'] . "/" . $path . "/pages/main.php");
+    exit(0);
+}
+
 ob_start();
 session_start();
 require('../config/config.php');
 // echo $_SESSION['username'];
 
-
+// query ARR
 $getUserSQL = "SELECT * FROM user WHERE usr_username = '" . $_SESSION['username'] . "'";
 $getUserARR = mysqli_query($conn, $getUserSQL);
 $getUserNUM = mysqli_num_rows($getUserARR);
 
 foreach ($getUserARR as $getUser) {
-    // print_r($getUser);
+
     $fullname = $getUser['usr_fname'] . " " . $getUser['usr_lname'];
 }
 ?>
@@ -66,6 +74,7 @@ foreach ($getUserARR as $getUser) {
     <script src="../plugins/jquery/jquery.min.js"></script>
 </head>
 
+<!-- แถบส่วนหัว -->
 <body style="font-family: 'Kanit', sans-serif;">
     <div class="wrapper">
         <!-- Navbar -->
@@ -76,7 +85,7 @@ foreach ($getUserARR as $getUser) {
                     <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a href="#" class="nav-link">Home</a>
+                    <a href="<?= $_SESSION['uri']; ?>/<?= $path; ?>/pages/main?path=dashboard" class="nav-link">Home</a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
                     <a href="#" class="nav-link">Contact</a>
@@ -102,7 +111,7 @@ foreach ($getUserARR as $getUser) {
         <!-- Main Sidebar Container -->
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
             <!-- Brand Logo -->
-            <a href="#" class="brand-link">
+            <a href="<?= $_SESSION['uri']; ?>/<?= $path; ?>/pages/main?path=dashboard" class="brand-link">
                 <img src="../dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
                 <span class="brand-text font-weight-light">AdminLTE 3</span>
             </a>
@@ -115,7 +124,7 @@ foreach ($getUserARR as $getUser) {
                         <img src="../dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
                     </div>
                     <div class="info">
-                        <a href="#" class="d-block"><?= strtoupper($fullname); ?></a>
+                        <a href="<?= $_SESSION['uri']; ?>/<?= $path; ?>/pages/main?path=dashboard" class="d-block"><?= strtoupper($fullname); ?></a>
                     </div>
                 </div>
 
@@ -135,6 +144,7 @@ foreach ($getUserARR as $getUser) {
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
 
+                    <!-- เช๊คว่ามีค่าหรือเปล่ากดแถบเลือกให้เป็นสี active -->
                         <?PHP
                         if (isset($_GET['path']) && $_GET['path'] == 'controlUser') {
                             $controlUser = 'active';
@@ -148,6 +158,7 @@ foreach ($getUserARR as $getUser) {
                             $deposit = '';
                         }
                         ?>
+                        <!-- หน้าต่างๆในแถบเมนู -->
                         <li class="nav-item">
                             <a href="<?= $_SESSION['uri']; ?>/<?= $path; ?>/pages/main?path=controlUser" class="nav-link <?= $controlUser; ?>">
                                 <i class="nav-icon fas fa-tachometer-alt"></i>
@@ -183,6 +194,8 @@ foreach ($getUserARR as $getUser) {
         <div class="content-wrapper">
             <?PHP
             // echo $_GET['path'];
+            
+            // เช๊คหน้าเวลากดเลือกหน้านั้นๆ หากไม่มีค่าในระบบหรือระบบไม่เข้าใจจะเด้งไปหน้า dashboard //
             if (isset($_GET['path'])) {
                 switch ($_GET['path']) {
                     case 'deposit':
