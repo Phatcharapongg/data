@@ -12,50 +12,57 @@ if (isset($_SESSION['username']) && $_SESSION['username'] != '') {
 }
 
 
-
-
+// เช๊คค่าPOSTจากฟอร์มล๊อคอินที่กรอกเข้ามา โดยเช๊คยูสเซอร์และพาสเวิดร์
 if (
     isset($_POST["user"]) && $_POST["user"] != ''
     && isset($_POST["password"]) && $_POST["password"] != ''
 ) {
 
-
+    // เก็บค่าPOSTไว้ในตัวแปร
     $username = trim($_POST["user"]);
     $password = trim($_POST["password"]);
 
+    // นำยูสเซอร์มาเช๊คในฐานข้อมูล
     $getUserSQL = "SELECT * FROM user WHERE usr_username = '" .  $username . "'";
     $getUserARR = mysqli_query($conn, $getUserSQL);
     $getUserNUM = mysqli_num_rows($getUserARR);
 
-
     if ($getUserNUM == 1) {
 
+        // ถ้าเจอpasswordต่อ
         $getPasswordSQL = "SELECT * FROM user WHERE usr_username = '" .  $username . "' AND usr_password = '" .  $password . "'";
         $getPasswordARR = mysqli_query($conn, $getPasswordSQL);
         $getPasswordNUM = mysqli_num_rows($getPasswordARR);
 
         if ($getPasswordNUM == 1) {
+            // ถ้าถูกทั้งสองค่า เช๊ค status ต่อว่าเท่า1ไหม
             $getStatusSQL = "SELECT * FROM user WHERE usr_username = '" .  $username . "' AND usr_password = '" . $password . "'  AND usr_status = '1'";
             $getStatusARR = mysqli_query($conn, $getStatusSQL);
             $getStatusNUM = mysqli_num_rows($getStatusARR);
 
-            // ...เช๊คค่าusername&passwordว่าผิดหรือไม่หากผิดหรือไม่มีสิทธิ์เข้าถึงจะแจ้งเตือน
+
             if ($getStatusNUM == 1) {
+                // ดึงข้อมูลออกมาวนลูป
                 foreach ($getStatusARR as $getStatus) {
+                    // เก็บค่า username ไว้ใน $_SESSION
                     $_SESSION['username'] = $getStatus['usr_username'];
+                    //และสั่งให้ไปหน้า main ต่อ
                     header("location:" . $_SESSION['uri'] . "/" . $path . "/pages/main");
                     exit(0);
                 }
             } else {
-                header("location:" . $_SESSION['uri'] . "/" . $path . "?error=status");
+                // ถ้าไม่เจอให้ Alert ว่า user ของคุณยังไม่ได้ถูกอนุมัติการใช้งาน กรุณาติดต่อแอดมิน
+                header("location:" . $_SESSION['uri'] . "/" . $path . "?error=status&u=" . $username);
                 exit(0);
             }
         } else {
-            header("location:" . $_SESSION['uri'] . "/" . $path . "?error=password");
+            // ถ้าไม่เจอให้ Alert ว่าpassword ผิด
+            header("location:" . $_SESSION['uri'] . "/" . $path . "?error=password&u=" . $username);
             exit(0);
         }
     } else {
-        header("location:" . $_SESSION['uri'] . "/" . $path . "?error=username");
+        // ถ้าไม่เจอให้ Alert ว่าuser ผิด
+        header("location:" . $_SESSION['uri'] . "/" . $path . "?error=username&u=" . $username);
         exit(0);
     }
 }
@@ -92,6 +99,7 @@ if (
 <?PHP
 // ....START ALERT....ปีอบอัพแจ้งเตือนต่างๆหากไม่ถูกต้องหรือไม่สามารถเข้าถึงได้
 // echo $_GET["error"];
+// เช๊คค่า $_GET["error"] 
 if (isset($_GET["error"])) {
     switch ($_GET["error"]) {
         case 'username':
@@ -144,7 +152,15 @@ if (isset($_GET["error"])) {
 
                 <form action="" method="POST">
                     <div class="input-group mb-3">
-                        <input type="text" class="form-control" name="user" placeholder="User">
+                        <?PHP
+                        $valUsr = '';
+                        if (
+                            isset($_GET['u'])
+                        ) {
+                            $valUsr = $_GET['u'];
+                        }
+                        ?>
+                        <input type="text" class="form-control" name="user" placeholder="User" value="<?= $valUsr; ?>">
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-user"></span>
