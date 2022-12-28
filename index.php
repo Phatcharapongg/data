@@ -5,10 +5,13 @@ session_start();
 //Connect DB
 require('config/config.php');
 
-// echo "<pre>";
-// print_r($_POST);
-// echo "</pre>";
+//...โค้ดสำหรับเช็คการล้อคอิน ว่าล็อคอินแล้วหรือยัง.....
+if (isset($_SESSION['username']) && $_SESSION['username'] != '') {
+    header("location:" . $_SESSION['uri'] . "/" . $path . "/pages/main.php");
+    exit(0);
+}
 
+็เช๊คuser&password ในตารางdatadatabase
 if (
     isset($_POST["user"]) && $_POST["user"] != ''
     && isset($_POST["password"]) && $_POST["password"] != ''
@@ -32,27 +35,26 @@ if (
             $getStatusARR = mysqli_query($conn, $getStatusSQL);
             $getStatusNUM = mysqli_num_rows($getStatusARR);
 
+
             if ($getStatusNUM == 1) {
                 foreach ($getStatusARR as $getStatus) {
-                    echo "<pre>";
-                    print_r($getStatus);
-                    echo "</pre>";
+                    $_SESSION['username'] = $getStatus['usr_username'];
+                    header("location:" . $_SESSION['uri'] . "/" . $path . "/pages/main.php");
+                    exit(0);
                 }
             } else {
-                echo 'status fail';
+                header("location:" . $_SESSION['uri'] . "/" . $path . "?error=status");
+                exit(0);
             }
         } else {
-            echo 'password fail';
+            header("location:" . $_SESSION['uri'] . "/" . $path . "?error=password");
+            exit(0);
         }
     } else {
-        echo 'username fail';
+        header("location:" . $_SESSION['uri'] . "/" . $path . "?error=username");
+        exit(0);
     }
-} else {
-    echo 'fail';
 }
-
-
-
 
 
 
@@ -76,12 +78,56 @@ if (
     <link rel="stylesheet" href="plugins/icheck-bootstrap/icheck-bootstrap.min.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="dist/css/adminlte.min.css">
+    <!-- Toastr -->
+    <link rel="stylesheet" href="plugins/toastr/toastr.min.css">
+    <!-- jQuery -->
+    <script src="plugins/jquery/jquery.min.js"></script>
 </head>
 
+
+<?PHP
+// ================================================================================================================================= START ALERT
+// echo $_GET["error"];
+if (isset($_GET["error"])) {
+    switch ($_GET["error"]) {
+        case 'username':
+            $alert = 1;
+            $icon = 'error';
+            $title = 'username ผิด! กรุณาพิมพ์ให้ถูกต้อง';
+            break;
+        case 'password':
+            $alert = 1;
+            $icon = 'error';
+            $title = 'password ผิด! กรุณาพิมพ์ให้ถูกต้อง';
+            break;
+        case 'status':
+            $alert = 1;
+            $icon = 'error';
+            $title = 'user ของคุณยังไม่ได้ถูกอนุมัติการใช้งาน กรุณาติดต่อแอดมิน';
+            break;
+        default:
+            $alert = 0;
+            break;
+    }
+}
+?>
+<script>
+    $(document).ready(function() {
+        if (<?= $alert; ?> == 1) {
+            toastr.<?= $icon; ?>('<?= $title; ?>')
+        }
+    });
+</script>
+
+<?PHP // =============================================================================================================================== END ALERT
+?>
+
+
 <body class="hold-transition login-page">
+
     <div class="login-box">
         <div class="login-logo">
-            <h2><a href="index2.html"><b>Deposit Login</b></a> </h2>
+            <h2><a href="#"><b>Deposit Login</b></a> </h2>
         </div>
         <!-- /.login-logo -->
         <div class="card">
@@ -118,19 +164,12 @@ if (
     </div>
     <!-- /.login-box -->
 
-    <!-- jQuery -->
-    <script src="plugins/jquery/jquery.min.js"></script>
+    <!-- Toastr -->
+    <script src="plugins/toastr/toastr.min.js"></script>
     <!-- Bootstrap 4 -->
     <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
     <!-- AdminLTE App -->
     <script src="dist/js/adminlte.min.js"></script>
 </body>
-
-
-
-
-
-
-
 
 </html>
