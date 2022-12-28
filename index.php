@@ -11,11 +11,14 @@ if (isset($_SESSION['username']) && $_SESSION['username'] != '') {
     exit(0);
 }
 
-// ็เช๊คuser&password ในตารางdatadatabase
+
+
+
 if (
     isset($_POST["user"]) && $_POST["user"] != ''
     && isset($_POST["password"]) && $_POST["password"] != ''
 ) {
+
 
     $username = trim($_POST["user"]);
     $password = trim($_POST["password"]);
@@ -23,6 +26,7 @@ if (
     $getUserSQL = "SELECT * FROM user WHERE usr_username = '" .  $username . "'";
     $getUserARR = mysqli_query($conn, $getUserSQL);
     $getUserNUM = mysqli_num_rows($getUserARR);
+
 
     if ($getUserNUM == 1) {
 
@@ -35,11 +39,11 @@ if (
             $getStatusARR = mysqli_query($conn, $getStatusSQL);
             $getStatusNUM = mysqli_num_rows($getStatusARR);
 
-
+            // ...เช๊คค่าusername&passwordว่าผิดหรือไม่หากผิดหรือไม่มีสิทธิ์เข้าถึงจะแจ้งเตือน
             if ($getStatusNUM == 1) {
                 foreach ($getStatusARR as $getStatus) {
                     $_SESSION['username'] = $getStatus['usr_username'];
-                    header("location:" . $_SESSION['uri'] . "/" . $path . "/pages/main.php");
+                    header("location:" . $_SESSION['uri'] . "/" . $path . "/pages/main");
                     exit(0);
                 }
             } else {
@@ -86,7 +90,7 @@ if (
 
 
 <?PHP
-// ================================================================================================================================= START ALERT
+// ....START ALERT....ปีอบอัพแจ้งเตือนต่างๆหากไม่ถูกต้องหรือไม่สามารถเข้าถึงได้
 // echo $_GET["error"];
 if (isset($_GET["error"])) {
     switch ($_GET["error"]) {
@@ -118,10 +122,12 @@ if (isset($_GET["error"])) {
         }
     });
 </script>
+<!-- =============================================================================================================================== END ALERT -->
 
-<?PHP // =============================================================================================================================== END ALERT
+<?PHP
 ?>
 
+<!-- From Login -->
 
 <body class="hold-transition login-page">
 
