@@ -4,6 +4,7 @@ echo "<pre>";
 print_r($_POST);
 echo "</pre>";
 
+
 ?>
 
 
@@ -88,27 +89,36 @@ echo "</pre>";
                                 // echo "<pre>";
                                 // print_r($getUser);
                                 // echo "</pre>";
-
+                            
                         ?>
-                                <tr>
-                                    <td><?= $id; ?></td>
-                                    <td><?= $getUser['usr_cid']; ?></td>
-                                    <td><?= $getUser['usr_fname']; ?> <?= $getUser['usr_lname']; ?></td>
-                                    <td>15/12/2565</td>
-                                    <td>80</td>
-                                    <td>ฝาก</td>
-                                    <td class="project-actions text-center">
-                                        <form action="" method="POST">
-                                            <input type="hidden" name="type" value="del">
-                                            <input type="hidden" name="id_del" value=<?= $getUser['usr_id']; ?>>
-                                            <button type="submit" class="btn btn-danger btn-sm confirm" txtAlert="คุณต้องการลบใช่หรือไม่" name="del" value="9">
-                                                <i class="fas fa-trash">
-                                                </i>
-                                                Delete
-                                            </button>
-                                        </form>
-                                    </td>
-                                </tr>
+                        <tr>
+                            <td><?= $id; ?></td>
+                            <td><?= $getUser['usr_cid']; ?></td>
+                            <td><?= $getUser['usr_fname']; ?> <?= $getUser['usr_lname']; ?></td>
+                            <td>15/12/2565</td>
+                            <td>80</td>
+                            <td>ฝาก</td>
+                            <td class="project-actions text-center">
+                                <form action="" method="POST">
+                                    <input type="hidden" name="type" value="del">
+                                    <input type="hidden" name="id_del" value=<?= $getUser['usr_id']; ?>>
+                                    <button type="submit" class="btn btn-danger btn-sm confirm"
+                                        txtAlert="คุณต้องการลบใช่หรือไม่" name="del" value="9">
+                                        <i class="fas fa-trash">
+                                        </i>
+                                        Delete
+                                    </button>
+       
+                                    <button type="button" class="btn btn-warning btn-sm view" info-Detail="<?= $dataTodolist['td_id']; ?>|x|<?= $dataTodolist['td_case']; ?>|x|<?= $dataTodolist['td_dept']; ?>" data-toggle="modal" data-target="#editDataList">
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
+                                                
+
+
+
+                                </form>
+                            </td>
+                        </tr>
                         <?PHP
                                 $id++;
                             }
@@ -128,25 +138,51 @@ echo "</pre>";
 
 
 
-<!-- //-------------------------------------------------------------------- ปุ่มลบ-->
-<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+<div class="modal fade" id="editDataList">
+    <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header">
-                <h6 class="modal-title" id="deleteModalLabel"><b>ยืนยันการลบข้อมูล</b></h6>
-                <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                <h4 class="modal-title">เพิ่มข้อมูลการแก้ปัญหา</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
-            <div class="modal-body">
-                คุณต้องการลบกลุ่มผู้ใช้นี้หรือไม่</div>
-            <div class="modal-footer">
-                <form class="form-horizontal" role="form" method="post" action="Delete.php?groupID=$row[0]" enctype="multipart/form-data">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Close</button>
-                    <button class="btn btn-primary" type="submit">Delete</button>
-                </form>
-            </div>
+            <form action="" method="POST">
+                <div class="modal-body">
+                    <input type="hidden" name="status" value="edit">
+                    <input type="hidden" name="type" value="editworklist">
+                    <input type="hidden" id="id_edit" name="id_edit">
+
+
+
+
+                    <div class="form-group">
+                        <label for="dept_edit">ที่ไหนแจ้งมา</label>
+                        <input type="text" class="form-control" id="dept_edit" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label for="case_edit">อาการที่แจ้งมา</label>
+                        <input type="text" class="form-control" id="case_edit" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label for="repair">วิธีแก้ปัญหา</label>
+                        <input type="text" class="form-control" id="repair" name="repair" placeholder="วิธีแก้ปัญหา">
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button>
+                    <button type="submit" class="btn btn-success confirm"
+                        txtAlert='กรุณาตรวจสอบความถูกต้องก่อนกดยืนยัน ?'>บันทึก</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
+<?PHP // =============================================================================================================================  END EDIT 
+?>
+
+
+
 
 
 
@@ -197,7 +233,8 @@ echo "</pre>";
                         <div class="col-sm-12 col-md-12 col-lg-6 col-xl-4">
                             <div class="form-group">
                                 <label for="amount">amount</label>
-                                <input type="number" class="form-control" id="amount" name="amount" placeholder="Enter amount">
+                                <input type="number" class="form-control" id="amount" name="amount"
+                                    placeholder="Enter amount">
                             </div>
                         </div>
                     </div>
@@ -218,35 +255,35 @@ echo "</pre>";
 
 
 <script>
-    $(function() {
-        $("#example1").DataTable({
-            "responsive": true,
-            "lengthChange": false,
-            "autoWidth": false,
-            "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-        }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-        $('#example2').DataTable({
-            "paging": true,
-            "lengthChange": false,
-            "searching": false,
-            "ordering": true,
-            "info": true,
-            "autoWidth": false,
-            "responsive": true,
-        });
-
-        //searchdate picker
-        $('#searchdate').datetimepicker({
-            format: 'L'
-        });
-
-        //reservationdate picker
-        $('#reservationdate').datetimepicker({
-            format: 'L'
-        });
-
-
-
-
+$(function() {
+    $("#example1").DataTable({
+        "responsive": true,
+        "lengthChange": false,
+        "autoWidth": false,
+        "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+    }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+    $('#example2').DataTable({
+        "paging": true,
+        "lengthChange": false,
+        "searching": false,
+        "ordering": true,
+        "info": true,
+        "autoWidth": false,
+        "responsive": true,
     });
+
+    //searchdate picker
+    $('#searchdate').datetimepicker({
+        format: 'L'
+    });
+
+    //reservationdate picker
+    $('#reservationdate').datetimepicker({
+        format: 'L'
+    });
+
+
+
+
+});
 </script>

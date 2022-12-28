@@ -11,7 +11,7 @@ if (isset($_SESSION['username']) && $_SESSION['username'] != '') {
     exit(0);
 }
 
-็เช๊คuser&password ในตารางdatadatabase
+// ็เช๊คuser&password ในตารางdatadatabase
 if (
     isset($_POST["user"]) && $_POST["user"] != ''
     && isset($_POST["password"]) && $_POST["password"] != ''

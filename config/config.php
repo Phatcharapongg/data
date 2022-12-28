@@ -3,6 +3,9 @@ ob_start();
 date_default_timezone_set("Asia/Bangkok");
 
 
+$_SESSION['uri'] = 'http://localhost';
+$path = 'deposit';
+
 $servername = "localhost";
 $username = "root";
 $password = "";
