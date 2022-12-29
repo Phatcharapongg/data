@@ -88,7 +88,7 @@ foreach ($getUserARR as $getUser) {
                     <a href="<?= $_SESSION['uri']; ?>/<?= $path; ?>/pages/main?path=dashboard" class="nav-link">Home</a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a href="#" class="nav-link">Contact</a>
+                    <a href="<?= $_SESSION['uri']; ?>/<?= $path; ?>/pages/main?path=contact" class="nav-link">Contact</a>
                 </li>
             </ul>
 
@@ -183,6 +183,7 @@ foreach ($getUserARR as $getUser) {
                                 </p>
                             </a>
                         </li>
+                    
                     </ul>
                 </nav>
                 <!-- /.sidebar-menu -->
@@ -201,6 +202,9 @@ foreach ($getUserARR as $getUser) {
                     case 'deposit':
                         $content = 'deposit.php';
                         break;
+                        case 'contact':
+                            $content = 'contact.php';
+                            break;
                     case 'report':
                         $content = 'report.php';
                         break;

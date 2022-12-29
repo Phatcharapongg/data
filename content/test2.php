@@ -1,22 +1,28 @@
 <?PHP
 
-echo "<pre>";
-print_r($_POST);
-echo "</pre>";
-?>
+if (empty($_SESSION['username'])) {
+    header("location:" . $_SESSION['uri'] . "/" . $path);
+    exit(0);
+}
 
+// echo "<pre>";
+// print_r($_POST);
+// echo "</pre>";
+
+
+?>
 
 
 <section class="content-header">
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1>Report</h1>
+                <h1>ฝากเงิน</h1>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="<?= $_SESSION['uri']; ?>/<?= $path; ?>/pages/main?path=dashboard">Home</a></li>
-                    <li class="breadcrumb-item active">Report</li>
+                    <li class="breadcrumb-item active">ฝากเงิน</li>
                 </ol>
             </div>
         </div>
@@ -27,36 +33,27 @@ echo "</pre>";
 <section class="content">
     <div class="container-fluid">
 
-        <div class="row">
-            <div class="col-md-12">
-                <form action="" method="POST">
-                    <div class='row pb-4'>
-
-
-                        <div class='col-4'>
-                            <div class="input-group date" id="searchdate" data-target-input="nearest">
-                                <input type="text" name="one" class="form-control datetimepicker-input" data-target="#searchdate" />
-                                <div class="input-group-append" data-target="#searchdate" data-toggle="datetimepicker">
-                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class='col-4'>
-                            <div class="input-group date" id="reservationdate" data-target-input="nearest">
-                                <input type="text" name="two" class="form-control datetimepicker-input" data-target="#reservationdate" />
-                                <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
-                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class='col-4'>
-                            <button type="submit" class='btn btn-info btn-block'>ค้นหา</button>
-                        </div>
+        <div class='row pb-3'>
+            <div class='col-4'>
+                <div class="input-group date" id="searchdate" data-target-input="nearest">
+                    <input type="text" class="form-control datetimepicker-input" data-target="#searchdate" />
+                    <div class="input-group-append" data-target="#searchdate" data-toggle="datetimepicker">
+                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                     </div>
-                </form>
+                </div>
+            </div>
+            <div class='col-4'>
+                <div class="input-group date" id="reservationdate" data-target-input="nearest">
+                    <input type="text" class="form-control datetimepicker-input" data-target="#reservationdate" />
+                    <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
+                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                    </div>
+                </div>
+            </div>
+            <div class='col-4'>
+                <button class='btn btn-info btn-block'>ค้นหา</button>
             </div>
         </div>
-
 
         <div class="card">
             <div class="card-header">
@@ -135,7 +132,13 @@ echo "</pre>";
                 </table>
             </div>
         </div>
+    </div>
+    </div>
+    </div>
 </section>
+
+
+
 
 
 
@@ -250,7 +253,7 @@ echo "</pre>";
             "autoWidth": false,
             "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
         }).buttons().container().appendTo('#usertable_wrapper .col-md-6:eq(0)');
-
+  
 
         //searchdate picker
         $('#searchdate').datetimepicker({
