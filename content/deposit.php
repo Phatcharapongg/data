@@ -15,7 +15,8 @@ echo "</pre>";
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="<?= $_SESSION['uri']; ?>/<?= $path; ?>/pages/main?path=dashboard">Home</a></li>
+                    <li class="breadcrumb-item"><a
+                            href="<?= $_SESSION['uri']; ?>/<?= $path; ?>/pages/main?path=dashboard">Home</a></li>
                     <li class="breadcrumb-item active">Report</li>
                 </ol>
             </div>
@@ -35,7 +36,8 @@ echo "</pre>";
 
                         <div class='col-4'>
                             <div class="input-group date" id="searchdate" data-target-input="nearest">
-                                <input type="text" name="one" class="form-control datetimepicker-input" data-target="#searchdate" />
+                                <input type="text" name="one" class="form-control datetimepicker-input"
+                                    data-target="#searchdate" />
                                 <div class="input-group-append" data-target="#searchdate" data-toggle="datetimepicker">
                                     <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                 </div>
@@ -43,8 +45,10 @@ echo "</pre>";
                         </div>
                         <div class='col-4'>
                             <div class="input-group date" id="reservationdate" data-target-input="nearest">
-                                <input type="text" name="two" class="form-control datetimepicker-input" data-target="#reservationdate" />
-                                <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
+                                <input type="text" name="two" class="form-control datetimepicker-input"
+                                    data-target="#reservationdate" />
+                                <div class="input-group-append" data-target="#reservationdate"
+                                    data-toggle="datetimepicker">
                                     <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                 </div>
                             </div>
@@ -63,7 +67,7 @@ echo "</pre>";
                 <h3 class="card-title"><b> บันทึกการรับฝากเงินนักเรียนชั้ันประศึกษาปีที่ 1 </b></h3>
                 <div class='text-right'>
                     <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal-default">
-                        <i class="fas fa-plus"></i>
+                        <i class="fas fa-user-plus"></i> 
                         Add
                     </button>
                 </div>
@@ -99,33 +103,36 @@ echo "</pre>";
                                 // echo "</pre>";
 
                         ?>
-                                <tr>
-                                    <td><?= $id; ?></td>
-                                    <td><?= $getUser['usr_cid']; ?></td>
-                                    <td><?= $getUser['usr_fname']; ?> <?= $getUser['usr_lname']; ?></td>
-                                    <td>15/12/2565</td>
-                                    <td>80</td>
-                                    <td>ฝาก</td>
-                                    <td class="project-actions text-center">
-                                        <form action="" method="POST">
-                                            <input type="hidden" name="type" value="del">
-                                            <input type="hidden" name="id_del" value=<?= $getUser['usr_id']; ?>>
-                                            <button type="submit" class="btn btn-danger btn-sm confirm" txtAlert="คุณต้องการลบใช่หรือไม่" name="del" value="9">
-                                                <i class="fas fa-trash">
-                                                </i>
-                                                Delete
-                                            </button>
+                        <tr>
+                            <td><?= $id; ?></td>
+                            <td><?= $getUser['usr_cid']; ?></td>
+                            <td><?= $getUser['usr_fname']; ?> <?= $getUser['usr_lname']; ?></td>
+                            <td>15/12/2565</td>
+                            <td>80</td>
+                            <td>ฝาก</td>
+                            <td class="project-actions text-center">
+                                <form action="" method="POST">
+                                    <input type="hidden" name="type" value="del">
+                                    <input type="hidden" name="id_del" value=<?= $getUser['usr_id']; ?>>
+                                    <button type="submit" class="btn btn-danger btn-sm confirm"
+                                        txtAlert="คุณต้องการลบใช่หรือไม่" name="del" value="9">
+                                        <i class="fas fa-trash">
+                                        </i>
+                                        Delete
+                                    </button>
 
-                                            <button type="button" class="btn btn-warning btn-sm view" info-Detail="<?= $dataTodolist['td_id']; ?>|x|<?= $dataTodolist['td_case']; ?>|x|<?= $dataTodolist['td_dept']; ?>" data-toggle="modal" data-target="#editDataList">
-                                                <i class="fas fa-edit"></i>
-                                            </button>
+                                    <button type="button" class="btn btn-warning btn-sm view"
+                                        info-Detail="<?= $dataTodolist['td_id']; ?>|x|<?= $dataTodolist['td_case']; ?>|x|<?= $dataTodolist['td_dept']; ?>"
+                                        data-toggle="modal" data-target="#editDataList">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
 
 
 
 
-                                        </form>
-                                    </td>
-                                </tr>
+                                </form>
+                            </td>
+                        </tr>
                         <?PHP
                                 $id++;
                             }
@@ -172,7 +179,8 @@ echo "</pre>";
                 </div>
                 <div class="modal-footer justify-content-between">
                     <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button>
-                    <button type="submit" class="btn btn-success confirm" txtAlert='กรุณาตรวจสอบความถูกต้องก่อนกดยืนยัน ?'>บันทึก</button>
+                    <button type="submit" class="btn btn-success confirm"
+                        txtAlert='กรุณาตรวจสอบความถูกต้องก่อนกดยืนยัน ?'>บันทึก</button>
                 </div>
             </form>
         </div>
@@ -222,7 +230,8 @@ echo "</pre>";
                         <div class="col-sm-12 col-md-12 col-lg-6 col-xl-4">
                             <div class="form-group">
                                 <label for="amount">amount</label>
-                                <input type="number" class="form-control" id="amount" name="amount" placeholder="Enter amount">
+                                <input type="number" class="form-control" id="amount" name="amount"
+                                    placeholder="Enter amount">
                             </div>
                         </div>
                     </div>
@@ -243,23 +252,23 @@ echo "</pre>";
 
 
 <script>
-    $(function() {
-        $("#usertable").DataTable({
-            "responsive": true,
-            "lengthChange": false,
-            "autoWidth": false,
-            "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-        }).buttons().container().appendTo('#usertable_wrapper .col-md-6:eq(0)');
+$(function() {
+    $("#usertable").DataTable({
+        "responsive": true,
+        "lengthChange": false,
+        "autoWidth": false,
+        "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+    }).buttons().container().appendTo('#usertable_wrapper .col-md-6:eq(0)');
 
 
-        //searchdate picker
-        $('#searchdate').datetimepicker({
-            format: 'L'
-        });
-
-        //reservationdate picker
-        $('#reservationdate').datetimepicker({
-            format: 'L'
-        });
+    //searchdate picker
+    $('#searchdate').datetimepicker({
+        format: 'L'
     });
+
+    //reservationdate picker
+    $('#reservationdate').datetimepicker({
+        format: 'L'
+    });
+});
 </script>
