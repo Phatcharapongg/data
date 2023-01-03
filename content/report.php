@@ -1,4 +1,4 @@
-<?PHP 
+<?PHP
 
 
 ?>
@@ -32,8 +32,7 @@
                 <div class="card card-primary card-outline">
                     <div class="card-body box-profile">
                         <div class="text-center">
-                            <img class="profile-user-img img-fluid img-circle" src="../dist/img/user4-128x128.jpg"
-                                alt="User profile picture">
+                            <img class="profile-user-img img-fluid img-circle" src="../dist/img/user4-128x128.jpg" alt="User profile picture">
                         </div>
 
                         <h3 class="profile-username text-center">Teacher</h3>
@@ -119,7 +118,18 @@
 
 
                 <div class='row pb-3'>
-                    <div class='col-4'>
+                    <div class='col-3'>
+                        <select class="form-control select2bs4" id='student' name="student">
+                            <option>กรุณาเลือกนักเรียน</option>
+                            <option value='1'>นายเอ</option>
+                            <option value='2'>นายเอ้</option>
+                            <option value='3'>นายเอก</option>
+                            <option value='4'>นายเอส</option>
+                            <option value='5'>นายเอว</option>
+                            <option value='6'>นายเอง</option>
+                        </select>
+                    </div>
+                    <div class='col-3'>
                         <div class="input-group date" id="searchdate" data-target-input="nearest">
                             <input type="text" class="form-control datetimepicker-input" data-target="#searchdate" />
                             <div class="input-group-append" data-target="#searchdate" data-toggle="datetimepicker">
@@ -127,21 +137,20 @@
                             </div>
                         </div>
                     </div>
-                    <div class='col-4'>
+                    <div class='col-3'>
                         <div class="input-group date" id="reservationdate" data-target-input="nearest">
-                            <input type="text" class="form-control datetimepicker-input"
-                                data-target="#reservationdate" />
+                            <input type="text" class="form-control datetimepicker-input" data-target="#reservationdate" />
                             <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
                                 <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                             </div>
                         </div>
                     </div>
-                    <div class='col-4'>
+                    <div class='col-3'>
                         <button class='btn btn-info btn-block'>ค้นหา</button>
 
                     </div>
 
-                </div>  
+                </div>
                 <div class="card">
                     <div class="card-header">
                         <h3 class="card-title"><b> บันทึกการรับฝากเงินนักเรียนชั้ันประศึกษาปีที่ 1 </b></h3>
@@ -213,7 +222,7 @@
                                             </a>
                                         </td>
                                     </tr>
-                                </thead>        
+                                </thead>
                             </tfoot>
                         </table>
                     </div>
@@ -228,35 +237,35 @@
 
 
 <script>
-$(function() {
-    $("#example1").DataTable({
-        "responsive": true,
-        "lengthChange": false,
-        "autoWidth": false,
-        "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-    }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-    $('#example2').DataTable({
-        "paging": true,
-        "lengthChange": false,
-        "searching": false,
-        "ordering": true,
-        "info": true,
-        "autoWidth": false,
-        "responsive": true,
+    $(function() {
+        $("#example1").DataTable({
+            "responsive": true,
+            "lengthChange": false,
+            "autoWidth": false,
+            "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+        }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+        $('#example2').DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "searching": false,
+            "ordering": true,
+            "info": true,
+            "autoWidth": false,
+            "responsive": true,
+        });
+
+        //searchdate picker
+        $('#searchdate').datetimepicker({
+            format: 'L'
+        });
+
+        //reservationdate picker
+        $('#reservationdate').datetimepicker({
+            format: 'L'
+        });
+
+
+
+
     });
-
-    //searchdate picker
-    $('#searchdate').datetimepicker({
-        format: 'L'
-    });
-
-    //reservationdate picker
-    $('#reservationdate').datetimepicker({
-        format: 'L'
-    });
-
-
-
-
-});
 </script>

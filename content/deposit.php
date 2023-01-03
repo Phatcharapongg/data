@@ -11,13 +11,13 @@ echo "</pre>";
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1>Report</h1>
+                <h1>ฝากเงิน</h1>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a
                             href="<?= $_SESSION['uri']; ?>/<?= $path; ?>/pages/main?path=dashboard">Home</a></li>
-                    <li class="breadcrumb-item active">Report</li>
+                    <li class="breadcrumb-item active">ฝากเงิน</li>
                 </ol>
             </div>
         </div>
@@ -28,7 +28,7 @@ echo "</pre>";
 <section class="content">
     <div class="container-fluid">
 
-        <div class="row">
+        <!-- <div class="row">
             <div class="col-md-12">
                 <form action="" method="POST">
                     <div class='row pb-4'>
@@ -59,7 +59,7 @@ echo "</pre>";
                     </div>
                 </form>
             </div>
-        </div>
+        </div> -->
 
 
         <div class="card">

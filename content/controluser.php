@@ -36,10 +36,17 @@ if (empty($_SESSION['username'])) {
                         <i class="fas fa-user-plus"></i>
                         Add
                     </button>
-                    <button type="button" class="btn btn-success">
+                    <button type="button" class="btn btn-success testAlert3">
                         <i class="fas fa-user-plus"></i>
                         TEST
                     </button>
+                    <script>
+                        $(document).ready(function() {
+                            $(".testAlert3").click(function() {
+                                Swal.fire('TEST')
+                            })
+                        })
+                    </script>
 
                 </div>
             </div>
@@ -68,11 +75,6 @@ if (empty($_SESSION['username'])) {
                         if ($getUserNUM > 0) {
                             $id = 1;
                             foreach ($getUserARR as $getUser) {
-
-                                // echo "<pre>";
-                                // print_r($getUser);
-                                // echo "</pre>";
-
                         ?>
                                 <tr>
                                     <td><?= $id; ?></td>
@@ -82,31 +84,41 @@ if (empty($_SESSION['username'])) {
                                     <td>80</td>
                                     <td>ฝาก</td>
                                     <td class="project-actions text-center">
-                                        <form action="" method="POST">
-                                            <input type="hidden" name="type" value="del">
-                                            <input type="hidden" name="id_del" value=<?= $getUser['usr_id']; ?>>
+                                        <button type="button" class="btn btn-success btn-sm view" data-toggle="modal" data-target="#setuser">
+                                            <i class='fas fa-user-check'></i>
+                                        </button>
+                                        <button type="button" class="btn btn-warning btn-sm view" data-toggle="modal" data-target="#editDataList">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
 
-                                            <button type="button" class="btn btn-success btn-sm view" data-toggle="modal" data-target="#setuser">
-                                                <i class='fas fa-user-check'></i>
-                                            </button>
-
-                                            <button type="button" class="btn btn-warning btn-sm view" data-toggle="modal" data-target="#editDataList">
-                                                <i class="fas fa-edit"></i>
-                                            </button>
-
-                                            <button type="submit" class="btn btn-danger btn-sm testAlert" txtAlert="คุณต้องการลบใช่หรือไม่" dataTest="<?= $getUser['usr_id']; ?>" name="del" value="9">
-                                                <i class="fas fa-trash"> </i>
-                                            </button>
-                                            <script>
-                                                $(document).ready(function() {
-                                                    $(".testAlert").click(function() {
-                                                        var getValue = $(this).attr('dataTest')
-                                                        alert(getValue)
-                                                        Swal.fire('Any fool can use a computer')
+                                        <button type="button" class="btn btn-danger btn-sm testAlert" dataID="<?= $getUser['usr_id']; ?>" name="del" value="9">
+                                            <i class="fas fa-trash"> </i>
+                                        </button>
+                                        <script>
+                                            $(document).ready(function() {
+                                                $(".testAlert").click(function() {
+                                                    var getId = $(this).attr('dataID')
+                                                    // alert(getName)
+                                                    Swal.fire({
+                                                        title: getName,
+                                                        text: "You won't be able to revert this! ID : " + getId,
+                                                        icon: 'warning',
+                                                        showCancelButton: true,
+                                                        confirmButtonColor: '#3085d6',
+                                                        cancelButtonColor: '#d33',
+                                                        confirmButtonText: 'Yes, delete it!'
+                                                    }).then((result) => {
+                                                        if (result.isConfirmed) {
+                                                            Swal.fire(
+                                                                'Deleted!',
+                                                                'Your file has been deleted.',
+                                                                'success'
+                                                            )
+                                                        }
                                                     })
-                                                })
-                                            </script>
-                                        </form>
+                                                });
+                                            });
+                                        </script>
 
                                     </td>
                                 </tr>
