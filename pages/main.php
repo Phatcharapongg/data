@@ -72,9 +72,11 @@ foreach ($getUserARR as $getUser) {
     <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@100;200;300&display=swap" rel="stylesheet">
     <!-- jQuery -->
     <script src="../plugins/jquery/jquery.min.js"></script>
+
 </head>
 
 <!-- แถบส่วนหัว -->
+
 <body style="font-family: 'Kanit', sans-serif;">
     <div class="wrapper">
         <!-- Navbar -->
@@ -144,7 +146,7 @@ foreach ($getUserARR as $getUser) {
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
 
-                    <!-- เช๊คว่ามีค่าหรือเปล่ากดแถบเลือกให้เป็นสี active -->
+                        <!-- เช๊คว่ามีค่าหรือเปล่ากดแถบเลือกให้เป็นสี active -->
                         <?PHP
                         if (isset($_GET['path']) && $_GET['path'] == 'controlUser') {
                             $controlUser = 'active';
@@ -183,7 +185,7 @@ foreach ($getUserARR as $getUser) {
                                 </p>
                             </a>
                         </li>
-                    
+
                     </ul>
                 </nav>
                 <!-- /.sidebar-menu -->
@@ -195,16 +197,16 @@ foreach ($getUserARR as $getUser) {
         <div class="content-wrapper">
             <?PHP
             // echo $_GET['path'];
-            
+
             // เช๊คหน้าเวลากดเลือกหน้านั้นๆ หากไม่มีค่าในระบบหรือระบบไม่เข้าใจจะเด้งไปหน้า dashboard //
             if (isset($_GET['path'])) {
                 switch ($_GET['path']) {
                     case 'deposit':
                         $content = 'deposit.php';
                         break;
-                        case 'contact':
-                            $content = 'contact.php';
-                            break;
+                    case 'contact':
+                        $content = 'contact.php';
+                        break;
                     case 'report':
                         $content = 'report.php';
                         break;
@@ -228,11 +230,12 @@ foreach ($getUserARR as $getUser) {
             <div class="float-right d-none d-sm-block">
                 <b>Version</b> 3.2.0
             </div>
-            <strong>Copyright &copy; 2014-2021 <a href="#">AdminLTE.io</a>.</strong> All rights
+            <strong>Copyright &copy; 2021-2021 <a href="#">AdminLTE.io</a>.</strong> All rights
             reserved.
         </footer>
     </div>
 
+    <script src="sweetalert2.all.min.js"></script>
     <script src="https://code.iconify.design/2/2.2.1/iconify.min.js"></script>
     <!-- jQuery UI 1.11.4 -->
     <script src="../plugins/jquery-ui/jquery-ui.min.js"></script>
@@ -293,27 +296,23 @@ foreach ($getUserARR as $getUser) {
     <!-- pace-progress -->
     <script src="../plugins/pace-progress/pace.min.js"></script>
 
+    <script src="https://rawgit.com/RobinHerbots/jquery.inputmask/3.x/dist/jquery.inputmask.bundle.js"></script>
 
     <script>
         $(function() {
-            //Initialize Select2 Elements
+            bsCustomFileInput.init();
             $('.select2').select2()
+        });
 
-            //Initialize Select2 Elements
-            $('.select2bs4').select2({
-                theme: 'bootstrap4'
-            })
+        $('.confirm').click(function() {
+            var getTxt = $(this).attr('txtAlert');
+            var text = confirm(getTxt);
 
-            $('.confirm').click(function() {
-                var getTxt = $(this).attr('txtAlert');
-                var text = confirm(getTxt);
-
-                if (text == true) {
-                    return true;
-                } else {
-                    return false;
-                }
-            })
+            if (text == true) {
+                return true;
+            } else {
+                return false;
+            }
         })
     </script>
 
