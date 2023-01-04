@@ -1,4 +1,122 @@
-<?PHP
+<!-- ปุ่มลบ sweetalert2 -->
+<!-- <button type="button" class="btn btn-danger btn-sm testAlert" dataID="<?= $getUser['usr_id']; ?>" name="del" value="9">
+                                            <i class="fas fa-trash"> </i>
+                                        </button>
+                                        <script>
+                                            $(document).ready(function() {
+                                                $(".testAlert").click(function() {
+                                                    var getId = $(this).attr('dataID')
+                                                    // alert(getName)
+                                                    Swal.fire({
+                                                        title: 'test',
+                                                        text: "You won't be able to revert this! ID : " + getId,
+                                                        icon: 'warning',
+                                                        showCancelButton: true,
+                                                        confirmButtonColor: '#3085d6',
+                                                        cancelButtonColor: '#d33',
+                                                        confirmButtonText: 'Yes, delete it!'
+                                                    }).then((result) => {
+                                                        if (result.isConfirmed) {
+                                                            Swal.fire(
+                                                                'Deleted!',
+                                                                'Your file has been deleted.',
+                                                                'success'
+                                                            )
+                                                        }
+                                                    })
+                                                });
+                                            });
+                                        </script> -->
+<!-- ปุ่มลบ
+                                        <td class="project-actions text-center">
+                                <form action="" method="POST">
+                                    <input type="hidden" name="type" value="del">
+                                    <input type="hidden" name="id_del" value=<?= $getUser['usr_id']; ?>>
+                                    <button type="submit" class="btn btn-danger btn-sm confirm"
+                                        txtAlert="คุณต้องการลบใช่หรือไม่" name="del" value="9">
+                                        <i class="fas fa-trash">
+                                        </i>
+                                        Delete
+                                    </button>
+
+                                    <button type="button" class="btn btn-warning btn-sm view"
+                                        info-Detail=" <?= $dataTodolist['td_id']; ?>|x|<?= $dataTodolist['td_case']; ?>|x|<?= $dataTodolist['td_dept']; ?>"
+                                        data-toggle="modal" data-target="#editDataList">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+ -->
+
+
+
+
+<!-- ค้นหาวันที่ ค้นหา -->
+<!-- Main content
+<section class="content">
+    <div class="container-fluid"> -->
+
+<!-- <div class="row">
+            <div class="col-md-12">
+                <form action="" method="POST">
+                    <div class='row pb-4'>
+
+
+                        <div class='col-4'>
+                            <div class="input-group date" id="searchdate" data-target-input="nearest">
+                                <input type="text" name="one" class="form-control datetimepicker-input"
+                                    data-target="#searchdate" />
+                                <div class="input-group-append" data-target="#searchdate" data-toggle="datetimepicker">
+                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class='col-4'>
+                            <div class="input-group date" id="reservationdate" data-target-input="nearest">
+                                <input type="text" name="two" class="form-control datetimepicker-input"
+                                    data-target="#reservationdate" />
+                                <div class="input-group-append" data-target="#reservationdate"
+                                    data-toggle="datetimepicker">
+                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class='col-4'>
+                            <button type="submit" class='btn btn-info btn-block'>ค้นหา</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div> -->
+
+
+
+<!-- // echo "<pre>";
+                                // print_r($getUser);
+                                // echo "</pre>"; -->
+
+<!-- ปุ่มลบ
+<form action="" method="POST">
+    <input type="hidden" name="type" value="approve">
+    <input type="hidden" name="id" value="<?= $dataStudent["empBadgenumber"]; ?>">
+    <button type="submit" class="btn btn-<?= $statusColor; ?> btn-sm confirm"
+        txtAlert="คุณต้องการยืนยันการ<?= $choose; ?>ใช้งานบุคคลนี้ใช่ไหม" name="value" value="<?= $valApprove; ?>"><i
+            class="<?= $statusIcons; ?>"></i></button>
+</form>
+<!-- <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#editData"><i class="fas fa-edit"></i></button> -->
+<!-- </div>
+<div class="btn-group">
+    <form action="" method="POST">
+        <input type="hidden" name="type" value="delete">
+        <input type="hidden" name="id" value="<?= $dataStudent["empBadgenumber"]; ?>">
+        <button type="submit" class="btn btn-danger btn-sm confirm" txtAlert="คุณต้องการลบบุคคลนี้ใช่ไหม" name="value"
+            value="9">
+            <i class="fas fa-trash-alt"></i>
+        </button>
+    </form> --> -->
+
+
+
+<!-- 
+    <?PHP
 
 
 ?>
@@ -21,7 +139,7 @@
 </section>
 
 <!-- Main content -->
-<section class="content">
+<!-- <section class="content">
     <div class="container-fluid">
         <div class="card">
             <div class="card-header">
@@ -214,4 +332,4 @@ $(function() {
         format: 'L'
     });
 });
-</script>
+</script> --> -->

@@ -16,7 +16,8 @@ if (empty($_SESSION['username'])) {
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="<?= $_SESSION['uri']; ?>/<?= $path; ?>/pages/main?path=dashboard">Home</a></li>
+                    <li class="breadcrumb-item"><a
+                            href="<?= $_SESSION['uri']; ?>/<?= $path; ?>/pages/main?path=dashboard">Home</a></li>
                     <li class="breadcrumb-item active">Control User</li>
                 </ol>
             </div>
@@ -36,17 +37,17 @@ if (empty($_SESSION['username'])) {
                         <i class="fas fa-user-plus"></i>
                         Add
                     </button>
-                    <button type="button" class="btn btn-success testAlert3">
+                    <!-- <button type="button" class="btn btn-success testAlert3">
                         <i class="fas fa-user-plus"></i>
                         TEST
                     </button>
                     <script>
-                        $(document).ready(function() {
-                            $(".testAlert3").click(function() {
-                                Swal.fire('TEST')
-                            })
+                    $(document).ready(function() {
+                        $(".testAlert3").click(function() {
+                            Swal.fire('TEST')
                         })
-                    </script>
+                    })
+                    </script> -->
 
                 </div>
             </div>
@@ -76,52 +77,81 @@ if (empty($_SESSION['username'])) {
                             $id = 1;
                             foreach ($getUserARR as $getUser) {
                         ?>
-                                <tr>
-                                    <td><?= $id; ?></td>
-                                    <td><?= $getUser['usr_cid']; ?></td>
-                                    <td><?= $getUser['usr_fname']; ?> <?= $getUser['usr_lname']; ?></td>
-                                    <td>15/12/2565</td>
-                                    <td>80</td>
-                                    <td>ฝาก</td>
-                                    <td class="project-actions text-center">
-                                        <button type="button" class="btn btn-success btn-sm view" data-toggle="modal" data-target="#setuser">
-                                            <i class='fas fa-user-check'></i>
-                                        </button>
-                                        <button type="button" class="btn btn-warning btn-sm view" data-toggle="modal" data-target="#editDataList">
-                                            <i class="fas fa-edit"></i>
-                                        </button>
+                        <tr>
+                            <td><?= $id; ?></td>
+                            <td><?= $getUser['usr_cid']; ?></td>
+                            <td><?= $getUser['usr_fname']; ?> <?= $getUser['usr_lname']; ?></td>
+                            <td>15/12/2565</td>
+                            <td>80</td>
+                            <td>ฝาก</td>
 
-                                        <button type="button" class="btn btn-danger btn-sm testAlert" dataID="<?= $getUser['usr_id']; ?>" name="del" value="9">
-                                            <i class="fas fa-trash"> </i>
-                                        </button>
-                                        <script>
-                                            $(document).ready(function() {
-                                                $(".testAlert").click(function() {
-                                                    var getId = $(this).attr('dataID')
-                                                    // alert(getName)
-                                                    Swal.fire({
-                                                        title: getName,
-                                                        text: "You won't be able to revert this! ID : " + getId,
-                                                        icon: 'warning',
-                                                        showCancelButton: true,
-                                                        confirmButtonColor: '#3085d6',
-                                                        cancelButtonColor: '#d33',
-                                                        confirmButtonText: 'Yes, delete it!'
-                                                    }).then((result) => {
-                                                        if (result.isConfirmed) {
-                                                            Swal.fire(
-                                                                'Deleted!',
-                                                                'Your file has been deleted.',
-                                                                'success'
-                                                            )
-                                                        }
-                                                    })
-                                                });
-                                            });
-                                        </script>
+                            <td class="project-actions text-center">
+                                <button type="button" class="btn btn-success btn-sm usercheck" data-toggle="modal"
+                                    data-target="#setuser">
+                                    <i class='fas fa-user-check'></i>
+                                </button>
+                                <script>
+                                $(document).ready(function() {
+                                    $(".usercheck").click(function() {
+                                        var getId = $(this).attr('dataID')
+                                        // alert(getName)
+                                        Swal.fire({
+                                            title: 'Set up an account ? ',
+                                             icon: 'warning', 
+                                            showDenyButton: true,
+                                            showCancelButton: true,
+                                            confirmButtonText: 'Enable',
+                                            denyButtonText: `Disable `,
+                                        }).then((result) => {
+                                            /* Read more about isConfirmed, isDenied below */
+                                            if (result.isConfirmed) {
+                                                Swal.fire('Enable!', '', 'success')
+                                            } else if (result.isDenied) {
+                                                Swal.fire('Disable', '', 'error')
+                                            }
+                                        })
+                                    });
+                                });
+                                </script>
 
-                                    </td>
-                                </tr>
+                                <button type="button" class="btn btn-warning btn-sm view" data-toggle="modal"
+                                    data-target="#editDataList">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+
+                                <button type="button" class="btn btn-danger btn-sm deleteAlert"
+                                    dataID="<?= $getUser['usr_id']; ?>" name="del" value="9">
+                                    <i class="fas fa-trash"> </i>
+                                </button>
+                                <script>
+                                $(document).ready(function() {
+                                    $(".deleteAlert").click(function() {
+                                        var getId = $(this).attr('dataID')
+                                        // alert(getName)
+                                        Swal.fire({
+                                            title: 'Remove this user account from the system ?',
+                                            text: "You won't be able to revert this! ID : " +
+                                                getId,
+                                            icon: 'warning',
+                                            showCancelButton: true,
+                                            confirmButtonColor: '#3085d6',
+                                            cancelButtonColor: '#d33',
+                                            confirmButtonText: 'Yes, delete it!'
+                                        }).then((result) => {
+                                            if (result.isConfirmed) {
+                                                Swal.fire(
+                                                    'Deleted!',
+                                                    'Your file has been deleted.',
+                                                    'success'
+                                                )
+                                            }
+                                        })
+                                    });
+                                });
+                                </script>
+
+                            </td>
+                        </tr>
                         <?PHP
                                 $id++;
                             }
@@ -169,7 +199,8 @@ if (empty($_SESSION['username'])) {
                 </div>
                 <div class="modal-footer justify-content-between">
                     <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button>
-                    <button type="submit" class="btn btn-success confirm" txtAlert='กรุณาตรวจสอบความถูกต้องก่อนกดยืนยัน ?'>บันทึก</button>
+                    <button type="submit" class="btn btn-success confirm"
+                        txtAlert='กรุณาตรวจสอบความถูกต้องก่อนกดยืนยัน ?'>บันทึก</button>
                 </div>
             </form>
         </div>
@@ -219,7 +250,8 @@ if (empty($_SESSION['username'])) {
                         <div class="col-sm-12 col-md-12 col-lg-6 col-xl-4">
                             <div class="form-group">
                                 <label for="amount">amount</label>
-                                <input type="number" class="form-control" id="amount" name="amount" placeholder="Enter amount">
+                                <input type="number" class="form-control" id="amount" name="amount"
+                                    placeholder="Enter amount">
                             </div>
                         </div>
                     </div>
@@ -239,23 +271,23 @@ if (empty($_SESSION['username'])) {
 
 
 <script>
-    $(function() {
-        $("#usertable").DataTable({
-            "responsive": true,
-            "lengthChange": false,
-            "autoWidth": false,
-            "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-        }).buttons().container().appendTo('#usertable_wrapper .col-md-6:eq(0)');
+$(function() {
+    $("#usertable").DataTable({
+        "responsive": true,
+        "lengthChange": false,
+        "autoWidth": false,
+        "buttons": [ "colvis"]
+    }).buttons().container().appendTo('#usertable_wrapper .col-md-6:eq(0)');
 
 
-        //searchdate picker
-        $('#searchdate').datetimepicker({
-            format: 'L'
-        });
-
-        //reservationdate picker
-        $('#reservationdate').datetimepicker({
-            format: 'L'
-        });
+    //searchdate picker
+    $('#searchdate').datetimepicker({
+        format: 'L'
     });
+
+    //reservationdate picker
+    $('#reservationdate').datetimepicker({
+        format: 'L'
+    });
+});
 </script>
