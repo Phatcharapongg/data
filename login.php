@@ -14,10 +14,10 @@ if (isset($_SESSION['username']) && $_SESSION['username'] != '') {
 }
 
 
-    //....เช๊คค่าPOSTจากฟอร์มล๊อคอินที่กรอกเข้ามา โดยเช๊คยูสเซอร์และพาสเวิดร์   !=''&"" = ต้องไม่เท่ากับค่าว่าง //
+//....เช๊คค่าPOSTจากฟอร์มล๊อคอินที่กรอกเข้ามา โดยเช๊คยูสเซอร์และพาสเวิดร์   !=''&"" = ต้องไม่เท่ากับค่าว่าง //
 if (
     isset($_POST["user"]) && $_POST["user"] != ''
-    && isset($_POST["password"]) && $_POST["password"] != '' 
+    && isset($_POST["password"]) && $_POST["password"] != ''
 ) {
 
     //...เก็บค่าPOSTไว้ในตัวแปร ค่าPOST ที่กรอกเข้ามาคือusername&password // 
@@ -30,7 +30,7 @@ if (
     $getUserARR = mysqli_query($conn, $getUserSQL);
     $getUserNUM = mysqli_num_rows($getUserARR);
 
-     if ($getUserNUM == 1) {
+    if ($getUserNUM == 1) {
 
         //...ถ้าเจอ user & password ให้สามารถเข้าสู่ระบบได้
         $getPasswordSQL = "SELECT * FROM user WHERE usr_username = '" .  $username . "' AND usr_password = '" .  $password . "'";
@@ -56,17 +56,17 @@ if (
                 }
             } else {
                 // ถ้าไม่เจอให้ Alert บอกว่าuserของคุณยังไม่ได้ถูกอนุมัติการใช้งาน กรุณาติดต่อแอดมิน
-                header("location:" . $_SESSION['uri'] . "/" . $path . "?error=status&u=" . $username);
+                header("location:" . $_SESSION['uri'] . "/" . $path . "/login?error=status&u=" . $username);
                 exit(0);
             }
         } else {
             // ถ้าไม่เจอให้ Alert บอกว่าpassword ผิด
-            header("location:" . $_SESSION['uri'] . "/" . $path . "?error=password&u=" . $username);
+            header("location:" . $_SESSION['uri'] . "/" . $path . "/login?error=password&u=" . $username);
             exit(0);
         }
     } else {
         // ถ้าไม่เจอให้ Alert บอกว่าuser ผิด
-        header("location:" . $_SESSION['uri'] . "/" . $path . "?error=username&u=" . $username);
+        header("location:" . $_SESSION['uri'] . "/" . $path . "/login?error=username&u=" . $username);
         exit(0);
     }
 }
@@ -86,8 +86,7 @@ if (
     <title>Login</title>
 
     <!-- Google Font: Source Sans Pro -->
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
     <!-- icheck bootstrap -->
@@ -130,11 +129,11 @@ if (isset($_GET["error"])) {
 ?>
 <!-- script  ALERT -->
 <script>
-$(document).ready(function() {
-    if (<?= $alert; ?> == 1) {
-        toastr.<?= $icon; ?>('<?= $title; ?>')
-    }
-});
+    $(document).ready(function() {
+        if (<?= $alert; ?> == 1) {
+            toastr.<?= $icon; ?>('<?= $title; ?>')
+        }
+    });
 </script>
 <!--  END ALERT -->
 

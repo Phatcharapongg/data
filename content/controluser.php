@@ -97,7 +97,7 @@ if (empty($_SESSION['username'])) {
                                         // alert(getName)
                                         Swal.fire({
                                             title: 'Set up an account ? ',
-                                             icon: 'warning', 
+                                            icon: 'warning',
                                             showDenyButton: true,
                                             showCancelButton: true,
                                             confirmButtonText: 'Enable',
@@ -113,7 +113,7 @@ if (empty($_SESSION['username'])) {
                                     });
                                 });
                                 </script>
-
+                                
                                 <button type="button" class="btn btn-warning btn-sm view" data-toggle="modal"
                                     data-target="#editDataList">
                                     <i class="fas fa-edit"></i>
@@ -276,7 +276,7 @@ $(function() {
         "responsive": true,
         "lengthChange": false,
         "autoWidth": false,
-        "buttons": [ "colvis"]
+        "buttons": ["colvis"]
     }).buttons().container().appendTo('#usertable_wrapper .col-md-6:eq(0)');
 
 

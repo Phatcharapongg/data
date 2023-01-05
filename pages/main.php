@@ -19,7 +19,8 @@ $getUserNUM = mysqli_num_rows($getUserARR);
 
 foreach ($getUserARR as $getUser) {
 
-    $fullname = $getUser['usr_fname'] . " " . $getUser['usr_lname'];
+    $fullname   = $getUser['usr_fname'] . " " . $getUser['usr_lname'];
+    $class      = $getUser['usr_class'];
 }
 ?>
 

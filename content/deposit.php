@@ -1,6 +1,81 @@
 <?PHP
 
 
+
+//----------------------------------------------------------------------------------------------- START MODAL ADD
+if (
+    isset($_POST['form']) && $_POST['form'] == 'insertDeposit'
+    && isset($_POST['insert']) && $_POST['insert'] == 'deposit'
+    && isset($_POST['studentID']) && $_POST['studentID'] != ''
+    && isset($_POST['type']) && $_POST['type'] != ''
+    && isset($_POST['amount']) && $_POST['amount'] != ''
+) {
+    // Insert
+    $InsertDepositSQL = "INSERT INTO deposit (dep_type, dep_amount, dep_insby, dep_insdt, dep_status, dep_student_id, dep_note)
+    VALUES (
+        '" . $_POST['type'] . "',
+        '" . $_POST['amount'] . "',
+        '" . $_POST['username'] . "',
+        '" . date("Y-m-d H:i:s") . "',
+        '1',
+        '" . $_POST['studentID'] . "',
+        '" . $_POST['note'] . "'
+        )";
+    mysqli_query($conn, $InsertDepositSQL);
+
+    header("location: " . $_SESSION['uri'] . "/" . $path . "/pages/main?path=deposit&alert=success");
+    exit(0);
+}
+//----------------------------------------------------------------------------------------------- END MODAL ADD
+
+
+//----------------------------------------------------------------------------------------------- START MODAL EDIT
+if (
+    isset($_POST['form']) && $_POST['form'] == 'editDeposit'
+    && isset($_POST['edit']) && $_POST['edit'] == 'deposit'
+    && isset($_POST['editStudentID']) && $_POST['editStudentID'] != ''
+    && isset($_POST['editType']) && $_POST['editType'] != ''
+    && isset($_POST['editAmount']) && $_POST['editAmount'] != ''
+) {
+    //check data in table deposit
+    $chkDataSQL = "SELECT * FROM deposit WHERE dep_id = '" . $_POST['editID'] . "' AND dep_status != '9'";
+    $chkDataARR = mysqli_query($conn, $chkDataSQL);
+    $chkDataNUM = mysqli_num_rows($chkDataARR);
+
+
+    if ($chkDataNUM == 1) {
+        $editDepositSQL = "UPDATE deposit SET ";
+        $editDepositSQL .= "dep_student_id  = '" . $_POST['editStudentID'] . "' ";
+        $editDepositSQL .= ",dep_type       = '" . $_POST['editType'] . "' ";
+        $editDepositSQL .= ",dep_amount     = '" . $_POST['editAmount'] . "' ";
+        $editDepositSQL .= ",dep_note       = '" . $_POST['editNote'] . "' ";
+        $editDepositSQL .= ",dep_upby       = '" . $_SESSION['username'] . "' ";
+        $editDepositSQL .= ",dep_updt       = '" . date("Y-m-d H:i:s") . "' ";
+
+        $editDepositSQL .= "WHERE dep_id = '" . $_POST['editID'] . "' ";
+        mysqli_query($conn, $editDepositSQL);
+        header("location: " . $_SESSION['uri'] . "/" . $path . "/pages/main?path=deposit&alert=success");
+        exit(0);
+    }
+}
+
+//----------------------------------------------------------------------------------------------- END MODAL EDIT
+
+
+//  FUNCTION GET FULLNAME BY USERNAME 
+function getNameUser($conn, $username)
+{
+    $getUserSQL = "SELECT * FROM user WHERE usr_username = '" . $username . "'";
+    $getUserARR = mysqli_query($conn, $getUserSQL);
+    $getUserNUM = mysqli_num_rows($getUserARR);
+    if ($getUserNUM == 1) {
+        foreach ($getUserARR as $getUser) {
+            return $getUser['usr_fname'] . ' ' . $getUser['usr_lname'];
+        }
+    }
+}
+
+
 ?>
 
 <section class="content-header">
@@ -20,179 +95,228 @@
     </div>
 </section>
 
-<!-- Main content -->
 <section class="content">
     <div class="container-fluid">
         <div class="card">
             <div class="card-header">
                 <h3 class="card-title"><b> บันทึกการรับฝากเงินนักเรียนชั้ันประศึกษาปีที่ 1 </b></h3>
                 <div class='text-right'>
-                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal-default">
-                        <i class="fas fa-user-plus"></i>
-                        Add
+                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal-adddata">
+                        <i class='fas fa-coins'></i> Add
                     </button>
                 </div>
-            </div>
-            <div class="card-body">
-                <table id="usertable" class="table table-bordered table-striped">
+                <div class="card-body">
+                    <table id="usertable" class="table table-bordered table-striped">
 
-                    <thead>
-                        <tr align="center">
-                            <th>#</th>
-                            <th>รหัสประจำตัวนักเรียน</th>
-                            <th>ชื่อ - นามสกุล</th>
-                            <th>วันที่</th>
-                            <th>จำนวนเงินฝากวันนี้</th>
-                            <th>Status</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>รหัสประจำตัวนักเรียน</th>
+                                <th>ชื่อ - นามสกุล</th>
+                                <th>รายการ</th>
+                                <th>จำนวนเงิน (บาท)</th>
+                                <th>ชื่อครูผู้เพิ่มข้อมูล</th>
+                                <th>วันที่</th>
+                                <th>ชื่อครูผู้แก้ไขข้อมูล</th>
+                                <th>วันที่</th>
+                                <th>หมายเหตุ</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
 
-                        <?PHP
+                            <?PHP
+                            $getDepositSQL = "SELECT * FROM deposit d
+                            LEFT JOIN list_students ls ON ls.ls_student_id = d.dep_student_id
+                            WHERE ls_class = '" . $class . "'
+                            AND dep_status != '9'";
+                            $getDepositARR = mysqli_query($conn, $getDepositSQL);
+                            $getDepositNUM = mysqli_num_rows($getDepositARR);
 
-                        $getUserSQL = "SELECT * FROM user";
-                        $getUserARR = mysqli_query($conn, $getUserSQL);
-                        $getUserNUM = mysqli_num_rows($getUserARR);
+                            if ($getDepositNUM > 0) {
+                                $id = 1;
+                                foreach ($getDepositARR as $getDeposit) {
+                                    $fullname = $getDeposit['ls_prefix'] . '' . $getDeposit['ls_fname'] . ' ' . $getDeposit['ls_lname']
+                            ?>
+                            <tr class="text-center">
+                                <td><?= $id; ?></td>
+                                <td><?= $getDeposit['ls_student_id']; ?></td>
+                                <td><?= $fullname; ?></td>
+                                <td>
+                                    <?PHP
+                                            if ($getDeposit['dep_type'] == 'ฝาก') {
+                                                echo "<span class='text-success'>ฝาก</span>";
+                                            } else {
+                                                echo "<span class='text-red'>ถอน</span>";
+                                            }
+                                            ?>
+                                </td>
+                                <td><?= $getDeposit['dep_amount']; ?></td>
+                                <td><?= getNameUser($conn, $getDeposit['dep_insby']); ?></td>
+                                <td><?= KTgetData::convertTHDate($getDeposit['dep_insdt'], 'DMY'); ?></td>
+                                <td><?= $getDeposit['dep_upby'] != null ? getNameUser($conn, $getDeposit['dep_upby']) : '-'; ?>
+                                </td>
+                                <td><?= $getDeposit['dep_updt'] != null ? KTgetData::convertTHDate($getDeposit['dep_updt'], 'DMY') : '-'; ?>
+                                </td>
+                                <td><?= $getDeposit['dep_note'] != '' ? $getDeposit['dep_note'] : '-'; ?></td>
+                                <td class="project-actions text-center">
+                                    <button type="button" class="btn btn-warning btn-sm edit"
+                                        data-info="<?= $getDeposit['dep_id']; ?>|x|<?= $getDeposit['ls_student_id']; ?>|x|<?= $getDeposit['dep_type']; ?>|x|<?= $getDeposit['dep_amount']; ?>|x|<?= $getDeposit['dep_note']; ?>"
+                                        data-toggle="modal" data-target="#modal-editdata">
+                                        <i class='fas fa-edit'></i>
+                                    </button>
+                                    <script>
+                                    $(document).ready(function() {
+                                        $('.edit').click(function() {
+                                            var getInfo = $(this).attr('data-info')
+                                            var splitARR = getInfo.split('|x|')
+                                            $("#editID").val(splitARR[0])
+                                            $("#editStudentID").val(splitARR[1])
+                                            $("#editType").val(splitARR[2])
+                                            $("#editAmount").val(splitARR[3])
+                                            $("#editNote").val(splitARR[4])
+                                        })
+                                    })
+                                    </script>
+                                </td>
 
-                        if ($getUserNUM > 0) {
-                            $id = 1;
-                            foreach ($getUserARR as $getUser) {
-                        ?>
-                        <tr>
-                            <td><?= $id; ?></td>
-                            <td><?= $getUser['usr_cid']; ?></td>
-                            <td><?= $getUser['usr_fname']; ?> <?= $getUser['usr_lname']; ?></td>
-                            <td>15/12/2565</td>
-                            <td>80</td>
-                            <td>ฝาก</td>
-
-                            <td class="project-actions text-center">
-                                <button type="button" class="btn btn-warning btn-sm view" data-toggle="modal"
-                                    data-target="#editDataList">
-                                    <i class='fas fa-edit' style='font-size:15px'></i>
-                                </button>
-                            </td>
-                            </form>
-                            </td>
-                        </tr>
-                        <?PHP
-                                $id++;
+                            </tr>
+                            <?PHP
+                                    $id++;
+                                }
                             }
-                        }
-                        ?>
-                    </tbody>
-                </table>
+                            ?>
+                        </tbody>
+                    </table>
+                </div>
             </div>
-        </div>
 </section>
 
-
-
-<div class="modal fade" id="editDataList">
-    <div class="modal-dialog modal-xl">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title">เพิ่มข้อมูลการแก้ปัญหา</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <form action="" method="POST">
-                <div class="modal-body">
-                    <input type="hidden" name="status" value="edit">
-                    <input type="hidden" name="type" value="editworklist">
-                    <input type="hidden" id="id_edit" name="id_edit">
-
-
-
-
-                    <div class="form-group">
-                        <label for="dept_edit">ที่ไหนแจ้งมา</label>
-                        <input type="text" class="form-control" id="dept_edit" disabled>
-                    </div>
-                    <div class="form-group">
-                        <label for="case_edit">อาการที่แจ้งมา</label>
-                        <input type="text" class="form-control" id="case_edit" disabled>
-                    </div>
-                    <div class="form-group">
-                        <label for="repair">วิธีแก้ปัญหา</label>
-                        <input type="text" class="form-control" id="repair" name="repair" placeholder="วิธีแก้ปัญหา">
-                    </div>
-                </div>
-                <div class="modal-footer justify-content-between">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button>
-                    <button type="submit" class="btn btn-success confirm"
-                        txtAlert='กรุณาตรวจสอบความถูกต้องก่อนกดยืนยัน ?'>บันทึก</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-<?PHP // =============================================================================================================================  END EDIT 
-?>
-
-
 <!-- //-------------------------------------------------------------------- ฝากเงิน -->
-<div class="modal fade" id="modal-default">
+<div class="modal fade" id="modal-adddata">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Default Modal</h4>
+                <h4 class="modal-title">ฝากเงิน</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <form action="" method="POST">
+                <input type="hidden" name='form' value="insertDeposit" />
+                <input type="hidden" name='insert' value="deposit" />
+                <input type="hidden" name='username' value="<?= $_SESSION['username']; ?>" />
                 <div class="modal-body">
                     <div class="row">
-                        <div class="col-sm-12 col-md-12 col-lg-6 col-xl-4">
+                        <div class="col-sm-12 col-md-12 col-lg-6 col-xl-3">
                             <div class="form-group">
-                                <label for="student">ชื่อนักเรียน</label>
-                                <select class="form-control select2bs4" id='student' name="student">
+                                <label for="studentID">ชื่อนักเรียน</label>
+                                <select class="form-control select2bs4" id='studentID' name="studentID">
                                     <option>กรุณาเลือกนักเรียน</option>
-                                    <option value='1'>นายเอ</option>
-                                    <option value='2'>นายเอ้</option>
-                                    <option value='3'>นายเอก</option>
-                                    <option value='4'>นายเอส</option>
-                                    <option value='5'>นายเอว</option>
-                                    <option value='6'>นายเอง</option>
+                                    <option value='100'>นายเอ</option>
+                                    <option value='101'>นายเอ้</option>
                                 </select>
                             </div>
                         </div>
-                        <div class="col-sm-12 col-md-12 col-lg-6 col-xl-4">
+                        <div class="col-sm-12 col-md-12 col-lg-6 col-xl-3">
                             <div class="form-group">
                                 <label for="type">ประเภท</label>
                                 <select class="form-control" id='type' name="type">
-                                    <option>กรุณาเลือกประเภท</option>
-                                    <option value='1'>ฝาก</option>
-                                    <option value='2'>ถอน</option>
+                                    <option value=''>กรุณาเลือกประเภท</option>
+                                    <option value='ฝาก'>ฝาก</option>
+                                    <option value='ถอน'>ถอน</option>
                                 </select>
                             </div>
                         </div>
-                        <div class="col-sm-12 col-md-12 col-lg-6 col-xl-4">
+                        <div class="col-sm-12 col-md-12 col-lg-6 col-xl-3">
                             <div class="form-group">
                                 <label for="amount">amount</label>
                                 <input type="number" class="form-control" id="amount" name="amount"
                                     placeholder="Enter amount">
                             </div>
                         </div>
+                        <div class="col-sm-12 col-md-12 col-lg-6 col-xl-3">
+                            <div class="form-group">
+                                <label for="note">หมายเหตุ</label>
+                                <input type="text" class="form-control" id="note" name="note" placeholder="Enter note">
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer justify-content-between">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Save changes</button>
+                    <button type="submit" class="btn btn-primary">บันทึก</button>
                 </div>
             </form>
         </div>
-        <!-- /.modal-content -->
     </div>
-    <!-- /.modal-dialog -->
 </div>
-<!-- /.modal -->
 
 <!-- //-------------------------------------------------------------------- ฝากเงิน -->
 
+<!-- //-------------------------------------------------------------------- แก้ไขการฝากเงิน -->
+<div class="modal fade" id="modal-editdata">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">แก้ไขการฝากเงิน</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="" method="POST">
+                <input type="hidden" name='form' value="editDeposit" />
+                <input type="hidden" name='edit' value="deposit" />
+                <input type="hidden" id='editID' name='editID' />
+                <input type="hidden" name='username' value="<?= $_SESSION['username']; ?>" />
+                <input type="hidden" name='date' value="<?= $dataNow; ?>" />
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm-12 col-md-12 col-lg-6 col-xl-3">
+                            <div class="form-group">
+                                <label for="editStudentID">ชื่อนักเรียน</label>
+                                <select class="form-control select2bs4" id='editStudentID' name="editStudentID">
+                                    <option>กรุณาเลือกนักเรียน</option>
+                                    <option value='100'>นายเอ</option>
+                                    <option value='101'>นายเอ้</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-12 col-lg-6 col-xl-3">
+                            <div class="form-group">
+                                <label for="editType">ประเภท</label>
+                                <select class="form-control" id='editType' name="editType">
+                                    <option value=''>กรุณาเลือกประเภท</option>
+                                    <option value='ฝาก'>ฝาก</option>
+                                    <option value='ถอน'>ถอน</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-12 col-lg-6 col-xl-3">
+                            <div class="form-group">
+                                <label for="editAmount">amount</label>
+                                <input type="number" class="form-control" id="editAmount" name="editAmount"
+                                    placeholder="Enter amount">
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-12 col-lg-6 col-xl-3">
+                            <div class="form-group">
+                                <label for="editNote">หมายเหตุ</label>
+                                <input type="text" class="form-control" id="editNote" name="editNote"
+                                    placeholder="Enter note">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">บันทึก</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- //-------------------------------------------------------------------- แก้ไขการฝากเงิน -->
 
 <script>
 $(function() {
@@ -202,16 +326,5 @@ $(function() {
         "autoWidth": false,
         "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
     }).buttons().container().appendTo('#usertable_wrapper .col-md-6:eq(0)');
-
-
-    //searchdate picker
-    $('#searchdate').datetimepicker({
-        format: 'L'
-    });
-
-    //reservationdate picker
-    $('#reservationdate').datetimepicker({
-        format: 'L'
-    });
 });
 </script>

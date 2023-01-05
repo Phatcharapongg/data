@@ -167,47 +167,45 @@
                     </thead>
                     <tbody>
 
-                        <?PHP
+                         <?PHP
 
-                        $getUserSQL = "SELECT * FROM user";
-                        $getUserARR = mysqli_query($conn, $getUserSQL);
-                        $getUserNUM = mysqli_num_rows($getUserARR);
+//                         $getUserSQL = "SELECT * FROM user";
+//                         $getUserARR = mysqli_query($conn, $getUserSQL);
+//                         $getUserNUM = mysqli_num_rows($getUserARR);
 
-                        if ($getUserNUM > 0) {
-                            $id = 1;
-                            foreach ($getUserARR as $getUser) {
-                        ?>
-                        <tr>
-                            <td><?= $id; ?></td>
-                            <td><?= $getUser['usr_cid']; ?></td>
-                            <td><?= $getUser['usr_fname']; ?> <?= $getUser['usr_lname']; ?></td>
-                            <td>15/12/2565</td>
-                            <td>80</td>
-                            <td>ฝาก</td>
+//                         if ($getUserNUM > 0) {
+//                             $id = 1;
+//                             foreach ($getUserARR as $getUser) {
+//                         ?> -->
+<!-- //                         <tr>
+//                             <td><?= $id; ?></td>
+//                             <td><?= $getUser['usr_cid']; ?></td>
+//                             <td><?= $getUser['usr_fname']; ?> <?= $getUser['usr_lname']; ?></td>
+//                             <td>15/12/2565</td>
+//                             <td>80</td>
+//                             <td>ฝาก</td>
 
-                            <td class="project-actions text-center">
-                                <button type="button" class="btn btn-warning btn-sm view" data-toggle="modal"
-                                    data-target="#editDataList">
-                                    <i class='fas fa-edit' style='font-size:15px'></i>
-                                </button>
-                            </td>
-                            </form>
-                            </td>
-                        </tr>
-                        <?PHP
+//                             <td class="project-actions text-center">
+//                                 <button type="button" class="btn btn-warning btn-sm view" data-toggle="modal"
+//                                     data-target="#editDataList">
+//                                     <i class='fas fa-edit' style='font-size:15px'></i>
+//                                 </button>
+//                             </td>
+//                             </form>
+//                             </td>
+//                         </tr>
+//                         <?PHP 
                                 $id++;
-                            }
-                        }
-                        ?>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-</section>
+                      
+//                         ?>
+//                     </tbody>
+//                 </table>
+//             </div>
+//         </div>
+// </section>
 
 
-
-<div class="modal fade" id="editDataList">
+ <div class="modal fade" id="editDataList">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header">
@@ -220,12 +218,12 @@
                 <div class="modal-body">
                     <input type="hidden" name="status" value="edit">
                     <input type="hidden" name="type" value="editworklist">
-                    <input type="hidden" id="id_edit" name="id_edit">
+                    <input type="hidden" id="id_edit" name="id_edit"> -->
 
 
 
 
-                    <div class="form-group">
+<!-- <div class="form-group">
                         <label for="dept_edit">ที่ไหนแจ้งมา</label>
                         <input type="text" class="form-control" id="dept_edit" disabled>
                     </div>
@@ -246,13 +244,13 @@
             </form>
         </div>
     </div>
-</div>
+</div> -->
 <?PHP // =============================================================================================================================  END EDIT 
 ?>
 
 
 <!-- //-------------------------------------------------------------------- ฝากเงิน -->
-<div class="modal fade" id="modal-default">
+<!-- <div class="modal fade" id="modal-default">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header">
@@ -304,15 +302,15 @@
             </form>
         </div>
         <!-- /.modal-content -->
-    </div>
-    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal-dialog -->
 </div>
 <!-- /.modal -->
 
 <!-- //-------------------------------------------------------------------- ฝากเงิน -->
 
 
-<script>
+<!-- <script>
 $(function() {
     $("#usertable").DataTable({
         "responsive": true,
@@ -333,3 +331,40 @@ $(function() {
     });
 });
 </script> --> -->
+
+-->
+
+
+-->
+
+
+
+
+
+
+
+<!-- SELECT * FROM deposit 
+WHERE dep_status != '9'
+
+
+SELECT * FROM deposit 
+WHERE dep_status != '9'
+AND dep_student_id = '101'
+AND dep_insdt BETWEEN '2022-12-27' AND '2023-01-06'
+
+
+INSERT INTO deposit (dep_note, dep_amount, dep_insby, dep_insdt, dep_status, dep_student_id)
+VALUES ('ฝาก','6000','ict1','2023-01-05 10:00:00','1','101')
+
+
+INSERT INTO deposit (dep_note, dep_amount, dep_insby, dep_insdt, dep_status, dep_student_id)
+VALUES ('ฝาก','200','ict1','2023-01-05 10:17:00','1','100')
+
+
+UPDATE deposit
+SET dep_amount = '800',
+		dep_upby = 'ict1',
+		dep_updt = '2023-01-05 10:00:00'
+WHERE dep_id = '3'
+
+ -->
