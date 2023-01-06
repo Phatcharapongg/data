@@ -1,6 +1,5 @@
 <?PHP
 
-
 //----------------------------------------------------------------------------------------------- START MODAL ADD
 if (
     isset($_POST['form']) && $_POST['form'] == 'insertDeposit'
@@ -22,7 +21,7 @@ if (
         )";
     mysqli_query($conn, $InsertDepositSQL);
 
-    header("location: " . $_SESSION['uri'] . "/" . $path . "/pages/main?path=deposit&alert=success");
+    header("location: " . $_SESSION['uri'] . "/" . $path . "/pages/main?path=deposit&alert=insert-success");
     exit(0);
 }
 //----------------------------------------------------------------------------------------------- END MODAL ADD
@@ -36,13 +35,7 @@ if (
     && isset($_POST['editType']) && $_POST['editType'] != ''
     && isset($_POST['editAmount']) && $_POST['editAmount'] != ''
 ) {
-    //check data in table deposit
-    $chkDataSQL = "SELECT * FROM deposit WHERE dep_id = '" . $_POST['editID'] . "' AND dep_status != '9'";
-    $chkDataARR = mysqli_query($conn, $chkDataSQL);
-    $chkDataNUM = mysqli_num_rows($chkDataARR);
 
-
-    if ($chkDataNUM == 1) {
         $editDepositSQL = "UPDATE deposit SET ";
         $editDepositSQL .= "dep_student_id  = '" . $_POST['editStudentID'] . "' ";
         $editDepositSQL .= ",dep_type       = '" . $_POST['editType'] . "' ";
@@ -53,13 +46,37 @@ if (
 
         $editDepositSQL .= "WHERE dep_id = '" . $_POST['editID'] . "' ";
         mysqli_query($conn, $editDepositSQL);
-        header("location: " . $_SESSION['uri'] . "/" . $path . "/pages/main?path=deposit&alert=success");
+        header("location: " . $_SESSION['uri'] . "/" . $path . "/pages/main?path=deposit&alert=edit-success");
         exit(0);
-    }
 }
 
 //----------------------------------------------------------------------------------------------- END MODAL EDIT
 
+//----------------------------------------------------------------------------------------------- START MODAL DELETE
+
+
+if (
+    isset($_POST['form']) && $_POST['form'] == 'delDeposit'
+    && isset($_POST['delete']) && $_POST['delete'] == 'deposit'
+    && isset($_POST['valueDel']) && $_POST['valueDel'] == '9'
+    && isset($_POST['idDel']) && $_POST['idDel'] != ''
+){
+
+    $delDepositSQL = "UPDATE deposit SET ";
+    $delDepositSQL .= "dep_status      = '" . $_POST['valueDel'] . "' ";
+    $delDepositSQL .= ",dep_upby       = '" . $_SESSION['username'] . "' ";
+    $delDepositSQL .= ",dep_updt       = '" . date("Y-m-d H:i:s") . "' ";
+
+    $delDepositSQL .= "WHERE dep_id = '" . $_POST['idDel'] . "' ";
+    mysqli_query($conn, $delDepositSQL);
+    header("location: " . $_SESSION['uri'] . "/" . $path . "/pages/main?path=deposit&alert=delete-success");
+    exit(0);
+
+    // echo '<pre>';
+    // print_r($_POST);
+    // echo '</pre>';
+}
+//----------------------------------------------------------------------------------------------- END MODAL DELETE
 
 
 
@@ -127,6 +144,8 @@ function getNameUser($conn, $username)
                         </thead>
                         <tbody>
 
+                    
+                        
                             <?PHP
                             $getDepositSQL = "SELECT * FROM deposit d
                             LEFT JOIN list_students ls ON ls.ls_student_id = d.dep_student_id
@@ -183,19 +202,15 @@ function getNameUser($conn, $username)
                                     <div class="btn-group">
                                         <form action="" method="POST">
                                             <input type="hidden" name="form" value="delDeposit">
-                                            <input type="hidden" name="dlelete" value="delDeposi">
-                                            <input type="hidden" name="dep_id_Deposit"
-                                                value="<?= $dataDeposit['dep_id']; ?>">
+                                            <input type="hidden" name="delete" value="deposit">
+                                            <input type="hidden" name="idDel" value="<?= $getDeposit['dep_id']; ?>">
                                             <button type="submit" class="btn btn-danger btn-sm confirm"
-                                                txtAlert='คุณต้องการลบข้อมูลนี้จริงหรือไม่ ?' name="del_val_Deposit"
-                                                value="9">
+                                                txtAlert='คุณต้องการลบข้อมูลนี้จริงหรือไม่ ?' name="valueDel" value="9">
                                                 <i class="fas fa-trash-alt"></i>
                                             </button>
                                         </form>
                                     </div>
-
                                 </td>
-
                             </tr>
                             <?PHP
                                     $id++;
@@ -207,6 +222,7 @@ function getNameUser($conn, $username)
                 </div>
             </div>
 </section>
+
 
 <!-- //-------------------------------------------------------------------- ฝากเงิน -->
 <div class="modal fade" id="modal-adddata">

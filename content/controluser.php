@@ -6,6 +6,10 @@ if (empty($_SESSION['username'])) {
 }
 
 
+echo '<pre>';
+print_r($_POST);
+echo '</pre>';
+
 ?>
 
 <section class="content-header">
@@ -86,34 +90,35 @@ if (empty($_SESSION['username'])) {
                             <td>ฝาก</td>
 
                             <td class="project-actions text-center">
-                                <button type="button" class="btn btn-success btn-sm usercheck" data-toggle="modal"
-                                    data-target="#setuser">
-                                    <i class='fas fa-user-check'></i>
-                                </button>
-                                <script>
-                                $(document).ready(function() {
-                                    $(".usercheck").click(function() {
-                                        var getId = $(this).attr('dataID')
-                                        // alert(getName)
-                                        Swal.fire({
-                                            title: 'Set up an account ? ',
-                                            icon: 'warning',
-                                            showDenyButton: true,
-                                            showCancelButton: true,
-                                            confirmButtonText: 'Enable',
-                                            denyButtonText: `Disable `,
-                                        }).then((result) => {
-                                            /* Read more about isConfirmed, isDenied below */
-                                            if (result.isConfirmed) {
-                                                Swal.fire('Enable!', '', 'success')
-                                            } else if (result.isDenied) {
-                                                Swal.fire('Disable', '', 'error')
-                                            }
-                                        })
-                                    });
-                                });
-                                </script>
-                                
+
+                                <?PHP
+
+                                        if ($getUser['usr_status'] == '1') {
+                                        ?>
+
+                                <form accept="" method="POST">
+                                    <input type="hidden" name="form" value="upStatusUser">
+                                    <input type="hidden" name="update" value="user">
+                                    <input type="hidden" name="upId" value="<?= $getUser['usr_id']; ?>">
+                                    <button type="submit" class="btn btn-success btn-sm" name="upValue" value="0">
+                                        <i class='fas fa-user-check'></i>
+                                    </button>
+                                </form>
+                                <?PHP
+                                        } else {
+                                        ?>
+
+                                <form accept="" method="POST">
+                                    <input type="hidden" name="form" value="upStatusUser">
+                                    <input type="hidden" name="update" value="user">
+                                    <input type="hidden" name="upId" value="<?= $getUser['usr_id']; ?>">
+                                    <button type="submit" class="btn btn-danger btn-sm" name="upValue" value="1">
+                                        <i class="fas fa-user-slash"></i>
+                                    </button>
+                                </form>
+                                <?PHP
+                                        }
+                                        ?>
                                 <button type="button" class="btn btn-warning btn-sm view" data-toggle="modal"
                                     data-target="#editDataList">
                                     <i class="fas fa-edit"></i>
