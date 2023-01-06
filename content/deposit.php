@@ -1,7 +1,6 @@
 <?PHP
 
 
-
 //----------------------------------------------------------------------------------------------- START MODAL ADD
 if (
     isset($_POST['form']) && $_POST['form'] == 'insertDeposit'
@@ -60,6 +59,9 @@ if (
 }
 
 //----------------------------------------------------------------------------------------------- END MODAL EDIT
+
+
+
 
 
 //  FUNCTION GET FULLNAME BY USERNAME 
@@ -178,6 +180,20 @@ function getNameUser($conn, $username)
                                         })
                                     })
                                     </script>
+                                    <div class="btn-group">
+                                        <form action="" method="POST">
+                                            <input type="hidden" name="form" value="delDeposit">
+                                            <input type="hidden" name="dlelete" value="delDeposi">
+                                            <input type="hidden" name="dep_id_Deposit"
+                                                value="<?= $dataDeposit['dep_id']; ?>">
+                                            <button type="submit" class="btn btn-danger btn-sm confirm"
+                                                txtAlert='คุณต้องการลบข้อมูลนี้จริงหรือไม่ ?' name="del_val_Deposit"
+                                                value="9">
+                                                <i class="fas fa-trash-alt"></i>
+                                            </button>
+                                        </form>
+                                    </div>
+
                                 </td>
 
                             </tr>
