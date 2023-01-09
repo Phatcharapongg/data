@@ -1,16 +1,37 @@
 <?PHP
 //...โค้ดสำหรับเช็คการล้อคอิน ว่าล็อคอินแล้วหรือยัง.....
-if (empty($_SESSION['username'])) {
-    header("location:" . $_SESSION['uri'] . "/" . $path);
+
+
+// echo '<pre>';
+// print_r($_POST);
+// echo '</pre>';
+
+//----------------------------------------------------------------------------------------------- START MODAL DELETE
+
+
+if (
+    isset($_POST['form']) && $_POST['form'] == 'delUser'
+    && isset($_POST['delete']) && $_POST['delete'] == 'user'
+    && isset($_POST['valueDel']) && $_POST['valueDel'] == '9'
+    && isset($_POST['idDel']) && $_POST['idDel'] != ''
+) {
+
+    $delUserSQL = "UPDATE user SET ";
+    $delUserSQL .= "usr_status      = '" . $_POST['valueDel'] . "' ";
+
+    $delUserSQL .= "WHERE usr_id = '" . $_POST['idDel'] . "' ";
+    mysqli_query($conn, $delUserSQL);
+    header("location: " . $_SESSION['uri'] . "/" . $path . "/pages/main?path=controlUser&alert=delete-success");
     exit(0);
 }
-
-
-echo '<pre>';
-print_r($_POST);
-echo '</pre>';
+//----------------------------------------------------------------------------------------------- END MODAL DELETE
 
 ?>
+
+
+
+
+
 
 <section class="content-header">
     <div class="container-fluid">
@@ -20,8 +41,7 @@ echo '</pre>';
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a
-                            href="<?= $_SESSION['uri']; ?>/<?= $path; ?>/pages/main?path=dashboard">Home</a></li>
+                    <li class="breadcrumb-item"><a href="<?= $_SESSION['uri']; ?>/<?= $path; ?>/pages/main?path=dashboard">Home</a></li>
                     <li class="breadcrumb-item active">Control User</li>
                 </ol>
             </div>
@@ -73,7 +93,7 @@ echo '</pre>';
 
                         <?PHP
 
-                        $getUserSQL = "SELECT * FROM user";
+                        $getUserSQL = "SELECT * FROM user WHERE usr_status != '9'";
                         $getUserARR = mysqli_query($conn, $getUserSQL);
                         $getUserNUM = mysqli_num_rows($getUserARR);
 
@@ -81,82 +101,64 @@ echo '</pre>';
                             $id = 1;
                             foreach ($getUserARR as $getUser) {
                         ?>
-                        <tr>
-                            <td><?= $id; ?></td>
-                            <td><?= $getUser['usr_cid']; ?></td>
-                            <td><?= $getUser['usr_fname']; ?> <?= $getUser['usr_lname']; ?></td>
-                            <td>15/12/2565</td>
-                            <td>80</td>
-                            <td>ฝาก</td>
+                                <tr>
+                                    <td><?= $id; ?></td>
+                                    <td><?= $getUser['usr_cid']; ?></td>
+                                    <td><?= $getUser['usr_fname']; ?> <?= $getUser['usr_lname']; ?></td>
+                                    <td>15/12/2565</td>
+                                    <td>80</td>
+                                    <td>ฝาก</td>
 
-                            <td class="project-actions text-center">
+                                    <td class="project-actions text-center">
 
-                                <?PHP
+                                        <?PHP
 
                                         if ($getUser['usr_status'] == '1') {
                                         ?>
 
-                                <form accept="" method="POST">
-                                    <input type="hidden" name="form" value="upStatusUser">
-                                    <input type="hidden" name="update" value="user">
-                                    <input type="hidden" name="upId" value="<?= $getUser['usr_id']; ?>">
-                                    <button type="submit" class="btn btn-success btn-sm" name="upValue" value="0">
-                                        <i class='fas fa-user-check'></i>
-                                    </button>
-                                </form>
-                                <?PHP
+                                            <form accept="" method="POST">
+                                                <input type="hidden" name="form" value="upStatusUser">
+                                                <input type="hidden" name="update" value="user">
+                                                <input type="hidden" name="upId" value="<?= $getUser['usr_id']; ?>">
+                                                <button type="submit" class="btn btn-success btn-sm" name="upValue" value="0">
+                                                    <i class='fas fa-user-check'></i>
+                                                </button>
+                                            </form>
+                                        <?PHP
                                         } else {
                                         ?>
 
-                                <form accept="" method="POST">
-                                    <input type="hidden" name="form" value="upStatusUser">
-                                    <input type="hidden" name="update" value="user">
-                                    <input type="hidden" name="upId" value="<?= $getUser['usr_id']; ?>">
-                                    <button type="submit" class="btn btn-danger btn-sm" name="upValue" value="1">
-                                        <i class="fas fa-user-slash"></i>
-                                    </button>
-                                </form>
-                                <?PHP
+                                            <form accept="" method="POST">
+                                                <input type="hidden" name="form" value="upStatusUser">
+                                                <input type="hidden" name="update" value="user">
+                                                <input type="hidden" name="upId" value="<?= $getUser['usr_id']; ?>">
+                                                <button type="submit" class="btn btn-danger btn-sm" name="upValue" value="1">
+                                                    <i class="fas fa-user-slash"></i>
+                                                </button>
+                                            </form>
+                                        <?PHP
                                         }
                                         ?>
-                                <button type="button" class="btn btn-warning btn-sm view" data-toggle="modal"
-                                    data-target="#editDataList">
-                                    <i class="fas fa-edit"></i>
-                                </button>
+                                        <button type="button" class="btn btn-warning btn-sm view" data-toggle="modal" data-target="#editDataList">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
 
-                                <button type="button" class="btn btn-danger btn-sm deleteAlert"
-                                    dataID="<?= $getUser['usr_id']; ?>" name="del" value="9">
-                                    <i class="fas fa-trash"> </i>
-                                </button>
-                                <script>
-                                $(document).ready(function() {
-                                    $(".deleteAlert").click(function() {
-                                        var getId = $(this).attr('dataID')
-                                        // alert(getName)
-                                        Swal.fire({
-                                            title: 'Remove this user account from the system ?',
-                                            text: "You won't be able to revert this! ID : " +
-                                                getId,
-                                            icon: 'warning',
-                                            showCancelButton: true,
-                                            confirmButtonColor: '#3085d6',
-                                            cancelButtonColor: '#d33',
-                                            confirmButtonText: 'Yes, delete it!'
-                                        }).then((result) => {
-                                            if (result.isConfirmed) {
-                                                Swal.fire(
-                                                    'Deleted!',
-                                                    'Your file has been deleted.',
-                                                    'success'
-                                                )
-                                            }
-                                        })
-                                    });
-                                });
-                                </script>
 
-                            </td>
-                        </tr>
+
+                                        <div class="btn-group">
+                                            <form action="" method="POST">
+                                                <input type="hidden" name="form" value="delUser">
+                                                <input type="hidden" name="delete" value="user">
+                                                <input type="hidden" name="idDel" value="<?= $getUser['usr_id']; ?>">
+                                                <button type="submit" class="btn btn-danger btn-sm confirm" txtAlert='คุณต้องการลบข้อมูลนี้จริงหรือไม่ ?' name="valueDel" value="9">
+                                                    <i class="fas fa-trash-alt"></i>
+                                                </button>
+                                            </form>
+                                        </div>
+
+
+                                    </td>
+                                </tr>
                         <?PHP
                                 $id++;
                             }
@@ -204,8 +206,7 @@ echo '</pre>';
                 </div>
                 <div class="modal-footer justify-content-between">
                     <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button>
-                    <button type="submit" class="btn btn-success confirm"
-                        txtAlert='กรุณาตรวจสอบความถูกต้องก่อนกดยืนยัน ?'>บันทึก</button>
+                    <button type="submit" class="btn btn-success confirm" txtAlert='กรุณาตรวจสอบความถูกต้องก่อนกดยืนยัน ?'>บันทึก</button>
                 </div>
             </form>
         </div>
@@ -255,8 +256,7 @@ echo '</pre>';
                         <div class="col-sm-12 col-md-12 col-lg-6 col-xl-4">
                             <div class="form-group">
                                 <label for="amount">amount</label>
-                                <input type="number" class="form-control" id="amount" name="amount"
-                                    placeholder="Enter amount">
+                                <input type="number" class="form-control" id="amount" name="amount" placeholder="Enter amount">
                             </div>
                         </div>
                     </div>
@@ -276,23 +276,23 @@ echo '</pre>';
 
 
 <script>
-$(function() {
-    $("#usertable").DataTable({
-        "responsive": true,
-        "lengthChange": false,
-        "autoWidth": false,
-        "buttons": ["colvis"]
-    }).buttons().container().appendTo('#usertable_wrapper .col-md-6:eq(0)');
+    $(function() {
+        $("#usertable").DataTable({
+            "responsive": true,
+            "lengthChange": false,
+            "autoWidth": false,
+            "buttons": ["colvis"]
+        }).buttons().container().appendTo('#usertable_wrapper .col-md-6:eq(0)');
 
 
-    //searchdate picker
-    $('#searchdate').datetimepicker({
-        format: 'L'
+        //searchdate picker
+        $('#searchdate').datetimepicker({
+            format: 'L'
+        });
+
+        //reservationdate picker
+        $('#reservationdate').datetimepicker({
+            format: 'L'
+        });
     });
-
-    //reservationdate picker
-    $('#reservationdate').datetimepicker({
-        format: 'L'
-    });
-});
 </script>

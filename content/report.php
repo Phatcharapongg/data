@@ -1,6 +1,5 @@
 <?PHP
 
-
 ?>
 
 <section class="content-header">
@@ -11,8 +10,7 @@
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a
-                            href="<?= $_SESSION['uri']; ?>/<?= $path; ?>/pages/main?path=dashboard">Home</a></li>
+                    <li class="breadcrumb-item"><a href="<?= $_SESSION['uri']; ?>/<?= $path; ?>/pages/main?path=dashboard">Home</a></li>
                     <li class="breadcrumb-item active">Report</li>
                 </ol>
             </div>
@@ -88,23 +86,23 @@
                             $id = 1;
                             foreach ($getUserARR as $getUser) {
                         ?>
-                        <tr>
-                            <td><?= $id; ?></td>
-                            <td><?= $getUser['usr_cid']; ?></td>
-                            <td><?= $getUser['usr_fname']; ?> <?= $getUser['usr_lname']; ?></td>
-                            <td>15/12/2565</td>
-                            <td>80</td>
-                            <td>ฝาก</td>
+                                <tr>
+                                    <td><?= $id; ?></td>
+                                    <td><?= $getUser['usr_cid']; ?></td>
+                                    <td><?= $getUser['usr_fname']; ?> <?= $getUser['usr_lname']; ?></td>
+                                    <td>15/12/2565</td>
+                                    <td>80</td>
+                                    <td>ฝาก</td>
 
-                            <td class="project-actions text-center">
-                                <a class="btn btn-primary btn-sm" href="#">
-                                    <i class="fas fa-folder"></i>
-                                </a>
-                                </a>
-                            </td>
-                            </form>
-                            </td>
-                        </tr>
+                                    <td class="project-actions text-center">
+                                        <a class="btn btn-primary btn-sm" href="#">
+                                            <i class="fas fa-folder"></i>
+                                        </a>
+                                        </a>
+                                    </td>
+                                    </form>
+                                    </td>
+                                </tr>
                         <?PHP
                                 $id++;
                             }
@@ -151,8 +149,7 @@
                 </div>
                 <div class="modal-footer justify-content-between">
                     <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button>
-                    <button type="submit" class="btn btn-success confirm"
-                        txtAlert='กรุณาตรวจสอบความถูกต้องก่อนกดยืนยัน ?'>บันทึก</button>
+                    <button type="submit" class="btn btn-success confirm" txtAlert='กรุณาตรวจสอบความถูกต้องก่อนกดยืนยัน ?'>บันทึก</button>
                 </div>
             </form>
         </div>
@@ -202,8 +199,7 @@
                         <div class="col-sm-12 col-md-12 col-lg-6 col-xl-4">
                             <div class="form-group">
                                 <label for="amount">amount</label>
-                                <input type="number" class="form-control" id="amount" name="amount"
-                                    placeholder="Enter amount">
+                                <input type="number" class="form-control" id="amount" name="amount" placeholder="Enter amount">
                             </div>
                         </div>
                     </div>
@@ -224,23 +220,23 @@
 
 
 <script>
-$(function() {
-    $("#usertable").DataTable({
-        "responsive": true,
-        "lengthChange": false,
-        "autoWidth": false,
-        "buttons": ["excel", "pdf", "print", "colvis"]
-    }).buttons().container().appendTo('#usertable_wrapper .col-md-6:eq(0)');
+    $(function() {
+        $("#usertable").DataTable({
+            "responsive": true,
+            "lengthChange": false,
+            "autoWidth": false,
+            "buttons": ["excel", "pdf", "print", "colvis"]
+        }).buttons().container().appendTo('#usertable_wrapper .col-md-6:eq(0)');
 
 
-    //searchdate picker
-    $('#searchdate').datetimepicker({
-        format: 'L'
+        //searchdate picker
+        $('#searchdate').datetimepicker({
+            format: 'L'
+        });
+
+        //reservationdate picker
+        $('#reservationdate').datetimepicker({
+            format: 'L'
+        });
     });
-
-    //reservationdate picker
-    $('#reservationdate').datetimepicker({
-        format: 'L'
-    });
-});
 </script>

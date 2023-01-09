@@ -1,26 +1,27 @@
 <?PHP
 
-
 //...โค้ดสำหรับเช็คการล้อคอิน ว่าล็อคอินแล้วหรือยัง.....
-if (isset($_SESSION['username']) && $_SESSION['username'] != '') {
-    header("location:" . $_SESSION['uri'] . "/" . $path . "/pages/main.php");
-    exit(0);
-}
-
 ob_start();
 session_start();
 require('../config/config.php');
 // echo $_SESSION['username'];
 
 // query ARR
-$getUserSQL = "SELECT * FROM user WHERE usr_username = '" . $_SESSION['username'] . "'";
+$getUserSQL = "SELECT * FROM user WHERE usr_username = '" . $_SESSION['username'] . "' AND usr_status != '9' ";
 $getUserARR = mysqli_query($conn, $getUserSQL);
 $getUserNUM = mysqli_num_rows($getUserARR);
 
-foreach ($getUserARR as $getUser) {
+if ($getUserNUM == 1) {
+    foreach ($getUserARR as $getUser) {
 
-    $fullname   = $getUser['usr_fname'] . " " . $getUser['usr_lname'];
-    $class      = $getUser['usr_class'];
+        $fullname   = $getUser['usr_fname'] . " " . $getUser['usr_lname'];
+        $class      = $getUser['usr_class'];
+        $status     = $getUser['usr_status'];
+    }
+} else {
+    session_destroy();
+    header("location: " . $_SESSION['uri'] . "/" . $path . '/login?f=d');
+    exit(0);
 }
 ?>
 

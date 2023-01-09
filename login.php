@@ -39,7 +39,7 @@ if (
 
         if ($getPasswordNUM == 1) {
             // ถ้าถูกทั้งสองค่า เช๊ค status ต่อว่าเท่า1ไหม     
-            $getStatusSQL = "SELECT * FROM user WHERE usr_username = '" .  $username . "' AND usr_password = '" . $password . "'  AND usr_status = '1'";
+            $getStatusSQL = "SELECT * FROM user WHERE usr_username = '" .  $username . "' AND usr_password = '" . $password . "'  AND usr_status = '1' OR usr_status = '8'";
             $getStatusARR = mysqli_query($conn, $getStatusSQL);
             $getStatusNUM = mysqli_num_rows($getStatusARR);
 
