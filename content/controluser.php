@@ -2,9 +2,51 @@
 //...โค้ดสำหรับเช็คการล้อคอิน ว่าล็อคอินแล้วหรือยัง.....
 
 
-// echo '<pre>';
+
+// echo "<pre>";
 // print_r($_POST);
-// echo '</pre>';
+// echo "</pre>";
+
+
+//----------------------------------------------------------------------------------------------- START MODAL ADDUSER
+if (
+    isset($_POST['form']) && $_POST['form'] == 'insertuser'
+    && isset($_POST['insert']) && $_POST['insert'] == 'user'
+    && isset($_POST['username']) && $_POST['username'] != ''
+    && isset($_POST['password']) && $_POST['password'] != ''
+    && isset($_POST['fname']) && $_POST['fname'] != ''
+    && isset($_POST['lname']) && $_POST['lname'] != ''
+    && isset($_POST['class']) && $_POST['class'] != ''
+    && isset($_POST['cid']) && $_POST['cid'] != ''
+    && isset($_POST['tel']) && $_POST['tel'] != ''
+
+
+) {
+
+    // echo "<pre>";
+    // print_r($_POST);
+    // echo "</pre>";
+    // Insert
+    $InsertuserSQL = "INSERT INTO user (usr_username, usr_password, usr_fname, usr_lname, usr_class, usr_cid, usr_tel, usr_status)
+    VALUES (
+        '" . $_POST['username'] . "',
+        '" . $_POST['password'] . "',
+        '" . $_POST['fname'] . "',
+        '" . $_POST['lname'] . "',
+        '" . $_POST['class'] . "',
+        '" . $_POST['cid'] . "',
+        '" . $_POST['tel'] . "',
+        '1'
+        )";
+
+
+    // echo  'sql : ' . $InsertuserSQL;
+    mysqli_query($conn, $InsertuserSQL);
+
+    header("location: " . $_SESSION['uri'] . "/" . $path . "/pages/main?path=controlUser&alert=insert-success");
+    exit(0);
+}
+//----------------------------------------------------------------------------------------------- END MODAL ADDUSER
 
 //----------------------------------------------------------------------------------------------- START MODAL DELETE
 
@@ -16,10 +58,7 @@ if (
     && isset($_POST['idDel']) && $_POST['idDel'] != ''
 ) {
 
-    $delUserSQL = "UPDATE user SET ";
-    $delUserSQL .= "usr_status      = '" . $_POST['valueDel'] . "' ";
-
-    $delUserSQL .= "WHERE usr_id = '" . $_POST['idDel'] . "' ";
+    $delUserSQL = "DELETE FROM user WHERE usr_id = '" . $_POST['idDel'] . "'";
     mysqli_query($conn, $delUserSQL);
     header("location: " . $_SESSION['uri'] . "/" . $path . "/pages/main?path=controlUser&alert=delete-success");
     exit(0);
@@ -41,7 +80,8 @@ if (
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="<?= $_SESSION['uri']; ?>/<?= $path; ?>/pages/main?path=dashboard">Home</a></li>
+                    <li class="breadcrumb-item"><a
+                            href="<?= $_SESSION['uri']; ?>/<?= $path; ?>/pages/main?path=dashboard">Home</a></li>
                     <li class="breadcrumb-item active">Control User</li>
                 </ol>
             </div>
@@ -57,10 +97,11 @@ if (
             <div class="card-header">
                 <h3 class="card-title"><b> บันทึกการรับฝากเงินนักเรียนชั้ันประศึกษาปีที่ 1 </b></h3>
                 <div class='text-right'>
-                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal-default">
+                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal-adduser">
                         <i class="fas fa-user-plus"></i>
                         Add
                     </button>
+
                     <!-- <button type="button" class="btn btn-success testAlert3">
                         <i class="fas fa-user-plus"></i>
                         TEST
@@ -81,11 +122,13 @@ if (
                     <thead>
                         <tr align="center">
                             <th>#</th>
-                            <th>รหัสประจำตัวนักเรียน</th>
+                            <th>รหัสประจำตัว</th>
+                            <th>Username</th>
+                            <th>Password</th>
                             <th>ชื่อ - นามสกุล</th>
-                            <th>วันที่</th>
-                            <th>จำนวนเงินฝากวันนี้</th>
-                            <th>Status</th>
+
+                            <th>ชั้นเรียนที่รับผิดชอบ</th>
+                            <th>Tel</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -101,64 +144,68 @@ if (
                             $id = 1;
                             foreach ($getUserARR as $getUser) {
                         ?>
-                                <tr>
-                                    <td><?= $id; ?></td>
-                                    <td><?= $getUser['usr_cid']; ?></td>
-                                    <td><?= $getUser['usr_fname']; ?> <?= $getUser['usr_lname']; ?></td>
-                                    <td>15/12/2565</td>
-                                    <td>80</td>
-                                    <td>ฝาก</td>
+                        <tr class="text-center">
 
-                                    <td class="project-actions text-center">
+                            <td><?= $id; ?></td>
+                            <td><?= $getUser['usr_cid']; ?></td>
+                            <td><?= $getUser['usr_username']; ?></td>
+                            <td><?= $getUser['usr_password']; ?></td>
+                            <td><?= $getUser['usr_fname']; ?> <?= $getUser['usr_lname']; ?></td>
+                            <td>ชั้นประถมศึกษาปีที่ <?= $getUser['usr_class']; ?></td>
+                            <td><?= KTgetData::formatNumber($getUser['usr_tel']); ?></td>
 
-                                        <?PHP
+                            <td class="project-actions text-center">
+                                <div class="btn-group">
+                                    <?PHP
 
-                                        if ($getUser['usr_status'] == '1') {
-                                        ?>
+                                            if ($getUser['usr_status'] == '1') {
+                                            ?>
 
-                                            <form accept="" method="POST">
-                                                <input type="hidden" name="form" value="upStatusUser">
-                                                <input type="hidden" name="update" value="user">
-                                                <input type="hidden" name="upId" value="<?= $getUser['usr_id']; ?>">
-                                                <button type="submit" class="btn btn-success btn-sm" name="upValue" value="0">
-                                                    <i class='fas fa-user-check'></i>
-                                                </button>
-                                            </form>
-                                        <?PHP
-                                        } else {
-                                        ?>
-
-                                            <form accept="" method="POST">
-                                                <input type="hidden" name="form" value="upStatusUser">
-                                                <input type="hidden" name="update" value="user">
-                                                <input type="hidden" name="upId" value="<?= $getUser['usr_id']; ?>">
-                                                <button type="submit" class="btn btn-danger btn-sm" name="upValue" value="1">
-                                                    <i class="fas fa-user-slash"></i>
-                                                </button>
-                                            </form>
-                                        <?PHP
-                                        }
-                                        ?>
-                                        <button type="button" class="btn btn-warning btn-sm view" data-toggle="modal" data-target="#editDataList">
-                                            <i class="fas fa-edit"></i>
+                                    <form accept="" method="POST">
+                                        <input type="hidden" name="form" value="upStatusUser">
+                                        <input type="hidden" name="update" value="user">
+                                        <input type="hidden" name="upId" value="<?= $getUser['usr_id']; ?>">
+                                        <button type="submit" class="btn btn-success btn-sm" name="upValue" value="0">
+                                            <i class='fas fa-user-check'></i>
                                         </button>
+                                    </form>
+                                    <?PHP
+                                            } else {
+                                            ?>
+
+                                    <form accept="" method="POST">
+                                        <input type="hidden" name="form" value="upStatusUser">
+                                        <input type="hidden" name="update" value="user">
+                                        <input type="hidden" name="upId" value="<?= $getUser['usr_id']; ?>">
+                                        <button type="submit" class="btn btn-danger btn-sm" name="upValue" value="1">
+                                            <i class="fas fa-user-slash"></i>
+                                        </button>
+                                    </form>
+                                    <?PHP
+                                            }
+                                            ?>
+                                    <button type="button" class="btn btn-warning btn-sm view" data-toggle="modal"
+                                        data-target="#edituser">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
 
 
 
-                                        <div class="btn-group">
-                                            <form action="" method="POST">
-                                                <input type="hidden" name="form" value="delUser">
-                                                <input type="hidden" name="delete" value="user">
-                                                <input type="hidden" name="idDel" value="<?= $getUser['usr_id']; ?>">
-                                                <button type="submit" class="btn btn-danger btn-sm confirm" txtAlert='คุณต้องการลบข้อมูลนี้จริงหรือไม่ ?' name="valueDel" value="9">
-                                                    <i class="fas fa-trash-alt"></i>
-                                                </button>
-                                            </form>
-                                        </div>
+
+                                    <form action="" method="POST">
+                                        <input type="hidden" name="form" value="delUser">
+                                        <input type="hidden" name="delete" value="user">
+                                        <input type="hidden" name="idDel" value="<?= $getUser['usr_id']; ?>">
+                                        <button type="submit" class="btn btn-danger btn-sm confirm"
+                                            txtAlert='คุณต้องการลบข้อมูลนี้จริงหรือไม่ ?' name="valueDel" value="9">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </button>
+                                    </form>
+                                </div>
 
 
-                                    </td>
-                                </tr>
+                            </td>
+                        </tr>
                         <?PHP
                                 $id++;
                             }
@@ -173,7 +220,7 @@ if (
 
 
 
-<div class="modal fade" id="editDataList">
+<div class="modal fade" id="edituser">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header">
@@ -206,93 +253,117 @@ if (
                 </div>
                 <div class="modal-footer justify-content-between">
                     <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button>
-                    <button type="submit" class="btn btn-success confirm" txtAlert='กรุณาตรวจสอบความถูกต้องก่อนกดยืนยัน ?'>บันทึก</button>
+                    <button type="submit" class="btn btn-success confirm"
+                        txtAlert='กรุณาตรวจสอบความถูกต้องก่อนกดยืนยัน ?'>บันทึก</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
-<?PHP // =============================================================================================================================  END EDIT 
+<?PHP 
 ?>
 
 
-<!-- //-------------------------------------------------------------------- ฝากเงิน -->
-<div class="modal fade" id="modal-default">
+<!-- //-------------------------------------------------------------------- เพิ่ม user -->
+<div class="modal fade" id="modal-adduser">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Default Modal</h4>
+                <h4 class="modal-title">Add User</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <form action="" method="POST">
+                <input type="hidden" name='form' value="insertuser" />
+                <input type="hidden" name='insert' value="user" />
                 <div class="modal-body">
                     <div class="row">
-                        <div class="col-sm-12 col-md-12 col-lg-6 col-xl-4">
+
+                        <div class="col-sm-12 col-md-12 col-lg-6 col-xl-3">
                             <div class="form-group">
-                                <label for="student">ชื่อนักเรียน</label>
-                                <select class="form-control select2bs4" id='student' name="student">
-                                    <option>กรุณาเลือกนักเรียน</option>
-                                    <option value='1'>นายเอ</option>
-                                    <option value='2'>นายเอ้</option>
-                                    <option value='3'>นายเอก</option>
-                                    <option value='4'>นายเอส</option>
-                                    <option value='5'>นายเอว</option>
-                                    <option value='6'>นายเอง</option>
+                                <label for="cid">รหัสประจำตัว</label>
+                                <input type="text" class="form-control" id="cid" name="cid" placeholder="Enter ID">
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-12 col-lg-6 col-xl-3">
+                            <div class="form-group">
+                                <label for="fname">ชื่อ</label>
+                                <input type="text" class="form-control" id="fname" name="fname"
+                                    placeholder="Enter fname">
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-12 col-lg-6 col-xl-3">
+                            <div class="form-group">
+                                <label for="lname">สกุล</label>
+                                <input type="text" class="form-control" id="lname" name="lname"
+                                    placeholder="Enter lname">
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-12 col-lg-6 col-xl-3">
+                            <div class="form-group">
+                                <label for="calss">ชั้นเรียนที่รับผิดชอบ</label>
+                                <select class="form-control select2bs4" id='class' name="class">
+                                    <option>กรุณาเลือกชั้นเรียน</option>
+                                    <option value='1/1'>ชั้นประถมศึกษาปีที่ 1/1</option>
+                                    <option value='1/2'>ชั้นประถมศึกษาปีที่ 1/2</option>
+                                    <option value='2/1'>ชั้นประถมศึกษาปีที่ 2/1</option>
+                                    <option value='2/2'>ชั้นประถมศึกษาปีที่ 2/2</option>
                                 </select>
                             </div>
                         </div>
-                        <div class="col-sm-12 col-md-12 col-lg-6 col-xl-4">
+                        <div class="col-sm-12 col-md-12 col-lg-6 col-xl-3">
                             <div class="form-group">
-                                <label for="type">ประเภท</label>
-                                <select class="form-control" id='type' name="type">
-                                    <option>กรุณาเลือกประเภท</option>
-                                    <option value='1'>ฝาก</option>
-                                    <option value='2'>ถอน</option>
-                                </select>
+                                <label for="tel">เบอร์ติดต่อ</label>
+                                <input type="text" class="form-control" id="tel" name="tel" placeholder="Enter Tel">
                             </div>
                         </div>
-                        <div class="col-sm-12 col-md-12 col-lg-6 col-xl-4">
+                        <div class="col-sm-12 col-md-12 col-lg-6 col-xl-3">
                             <div class="form-group">
-                                <label for="amount">amount</label>
-                                <input type="number" class="form-control" id="amount" name="amount" placeholder="Enter amount">
+                                <label for="username">UserName</label>
+                                <input type="text" class="form-control" id="username" name="username"
+                                    placeholder="Enter username">
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-12 col-lg-6 col-xl-3">
+                            <div class="form-group">
+                                <label for="password">password</label>
+                                <input type="text" class="form-control" id="password" name="password"
+                                    placeholder="Enter password">
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer justify-content-between">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Save changes</button>
+                    <button type="submit" class="btn btn-primary">บันทึก</button>
                 </div>
             </form>
         </div>
-        <!-- /.modal-content -->
     </div>
-    <!-- /.modal-dialog -->
 </div>
-<!-- /.modal -->
 
+<!-- //-------------------------------------------------------------------- เพิ่ม user -->
 
 
 <script>
-    $(function() {
-        $("#usertable").DataTable({
-            "responsive": true,
-            "lengthChange": false,
-            "autoWidth": false,
-            "buttons": ["colvis"]
-        }).buttons().container().appendTo('#usertable_wrapper .col-md-6:eq(0)');
+$(function() {
+    $("#usertable").DataTable({
+        "responsive": true,
+        "lengthChange": false,
+        "autoWidth": false,
+        "buttons": ["colvis"]
+    }).buttons().container().appendTo('#usertable_wrapper .col-md-6:eq(0)');
 
 
-        //searchdate picker
-        $('#searchdate').datetimepicker({
-            format: 'L'
-        });
-
-        //reservationdate picker
-        $('#reservationdate').datetimepicker({
-            format: 'L'
-        });
+    //searchdate picker
+    $('#searchdate').datetimepicker({
+        format: 'L'
     });
+
+    //reservationdate picker
+    $('#reservationdate').datetimepicker({
+        format: 'L'
+    });
+});
 </script>

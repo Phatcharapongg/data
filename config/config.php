@@ -25,6 +25,17 @@ if (!$conn) {
 class KTgetData
 {
 
+    public static function formatNumber($number)
+    {
+
+        // 👇 format phone number
+        $format_phone =
+            substr($number, -10, -7) . "-" .
+            substr($number, -7, -4) . "-" .
+            substr($number, -4);
+        return $format_phone;
+    }
+
     public static function convertTHDate($strDate, $show)
     {
 
