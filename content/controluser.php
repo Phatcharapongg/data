@@ -19,10 +19,7 @@ if (
     && isset($_POST['class']) && $_POST['class'] != ''
     && isset($_POST['cid']) && $_POST['cid'] != ''
     && isset($_POST['tel']) && $_POST['tel'] != ''
-
-
 ) {
-
     // echo "<pre>";
     // print_r($_POST);
     // echo "</pre>";
@@ -38,8 +35,6 @@ if (
         '" . $_POST['tel'] . "',
         '1'
         )";
-
-
     // echo  'sql : ' . $InsertuserSQL;
     mysqli_query($conn, $InsertuserSQL);
 
@@ -47,6 +42,50 @@ if (
     exit(0);
 }
 //----------------------------------------------------------------------------------------------- END MODAL ADDUSER
+
+
+
+
+// echo "<pre>";
+// print_r($_POST);
+// echo "</pre>";
+
+
+//----------------------------------------------------------------------------------------------- START MODAL EDIT
+if (
+    isset($_POST['form']) && $_POST['form'] == 'edituser'
+    && isset($_POST['edit']) && $_POST['edit'] == 'user'
+    && isset($_POST['editusername']) && $_POST['editusername'] != ''
+    && isset($_POST['editpassword']) && $_POST['editpassword'] != ''
+    && isset($_POST['editfname']) && $_POST['editfname'] != ''
+    && isset($_POST['editlname']) && $_POST['editlname'] != ''
+    && isset($_POST['editclass']) && $_POST['editclass'] != ''
+    && isset($_POST['editcid']) && $_POST['editcid'] != ''
+    && isset($_POST['edittel']) && $_POST['edittel'] != ''
+){
+    $edituserSQL = "UPDATE user SET ";
+    $edituserSQL .= "usr_username  = '" . $_POST['editusername'] . "' ";
+    $edituserSQL .= ",usr_passworde       = '" . $_POST['editpassworde'] . "' ";
+    $edituserSQL .= ",usr_fname     = '" . $_POST['editfname'] . "' ";
+    $edituserSQL .= ",usr_lname       = '" . $_POST['editlname'] . "' ";
+    $edituserSQL .= ",usr_class       = '" .  $_POST['editclass'] . "' ";
+    $edituserSQL .= ",usr_cid       = '" .  $_POST['editcid'] . "' ";
+    $edituserSQL .= ",usr_tel       = '" . $_POST['edittel'] . "' ";
+
+
+$edituserSQL .= "WHERE usr_id = '" . $_POST['editID'] . "' ";
+mysqli_query($conn, $edituserSQL);
+header("location: " . $_SESSION['uri'] . "/" . $path . "/pages/main?path=controlUser&alert=edit-success");
+exit(0);
+}
+// ----------------------------------------------------------------------------------------------- END MODAL EDIT
+
+
+
+
+
+
+
 
 //----------------------------------------------------------------------------------------------- START MODAL DELETE
 
@@ -185,7 +224,7 @@ if (
                                             }
                                             ?>
                                     <button type="button" class="btn btn-warning btn-sm view" data-toggle="modal"
-                                        data-target="#edituser">
+                                        data-target="#modal-edituser">
                                         <i class="fas fa-edit"></i>
                                     </button>
 
@@ -220,46 +259,98 @@ if (
 
 
 
-<div class="modal fade" id="edituser">
+<!-- //-------------------------------------------------------------------- แก้ไข user -->
+<div class="modal fade" id="modal-edituser">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">เพิ่มข้อมูลการแก้ปัญหา</h4>
+                <h4 class="modal-title">Edit User</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <form action="" method="POST">
+                <input type="hidden" name='form' value="edituser" />
+                <input type="hidden" name='edit' value="user" />
+                <input type="hidden" id='editID' name='editID' />
+                <input type="hidden" name='username' value="<?= $_SESSION['username']; ?>" />
                 <div class="modal-body">
-                    <input type="hidden" name="status" value="edit">
-                    <input type="hidden" name="type" value="editworklist">
-                    <input type="hidden" id="id_edit" name="id_edit">
+                    <div class="row">
+
+                        <div class="col-sm-12 col-md-12 col-lg-6 col-xl-3">
+                            <div class="form-group">
+                                <label for="editusername">UserName</label>
+                                <input type="text" class="form-control" id="editusername" name="editusername"
+                                    placeholder="Enter username">
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12 col-md-12 col-lg-6 col-xl-3">
+                            <div class="form-group">
+                                <label for="editpassword">password</label>
+                                <input type="text" class="form-control" id="editpassword" name="editpassword"
+                                    placeholder="Enter password">
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-12 col-lg-6 col-xl-3">
+                            <div class="form-group">
+                                <label for="editfname">ชื่อ</label>
+                                <input type="text" class="form-control" id="editfname" name="editfname"
+                                    placeholder="Enter fname">
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12 col-md-12 col-lg-6 col-xl-3">
+                            <div class="form-group">
+                                <label for="editlname">สกุล</label>
+                                <input type="text" class="form-control" id="editlname" name="editlname"
+                                    placeholder="Enter lname">
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-12 col-lg-6 col-xl-3">
+                            <div class="form-group">
+                                <label for="editcid">รหัสประจำตัว</label>
+                                <input type="text" class="form-control" id="editcid" name="editcid"
+                                    placeholder="Enter cid">
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12 col-md-12 col-lg-6 col-xl-3">
+                            <div class="form-group">
+                                <label for="edittel">เบอร์ติดต่อ</label>
+                                <input type="text" class="form-control" id="edittel" name="edittel"
+                                    placeholder="Enter Tel">
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12 col-md-12 col-lg-6 col-xl-3">
+                            <div class="form-group">
+                                <label for="editcalss">ชั้นเรียนที่รับผิดชอบ</label>
+                                <select class="form-control select2bs4" id='editclass' name="editclass">
+                                    <option>กรุณาเลือกชั้นเรียน</option>
+                                    <option value='1/1'>ชั้นประถมศึกษาปีที่ 1/1</option>
+                                    <option value='1/2'>ชั้นประถมศึกษาปีที่ 1/2</option>
+                                    <option value='2/1'>ชั้นประถมศึกษาปีที่ 2/1</option>
+                                    <option value='2/2'>ชั้นประถมศึกษาปีที่ 2/2</option>
+                                </select>
+                            </div>
+                        </div>
 
 
-
-
-                    <div class="form-group">
-                        <label for="dept_edit">ที่ไหนแจ้งมา</label>
-                        <input type="text" class="form-control" id="dept_edit" disabled>
-                    </div>
-                    <div class="form-group">
-                        <label for="case_edit">อาการที่แจ้งมา</label>
-                        <input type="text" class="form-control" id="case_edit" disabled>
-                    </div>
-                    <div class="form-group">
-                        <label for="repair">วิธีแก้ปัญหา</label>
-                        <input type="text" class="form-control" id="repair" name="repair" placeholder="วิธีแก้ปัญหา">
                     </div>
                 </div>
                 <div class="modal-footer justify-content-between">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button>
-                    <button type="submit" class="btn btn-success confirm"
-                        txtAlert='กรุณาตรวจสอบความถูกต้องก่อนกดยืนยัน ?'>บันทึก</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">บันทึก</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
+
+
+<!-- //-------------------------------------------------------------------- แก้ไข user -->
+
 <?PHP 
 ?>
 
@@ -282,8 +373,17 @@ if (
 
                         <div class="col-sm-12 col-md-12 col-lg-6 col-xl-3">
                             <div class="form-group">
-                                <label for="cid">รหัสประจำตัว</label>
-                                <input type="text" class="form-control" id="cid" name="cid" placeholder="Enter ID">
+                                <label for="username">UserName</label>
+                                <input type="text" class="form-control" id="username" name="username"
+                                    placeholder="Enter username">
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12 col-md-12 col-lg-6 col-xl-3">
+                            <div class="form-group">
+                                <label for="password">password</label>
+                                <input type="text" class="form-control" id="password" name="password"
+                                    placeholder="Enter password">
                             </div>
                         </div>
                         <div class="col-sm-12 col-md-12 col-lg-6 col-xl-3">
@@ -293,6 +393,7 @@ if (
                                     placeholder="Enter fname">
                             </div>
                         </div>
+
                         <div class="col-sm-12 col-md-12 col-lg-6 col-xl-3">
                             <div class="form-group">
                                 <label for="lname">สกุล</label>
@@ -300,6 +401,20 @@ if (
                                     placeholder="Enter lname">
                             </div>
                         </div>
+                        <div class="col-sm-12 col-md-12 col-lg-6 col-xl-3">
+                            <div class="form-group">
+                                <label for="cid">รหัสประจำตัว</label>
+                                <input type="text" class="form-control" id="cid" name="cid" placeholder="Enter ID">
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12 col-md-12 col-lg-6 col-xl-3">
+                            <div class="form-group">
+                                <label for="tel">เบอร์ติดต่อ</label>
+                                <input type="text" class="form-control" id="tel" name="tel" placeholder="Enter Tel">
+                            </div>
+                        </div>
+
                         <div class="col-sm-12 col-md-12 col-lg-6 col-xl-3">
                             <div class="form-group">
                                 <label for="calss">ชั้นเรียนที่รับผิดชอบ</label>
@@ -312,26 +427,8 @@ if (
                                 </select>
                             </div>
                         </div>
-                        <div class="col-sm-12 col-md-12 col-lg-6 col-xl-3">
-                            <div class="form-group">
-                                <label for="tel">เบอร์ติดต่อ</label>
-                                <input type="text" class="form-control" id="tel" name="tel" placeholder="Enter Tel">
-                            </div>
-                        </div>
-                        <div class="col-sm-12 col-md-12 col-lg-6 col-xl-3">
-                            <div class="form-group">
-                                <label for="username">UserName</label>
-                                <input type="text" class="form-control" id="username" name="username"
-                                    placeholder="Enter username">
-                            </div>
-                        </div>
-                        <div class="col-sm-12 col-md-12 col-lg-6 col-xl-3">
-                            <div class="form-group">
-                                <label for="password">password</label>
-                                <input type="text" class="form-control" id="password" name="password"
-                                    placeholder="Enter password">
-                            </div>
-                        </div>
+
+
                     </div>
                 </div>
                 <div class="modal-footer justify-content-between">
