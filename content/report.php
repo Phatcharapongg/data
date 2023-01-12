@@ -22,7 +22,7 @@
 <section class="content">
     <div class="container-fluid">
         <div class="row mb-4">
-            <div class='col-3'>
+            <div class='col-12 mb-3'>
                 <select class="form-control select2bs4" id='student' name="student">
                     <option>กรุณาเลือกนักเรียน</option>
                     <option value='1'>นายเอ</option>
@@ -33,7 +33,7 @@
                     <option value='6'>นายเอง</option>
                 </select>
             </div>
-            <div class='col-3'>
+            <div class='col-6 mb-3'>
                 <div class="input-group date" id="searchdate" data-target-input="nearest">
                     <input type="text" class="form-control datetimepicker-input" data-target="#searchdate" />
                     <div class="input-group-append" data-target="#searchdate" data-toggle="datetimepicker">
@@ -41,7 +41,7 @@
                     </div>
                 </div>
             </div>
-            <div class='col-3'>
+            <div class='col-6 mb-3'>
                 <div class="input-group date" id="reservationdate" data-target-input="nearest">
                     <input type="text" class="form-control datetimepicker-input" data-target="#reservationdate" />
                     <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
@@ -49,31 +49,35 @@
                     </div>
                 </div>
             </div>
-            <div class='col-3'>
-                <button class='btn btn-info btn-block'>ค้นหา</button>
+            <div class="col-12">
 
+                <button class='btn btn-info btn-block mb-3 '>ค้นหา</button>
             </div>
-
         </div>
+
+
+
         <div class="card">
             <div class="card-header">
                 <h3 class="card-title"><b> บันทึกการรับฝากเงินนักเรียนชั้ันประศึกษาปีที่ 1 </b></h3>
             </div>
             <!-- /.card-header -->
             <div class="card-body">
-                <table id="usertable" class="table table-bordered table-striped">
 
+
+                <table id="usertable" class="table table-bordered table-striped">
                     <thead>
-                        <tr align="center">
-                            <th>#</th>
-                            <th>รหัสประจำตัวนักเรียน</th>
-                            <th>ชื่อ - นามสกุล</th>
+                        <tr>
                             <th>วันที่</th>
-                            <th>จำนวนเงินฝากวันนี้</th>
-                            <th>Status</th>
-                            <th>Action</th>
+                            <th>รายการ</th>
+                            <th>ฝาก / ถอน</th>
+                            <th>ยอดคงเหลือ (บาท)</th>
+                            <th>รายละเอียด</th>
                         </tr>
                     </thead>
+
+
+
                     <tbody>
 
                         <?PHP
@@ -87,21 +91,11 @@
                             foreach ($getUserARR as $getUser) {
                         ?>
                                 <tr>
-                                    <td><?= $id; ?></td>
-                                    <td><?= $getUser['usr_cid']; ?></td>
-                                    <td><?= $getUser['usr_fname']; ?> <?= $getUser['usr_lname']; ?></td>
-                                    <td>15/12/2565</td>
-                                    <td>80</td>
+                                    <td>1 / 12 / 65</td>
                                     <td>ฝาก</td>
-
-                                    <td class="project-actions text-center">
-                                        <a class="btn btn-primary btn-sm" href="#">
-                                            <i class="fas fa-folder"></i>
-                                        </a>
-                                        </a>
-                                    </td>
-                                    </form>
-                                    </td>
+                                    <td>100.-</td>
+                                    <td>100.-</td>
+                                    <td>-</td>
                                 </tr>
                         <?PHP
                                 $id++;
@@ -109,9 +103,17 @@
                         }
                         ?>
                     </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="4" style="text-align: right;">จำนวนเงินสะสม</td>
+                            <td>50 บาท</td>
+                        </tr>
+                    </tfoot>
                 </table>
+
             </div>
         </div>
+    </div>
 </section>
 
 

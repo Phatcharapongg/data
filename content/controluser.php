@@ -3,9 +3,7 @@
 
 
 
-// echo "<pre>";
-// print_r($_POST);
-// echo "</pre>";
+
 
 
 //----------------------------------------------------------------------------------------------- START MODAL ADDUSER
@@ -62,7 +60,7 @@ if (
     && isset($_POST['editclass']) && $_POST['editclass'] != ''
     && isset($_POST['editcid']) && $_POST['editcid'] != ''
     && isset($_POST['edittel']) && $_POST['edittel'] != ''
-){
+) {
     $edituserSQL = "UPDATE user SET ";
     $edituserSQL .= "usr_username  = '" . $_POST['editusername'] . "' ";
     $edituserSQL .= ",usr_passworde       = '" . $_POST['editpassworde'] . "' ";
@@ -73,14 +71,29 @@ if (
     $edituserSQL .= ",usr_tel       = '" . $_POST['edittel'] . "' ";
 
 
-$edituserSQL .= "WHERE usr_id = '" . $_POST['editID'] . "' ";
-mysqli_query($conn, $edituserSQL);
-header("location: " . $_SESSION['uri'] . "/" . $path . "/pages/main?path=controlUser&alert=edit-success");
-exit(0);
+    $edituserSQL .= "WHERE usr_id = '" . $_POST['editID'] . "' ";
+    mysqli_query($conn, $edituserSQL);
+    header("location: " . $_SESSION['uri'] . "/" . $path . "/pages/main?path=controlUser&alert=edit-success");
+    exit(0);
 }
 // ----------------------------------------------------------------------------------------------- END MODAL EDIT
 
-
+if (
+    isset($_POST['form']) && $_POST['form'] == 'upStatusUser'
+    && isset($_POST['update']) && $_POST['update'] == 'user'
+    && isset($_POST['upId']) && $_POST['upId'] != ''
+    && isset($_POST['upValue']) && $_POST['upValue'] != ''
+) {
+    // echo "<pre>";
+    // print_r($_POST);
+    // echo "</pre>";
+    $upStatusUserSQL = "UPDATE user SET ";
+    $upStatusUserSQL .= "usr_status  = '" . $_POST['upValue'] . "' ";
+    $upStatusUserSQL .= "WHERE usr_id = '" . $_POST['upId'] . "' ";
+    mysqli_query($conn, $upStatusUserSQL);
+    header("location: " . $_SESSION['uri'] . "/" . $path . "/pages/main?path=controlUser&alert=upstatus-success");
+    exit(0);
+}
 
 
 
@@ -119,8 +132,7 @@ if (
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a
-                            href="<?= $_SESSION['uri']; ?>/<?= $path; ?>/pages/main?path=dashboard">Home</a></li>
+                    <li class="breadcrumb-item"><a href="<?= $_SESSION['uri']; ?>/<?= $path; ?>/pages/main?path=dashboard">Home</a></li>
                     <li class="breadcrumb-item active">Control User</li>
                 </ol>
             </div>
@@ -183,73 +195,92 @@ if (
                             $id = 1;
                             foreach ($getUserARR as $getUser) {
                         ?>
-                        <tr class="text-center">
+                                <tr class="text-center">
 
-                            <td><?= $id; ?></td>
-                            <td><?= $getUser['usr_cid']; ?></td>
-                            <td><?= $getUser['usr_username']; ?></td>
-                            <td><?= $getUser['usr_password']; ?></td>
-                            <td><?= $getUser['usr_fname']; ?> <?= $getUser['usr_lname']; ?></td>
-                            <td>ชั้นประถมศึกษาปีที่ <?= $getUser['usr_class']; ?></td>
-                            <td><?= KTgetData::formatNumber($getUser['usr_tel']); ?></td>
+                                    <td><?= $id; ?></td>
+                                    <td><?= $getUser['usr_cid']; ?></td>
+                                    <td><?= $getUser['usr_username']; ?></td>
+                                    <td><?= $getUser['usr_password']; ?></td>
+                                    <td><?= $getUser['usr_fname']; ?> <?= $getUser['usr_lname']; ?></td>
+                                    <td>ชั้นประถมศึกษาปีที่ <?= $getUser['usr_class']; ?></td>
+                                    <td><?= KTgetData::formatNumber($getUser['usr_tel']); ?></td>
 
-                            <td class="project-actions text-center">
-                                <div class="btn-group">
-                                    <?PHP
-
-                                            if ($getUser['usr_status'] == '1') {
+                                    <td class="project-actions text-center">
+                                        <div class="btn-group">
+                                            <?PHP
+                                            if ($getUser['usr_username'] != $_SESSION['username']) {
+                                                if ($getUser['usr_status'] == '1') {
                                             ?>
 
-                                    <form accept="" method="POST">
-                                        <input type="hidden" name="form" value="upStatusUser">
-                                        <input type="hidden" name="update" value="user">
-                                        <input type="hidden" name="upId" value="<?= $getUser['usr_id']; ?>">
-                                        <button type="submit" class="btn btn-success btn-sm" name="upValue" value="0">
-                                            <i class='fas fa-user-check'></i>
-                                        </button>
-                                    </form>
-                                    <?PHP
-                                            } else {
-                                            ?>
+                                                    <form accept="" method="POST">
+                                                        <input type="hidden" name="form" value="upStatusUser">
+                                                        <input type="hidden" name="update" value="user">
+                                                        <input type="hidden" name="upId" value="<?= $getUser['usr_id']; ?>">
+                                                        <button type="submit" class="btn btn-success btn-sm" name="upValue" value="0">
+                                                            <i class='fas fa-user-check'></i>
+                                                        </button>
+                                                    </form>
+                                                <?PHP
+                                                } else {
+                                                ?>
 
-                                    <form accept="" method="POST">
-                                        <input type="hidden" name="form" value="upStatusUser">
-                                        <input type="hidden" name="update" value="user">
-                                        <input type="hidden" name="upId" value="<?= $getUser['usr_id']; ?>">
-                                        <button type="submit" class="btn btn-danger btn-sm" name="upValue" value="1">
-                                            <i class="fas fa-user-slash"></i>
-                                        </button>
-                                    </form>
-                                    <?PHP
+                                                    <form accept="" method="POST">
+                                                        <input type="hidden" name="form" value="upStatusUser">
+                                                        <input type="hidden" name="update" value="user">
+                                                        <input type="hidden" name="upId" value="<?= $getUser['usr_id']; ?>">
+                                                        <button type="submit" class="btn btn-danger btn-sm" name="upValue" value="1">
+                                                            <i class="fas fa-user-slash"></i>
+                                                        </button>
+                                                    </form>
+                                            <?PHP
+                                                }
                                             }
                                             ?>
-                                    <button type="button" class="btn btn-warning btn-sm view" data-toggle="modal"
-                                        data-target="#modal-edituser">
-                                        <i class="fas fa-edit"></i>
-                                    </button>
+
+                                            <button type="button" class="btn btn-warning btn-sm edit" data-info="<?= $getUser['usr_id']; ?>|x|<?= $getUser['usr_username']; ?>|x|<?= $getUser['usr_password']; ?>|x|<?= $getUser['usr_fname']; ?>|x|<?= $getUser['usr_lname']; ?>|x|<?= $getUser['usr_cid']; ?>|x|<?= $getUser['usr_tel']; ?>|x|<?= $getUser['usr_class']; ?>" data-toggle="modal" data-target="#modal-edituser">
+                                                <i class='fas fa-edit'></i>
+                                            </button>
+                                            <script>
+                                                $(document).ready(function() {
+                                                    $('.edit').click(function() {
+                                                        var getInfo = $(this).attr('data-info')
+                                                        var splitARR = getInfo.split('|x|')
+                                                        // alert(splitARR)
+                                                        $("#editID").val(splitARR[0])
+                                                        $("#editusername").val(splitARR[1])
+                                                        $("#editpassword").val(splitARR[2])
+                                                        $("#editfname").val(splitARR[3])
+                                                        $("#editlname").val(splitARR[4])
+                                                        $("#editcid").val(splitARR[5])
+                                                        $("#edittel").val(splitARR[6])
+                                                        $("#editclass").val(splitARR[7])
+                                                    })
+                                                })
+                                            </script>
+                                            <?php
+                                            if ($getUser['usr_username'] != $_SESSION['username']) {
+                                            ?>
+                                                <form action="" method="POST">
+                                                    <input type="hidden" name="form" value="delUser">
+                                                    <input type="hidden" name="delete" value="user">
+                                                    <input type="hidden" name="idDel" value="<?= $getUser['usr_id']; ?>">
+                                                    <button type="submit" class="btn btn-danger btn-sm confirm" txtAlert='คุณต้องการลบข้อมูลนี้จริงหรือไม่ ?' name="valueDel" value="9">
+                                                        <i class="fas fa-trash-alt"></i>
+                                                    </button>
+                                                </form>
+                                            <?php
+                                            }
+                                            ?>
+
+                                        </div>
+                                    </td>
 
 
-
-
-                                    <form action="" method="POST">
-                                        <input type="hidden" name="form" value="delUser">
-                                        <input type="hidden" name="delete" value="user">
-                                        <input type="hidden" name="idDel" value="<?= $getUser['usr_id']; ?>">
-                                        <button type="submit" class="btn btn-danger btn-sm confirm"
-                                            txtAlert='คุณต้องการลบข้อมูลนี้จริงหรือไม่ ?' name="valueDel" value="9">
-                                            <i class="fas fa-trash-alt"></i>
-                                        </button>
-                                    </form>
-                                </div>
-
-
-                            </td>
-                        </tr>
-                        <?PHP
+                            <?PHP
                                 $id++;
                             }
                         }
-                        ?>
+                            ?>
 
                     </tbody>
                 </table>
@@ -280,52 +311,46 @@ if (
                         <div class="col-sm-12 col-md-12 col-lg-6 col-xl-3">
                             <div class="form-group">
                                 <label for="editusername">UserName</label>
-                                <input type="text" class="form-control" id="editusername" name="editusername"
-                                    placeholder="Enter username">
+                                <input type="text" class="form-control" id="editusername" name="editusername" placeholder="Enter username">
                             </div>
                         </div>
 
                         <div class="col-sm-12 col-md-12 col-lg-6 col-xl-3">
                             <div class="form-group">
                                 <label for="editpassword">password</label>
-                                <input type="text" class="form-control" id="editpassword" name="editpassword"
-                                    placeholder="Enter password">
+                                <input type="text" class="form-control" id="editpassword" name="editpassword" placeholder="Enter password">
                             </div>
                         </div>
                         <div class="col-sm-12 col-md-12 col-lg-6 col-xl-3">
                             <div class="form-group">
                                 <label for="editfname">ชื่อ</label>
-                                <input type="text" class="form-control" id="editfname" name="editfname"
-                                    placeholder="Enter fname">
+                                <input type="text" class="form-control" id="editfname" name="editfname" placeholder="Enter fname">
                             </div>
                         </div>
 
                         <div class="col-sm-12 col-md-12 col-lg-6 col-xl-3">
                             <div class="form-group">
                                 <label for="editlname">สกุล</label>
-                                <input type="text" class="form-control" id="editlname" name="editlname"
-                                    placeholder="Enter lname">
+                                <input type="text" class="form-control" id="editlname" name="editlname" placeholder="Enter lname">
                             </div>
                         </div>
                         <div class="col-sm-12 col-md-12 col-lg-6 col-xl-3">
                             <div class="form-group">
                                 <label for="editcid">รหัสประจำตัว</label>
-                                <input type="text" class="form-control" id="editcid" name="editcid"
-                                    placeholder="Enter cid">
+                                <input type="text" class="form-control" id="editcid" name="editcid" placeholder="Enter cid">
                             </div>
                         </div>
 
                         <div class="col-sm-12 col-md-12 col-lg-6 col-xl-3">
                             <div class="form-group">
                                 <label for="edittel">เบอร์ติดต่อ</label>
-                                <input type="text" class="form-control" id="edittel" name="edittel"
-                                    placeholder="Enter Tel">
+                                <input type="text" class="form-control" id="edittel" name="edittel" placeholder="Enter Tel">
                             </div>
                         </div>
 
                         <div class="col-sm-12 col-md-12 col-lg-6 col-xl-3">
                             <div class="form-group">
-                                <label for="editcalss">ชั้นเรียนที่รับผิดชอบ</label>
+                                <label for="editclass">ชั้นเรียนที่รับผิดชอบ</label>
                                 <select class="form-control select2bs4" id='editclass' name="editclass">
                                     <option>กรุณาเลือกชั้นเรียน</option>
                                     <option value='1/1'>ชั้นประถมศึกษาปีที่ 1/1</option>
@@ -351,7 +376,7 @@ if (
 
 <!-- //-------------------------------------------------------------------- แก้ไข user -->
 
-<?PHP 
+<?PHP
 ?>
 
 
@@ -374,31 +399,27 @@ if (
                         <div class="col-sm-12 col-md-12 col-lg-6 col-xl-3">
                             <div class="form-group">
                                 <label for="username">UserName</label>
-                                <input type="text" class="form-control" id="username" name="username"
-                                    placeholder="Enter username">
+                                <input type="text" class="form-control" id="username" name="username" placeholder="Enter username">
                             </div>
                         </div>
 
                         <div class="col-sm-12 col-md-12 col-lg-6 col-xl-3">
                             <div class="form-group">
                                 <label for="password">password</label>
-                                <input type="text" class="form-control" id="password" name="password"
-                                    placeholder="Enter password">
+                                <input type="text" class="form-control" id="password" name="password" placeholder="Enter password">
                             </div>
                         </div>
                         <div class="col-sm-12 col-md-12 col-lg-6 col-xl-3">
                             <div class="form-group">
                                 <label for="fname">ชื่อ</label>
-                                <input type="text" class="form-control" id="fname" name="fname"
-                                    placeholder="Enter fname">
+                                <input type="text" class="form-control" id="fname" name="fname" placeholder="Enter fname">
                             </div>
                         </div>
 
                         <div class="col-sm-12 col-md-12 col-lg-6 col-xl-3">
                             <div class="form-group">
                                 <label for="lname">สกุล</label>
-                                <input type="text" class="form-control" id="lname" name="lname"
-                                    placeholder="Enter lname">
+                                <input type="text" class="form-control" id="lname" name="lname" placeholder="Enter lname">
                             </div>
                         </div>
                         <div class="col-sm-12 col-md-12 col-lg-6 col-xl-3">
@@ -444,23 +465,23 @@ if (
 
 
 <script>
-$(function() {
-    $("#usertable").DataTable({
-        "responsive": true,
-        "lengthChange": false,
-        "autoWidth": false,
-        "buttons": ["colvis"]
-    }).buttons().container().appendTo('#usertable_wrapper .col-md-6:eq(0)');
+    $(function() {
+        $("#usertable").DataTable({
+            "responsive": true,
+            "lengthChange": false,
+            "autoWidth": false,
+            "buttons": ["colvis"]
+        }).buttons().container().appendTo('#usertable_wrapper .col-md-6:eq(0)');
 
 
-    //searchdate picker
-    $('#searchdate').datetimepicker({
-        format: 'L'
+        //searchdate picker
+        $('#searchdate').datetimepicker({
+            format: 'L'
+        });
+
+        //reservationdate picker
+        $('#reservationdate').datetimepicker({
+            format: 'L'
+        });
     });
-
-    //reservationdate picker
-    $('#reservationdate').datetimepicker({
-        format: 'L'
-    });
-});
 </script>

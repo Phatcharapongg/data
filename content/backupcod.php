@@ -368,3 +368,15 @@ SET dep_amount = '800',
 WHERE dep_id = '3'
 
  -->
+
+ <form action="" method="POST">
+                                    <input type="hidden" name="form" value="delUser">
+                                    <input type="hidden" name="delete" value="user">
+                                    <input type="hidden" name="idDel" value="<?= $getUser['usr_id']; ?>">
+                                    <button type="submit" class="btn btn-danger btn-sm confirm"
+                                        txtAlert='คุณต้องการลบข้อมูลนี้จริงหรือไม่ ?' name="valueDel" value="9">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </button>
+                                </form>
+
+                                
