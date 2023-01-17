@@ -368,7 +368,7 @@ SET dep_amount = '800',
 WHERE dep_id = '3'
 
  -->
-
+<!-- 
  <form action="" method="POST">
                                     <input type="hidden" name="form" value="delUser">
                                     <input type="hidden" name="delete" value="user">
@@ -379,4 +379,40 @@ WHERE dep_id = '3'
                                     </button>
                                 </form>
 
-                                
+                                <thead>
+                        <tr align="center">
+                            <th>#</th>
+                            <th>รหัสประจำตัว</th>
+                            <th>ชื่อ - นามสกุล</th>
+                            <th>Calss</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?PHP
+                        // $getlist_studentSQL = "SELECT * FROM list_student WHERE ls_status != '9'";
+                        // $getlist_studentARR = mysqli_query($conn, $getlist_studentSQL);
+                        // $getlist_studentNUM = mysqli_num_rows($getlist_studentARR);
+                       
+                        // if ($getlist_studentNUM > 0) {
+                        //     $id = 1;
+                        //     foreach ($getlist_studentARR as $getlist_student) {
+                        // ?>
+                        //         <tr class="text-center"> -->
+
+
+                        //         <?PHP
+                        // $getlist_studentSQL = "SELECT * FROM list_student WHERE ls_status != '9'";
+                        // $getlist_studentARR = mysqli_query($conn, $getlist_studentSQL);
+                        // $getlist_studentNUM = mysqli_num_rows($getlist_studentARR);
+
+                        // if ($getlist_studentNUM > 0) {
+                        //     $id = 1;
+                        //     foreach ($getlist_studentARR as $getlist_student) {
+                        // ?>
+                        <!-- //         <tr class="text-center">
+
+                        //             <td><?= $id; ?></td>
+                        //             <td><?= $getlist_student['ls_student_id']; ?></td>
+                        //             <td><?= $getlist_student['ls_fname']; ?> <?= $getlist_student['ls_lname']; ?></td>
+                        //             <td>ชั้นประถมศึกษาปีที่ <?= $getlist_student['ls_class']; ?></td> -->

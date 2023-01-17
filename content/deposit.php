@@ -253,8 +253,8 @@ function getNameUser($conn, $username)
                                 <label for="studentID">ชื่อนักเรียน</label>
                                 <select class="form-control select2bs4" id='studentID' name="studentID">
                                     <option>กรุณาเลือกนักเรียน</option>
-                                    <option value='100'>นายเอ</option>
-                                    <option value='101'>นายเอ้</option>
+                                    <option value='4017'>นายเอ</option>
+                                    <option value='4018'>นายเอ้</option>
                                 </select>
                             </div>
                         </div>
@@ -318,8 +318,8 @@ function getNameUser($conn, $username)
                                 <label for="editStudentID">ชื่อนักเรียน</label>
                                 <select class="form-control select2bs4" id='editStudentID' name="editStudentID">
                                     <option>กรุณาเลือกนักเรียน</option>
-                                    <option value='100'>นายเอ</option>
-                                    <option value='101'>นายเอ้</option>
+                                    <option value='4017'>นายเอ</option>
+                                    <option value='4018'>นายเอ้</option>
                                 </select>
                             </div>
                         </div>

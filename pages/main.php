@@ -162,28 +162,17 @@ if ($getUserNUM == 1) {
                             $report = 'active';
                         } else if (isset($_GET['path']) && $_GET['path'] == 'deposit') {
                             $deposit = 'active';
-                        } else if (isset($_GET['path']) && $_GET['path'] == 'addstudent') {
-                            $report = 'active';
+                            } else if (isset($_GET['path']) && $_GET['path'] == 'addstudent') {
+                            $addstudent = 'active';
                         } else {
                             $controlUser = '';
                             $report = '';
                             $deposit = '';
-                            $addstudent+    
-                             = '';
-
-
+                            $addstudent = '';
                         }
                         ?>
                         <!-- หน้าต่างๆในแถบเมนู -->
-                        <li class="nav-item">
-                            <a href="<?= $_SESSION['uri']; ?>/<?= $path; ?>/pages/main?path=controlUser"
-                                class="nav-link <?= $controlUser; ?>">
-                                <i class="nav-icon fas fa-tachometer-alt"></i>
-                                <p>
-                                    Control User
-                                </p>
-                            </a>
-                        </li>
+                       
                         <li class="nav-item">
                             <a href="<?= $_SESSION['uri']; ?>/<?= $path; ?>/pages/main?path=deposit"
                                 class="nav-link <?= $deposit; ?>">
@@ -208,7 +197,15 @@ if ($getUserNUM == 1) {
                                 <i class="nav-icon fas fa-tachometer-alt"></i>
                                 <p>
                                     Add Student
-
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="<?= $_SESSION['uri']; ?>/<?= $path; ?>/pages/main?path=controlUser"
+                                class="nav-link <?= $controlUser; ?>">
+                                <i class="nav-icon fas fa-tachometer-alt"></i>
+                                <p>
+                                    Control User
                                 </p>
                             </a>
                         </li>
@@ -240,11 +237,11 @@ if ($getUserNUM == 1) {
                     case 'controlUser':
                         $content = 'controluser.php';
                         break;
+                    case 'addstudent':
+                            $content = 'addstudent.php';
+                            break;
                     default:
                         $content = 'dashboard.php';
-                        break;
-                     default:
-                        $content = 'addstudent.php';
                         break;
                 }
             } else {

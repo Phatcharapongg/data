@@ -150,21 +150,8 @@ if (
                 <div class='text-right'>
                     <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal-adduser">
                         <i class="fas fa-user-plus"></i>
-                        Add
+                        Add User
                     </button>
-
-                    <!-- <button type="button" class="btn btn-success testAlert3">
-                        <i class="fas fa-user-plus"></i>
-                        TEST
-                    </button>
-                    <script>
-                    $(document).ready(function() {
-                        $(".testAlert3").click(function() {
-                            Swal.fire('TEST')
-                        })
-                    })
-                    </script> -->
-
                 </div>
             </div>
             <div class="card-body">
@@ -177,16 +164,13 @@ if (
                             <th>Username</th>
                             <th>Password</th>
                             <th>ชื่อ - นามสกุล</th>
-
                             <th>ชั้นเรียนที่รับผิดชอบ</th>
                             <th>Tel</th>
                             <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
-
                         <?PHP
-
                         $getUserSQL = "SELECT * FROM user WHERE usr_status != '9'";
                         $getUserARR = mysqli_query($conn, $getUserSQL);
                         $getUserNUM = mysqli_num_rows($getUserARR);
@@ -211,7 +195,6 @@ if (
                                             if ($getUser['usr_username'] != $_SESSION['username']) {
                                                 if ($getUser['usr_status'] == '1') {
                                             ?>
-
                                                     <form accept="" method="POST">
                                                         <input type="hidden" name="form" value="upStatusUser">
                                                         <input type="hidden" name="update" value="user">
@@ -238,7 +221,7 @@ if (
                                             ?>
 
                                             <button type="button" class="btn btn-warning btn-sm edit" data-info="<?= $getUser['usr_id']; ?>|x|<?= $getUser['usr_username']; ?>|x|<?= $getUser['usr_password']; ?>|x|<?= $getUser['usr_fname']; ?>|x|<?= $getUser['usr_lname']; ?>|x|<?= $getUser['usr_cid']; ?>|x|<?= $getUser['usr_tel']; ?>|x|<?= $getUser['usr_class']; ?>" data-toggle="modal" data-target="#modal-edituser">
-                                                <i class='fas fa-edit'></i>
+                                            <i class='fas fa-edit'></i>
                                             </button>
                                             <script>
                                                 $(document).ready(function() {
