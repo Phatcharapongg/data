@@ -10,9 +10,8 @@ if (
     && isset($_POST['ls_lname']) && $_POST['ls_lname'] != ''
     && isset($_POST['ls_class']) && $_POST['ls_class'] != ''
 
-  
-)
-{   
+
+) {
 
     $Insertlist_studentsSQL = "INSERT INTO list_students (ls_student_id, ls_prefix, ls_fname, ls_lname, ls_class , ls_status)
     VALUES (
@@ -24,25 +23,56 @@ if (
         '1'
         )";
 
-//     // echo  'sql : ' . $InsertuserSQL;
+    // echo 'sql : ' . $editlist_studentsSQL;
     mysqli_query($conn, $Insertlist_studentsSQL);
 
     header("location: " . $_SESSION['uri'] . "/" . $path . "/pages/main?path=addstudent&alert=insertstudents-success");
     exit(0);
-
-
- 
 }
-//        echo "<pre>";
-//     print_r($_POST);
-//     echo "</pre>";
+//    echo "<pre>";
+// print_r($_POST);
+// echo "</pre>";
 //----------------------------------------------------------------------------------------------- END MODAL STUDENT
 
 
+//----------------------------------------------------------------------------------------------- START MODAL EDIT
+if (
+    isset($_POST['form']) && $_POST['form'] == 'editstudents'
+    && isset($_POST['edit']) && $_POST['edit'] == 'list_students'
+    && isset($_POST['editID']) && $_POST['editID'] != ''
+    && isset($_POST['editls_student_id']) && $_POST['editls_student_id'] != ''
+    && isset($_POST['editls_prefix']) && $_POST['editls_prefix'] != ''
+    && isset($_POST['editls_fname']) && $_POST['editls_fname'] != ''
+    && isset($_POST['editls_lname']) && $_POST['editls_lname'] != ''
+    && isset($_POST['editls_class']) && $_POST['editls_class'] != ''
+
+) {
+
+    $editlist_studentsSQL = "UPDATE list_students SET ";
+    $editlist_studentsSQL .= "ls_student_id  = '" . $_POST['editls_student_id'] . "' ";
+    $editlist_studentsSQL .= ",ls_prefix     = '" . $_POST['editls_prefix'] . "' ";
+    $editlist_studentsSQL .= ",ls_fname      = '" . $_POST['editls_fname'] . "' ";
+    $editlist_studentsSQL .= ",ls_lname      = '" . $_POST['editls_lname'] . "' ";
+    $editlist_studentsSQL .= ",ls_class      = '" . $_POST['editls_class'] . "' ";
+
+
+    $editlist_studentsSQL .= "WHERE ls_id    = '" . $_POST['editID'] . "' ";
+
+    //   echo 'sql : ' . $editlist_studentsSQL;
+
+    mysqli_query($conn, $editlist_studentsSQL);
+    header("location: " . $_SESSION['uri'] . "/" . $path . "/pages/main?path=addstudent&alert=edit-success");
 
 
 
+    exit(0);
+}
+// ----------------------------------------------------------------------------------------------- END MODAL EDIT
 
+
+// echo "<pre>";
+// print_r($_POST);
+// echo "</pre>";
 
 
 
@@ -77,8 +107,7 @@ if (
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a
-                            href="<?= $_SESSION['uri']; ?>/<?= $path; ?>/pages/main?path=dashboard">Home</a></li>
+                    <li class="breadcrumb-item"><a href="<?= $_SESSION['uri']; ?>/<?= $path; ?>/pages/main?path=dashboard">Home</a></li>
                     <li class="breadcrumb-item active">Control Student</li>
                 </ol>
             </div>
@@ -122,51 +151,50 @@ if (
                             $id = 1;
                             foreach ($getlist_studentsARR as $getlist_students) {
                         ?>
-                        <tr class="text-center">
+                                <tr class="text-center">
 
-                            <td><?= $id; ?></td>
-                            <td><?= $getlist_students['ls_student_id']; ?></td>
-                            <td><?= $getlist_students['ls_prefix']; ?><?= $getlist_students['ls_fname']; ?><?= $getlist_students['ls_lname']; ?>
-                            </td>
-                            <td>ชั้นประถมศึกษาปีที่ <?= $getlist_students['ls_class']; ?></td>
-
-
+                                    <td><?= $id; ?></td>
+                                    <td><?= $getlist_students['ls_student_id']; ?></td>
+                                    <td><?= $getlist_students['ls_prefix']; ?><?= $getlist_students['ls_fname']; ?><?= $getlist_students['ls_lname']; ?>
+                                    </td>
+                                    <td>ชั้นประถมศึกษาปีที่ <?= $getlist_students['ls_class']; ?></td>
 
 
 
-                            <td class="project-actions text-center">
-                                <button type="button" class="btn btn-warning btn-sm edit" data-info="<?= $getDeposit['dep_id']; ?>|x|<?= $getDeposit['ls_student_id']; 
-                                            ?>|x|<?= $getDeposit['dep_type']; ?>|x|<?= $getDeposit['dep_amount']; 
-                                            ?>|x|<?= $getDeposit['dep_note']; ?>" data-toggle="modal"
-                                    data-target="#modal-editstudent">
-                                    <i class='fas fa-edit'></i>
-                                </button>
-                                <script>
-                                $(document).ready(function() {
-                                    $('.edit').click(function() {
-                                        var getInfo = $(this).attr('data-info')
-                                        var splitARR = getInfo.split('|x|')
-                                        $("#editID").val(splitARR[0])
-                                        $("#editStudentID").val(splitARR[1])
-                                        $("#editType").val(splitARR[2])
-                                        $("#editAmount").val(splitARR[3])
-                                        $("#editNote").val(splitARR[4])
-                                    })
-                                })
-                                </script>
 
-                                <div class="btn-group">
-                                    <form action="" method="POST">
-                                        <input type="hidden" name="form" value="list_students">
-                                        <input type="hidden" name="delete" value="list_students">
-                                        <input type="hidden" name="idDel" value="<?= $getlist_students['ls_id']; ?>">
-                                        <button type="submit" class="btn btn-danger btn-sm confirm"
-                                            txtAlert='คุณต้องการลบข้อมูลนี้จริงหรือไม่ ?' name="valueDel" value="9">
-                                            <i class="fas fa-trash-alt"></i>
+
+                                    <td class="project-actions text-center">
+                                        <button type="button" class="btn btn-warning btn-sm edit" data-info="<?= $getlist_students['ls_id']; ?>|x|<?= $getlist_students['ls_student_id']; ?>|x|<?= $getlist_students['ls_prefix']; ?>|x|<?= $getlist_students['ls_fname']; ?>|x|<?= $getlist_students['ls_lname']; ?>|x|<?= $getlist_students['ls_class']; ?>" data-toggle="modal" data-target="#modal-editstudents">
+                                            <i class='fas fa-edit'></i>
                                         </button>
-                                    </form>
-                                </div>
-                            </td>
+                                        <script>
+                                            $(document).ready(function() {
+                                                $('.edit').click(function() {
+                                                    var getInfo = $(this).attr('data-info')
+                                                    var splitARR = getInfo.split('|x|')
+                                                    // alert(splitARR)
+                                                    $("#editID").val(splitARR[0])
+                                                    $("#editls_student_id").val(splitARR[1])
+                                                    $("#editls_prefix").val(splitARR[2])
+                                                    $("#editls_fname").val(splitARR[3])
+                                                    $("#editls_lname").val(splitARR[4])
+                                                    $("#editls_class").val(splitARR[5])
+
+                                                })
+                                            })
+                                        </script>
+
+                                        <div class="btn-group">
+                                            <form action="" method="POST">
+                                                <input type="hidden" name="form" value="list_students">
+                                                <input type="hidden" name="delete" value="list_students">
+                                                <input type="hidden" name="idDel" value="<?= $getlist_students['ls_id']; ?>">
+                                                <button type="submit" class="btn btn-danger btn-sm confirm" txtAlert='คุณต้องการลบข้อมูลนี้จริงหรือไม่ ?' name="valueDel" value="9">
+                                                    <i class="fas fa-trash-alt"></i>
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </td>
 
                             <?PHP
                                 $id++;
@@ -199,10 +227,10 @@ if (
                         <div class="col-sm-12 col-md-12 col-lg-6 col-xl-3">
                             <div class="form-group">
                                 <label for="ls_student_id">รหัสประจำตัว</label>
-                                <input type="text" class="form-control" id="ls_student_id" name="ls_student_id"
-                                    placeholder=" ID">
+                                <input type="text" class="form-control" id="ls_student_id" name="ls_student_id" placeholder=" ID">
                             </div>
                         </div>
+
                         <div class="col-sm-12 col-md-12 col-lg-6 col-xl-3">
                             <div class="form-group">
                                 <label for="ls_prefix">คำนำหน้า</label>
@@ -220,8 +248,7 @@ if (
                         <div class="col-sm-12 col-md-12 col-lg-6 col-xl-3">
                             <div class="form-group">
                                 <label for="ls_fname">ชื่อ</label>
-                                <input type="text" class="form-control" id="ls_fname" name="ls_fname"
-                                    placeholder="Enter fname">
+                                <input type="text" class="form-control" id="ls_fname" name="ls_fname" placeholder="Enter fname">
                             </div>
                         </div>
 
@@ -229,15 +256,14 @@ if (
                         <div class="col-sm-12 col-md-12 col-lg-6 col-xl-3">
                             <div class="form-group">
                                 <label for="ls_lname">สกุล</label>
-                                <input type="text" class="form-control" id="ls_lname" name="ls_lname"
-                                    placeholder="Enter lname">
+                                <input type="text" class="form-control" id="ls_lname" name="ls_lname" placeholder="Enter lname">
                             </div>
                         </div>
 
 
-                        <div class="col-sm-12 col-md-12 col-lg-6 col-xl-12">
+                        <div class="col-sm-12 col-md-12 col-lg-6 col-xl-3">
                             <div class="form-group">
-                                <label for="ls_class">ชั้นเรียนที่รับผิดชอบ</label>
+                                <label for="ls_class">ชั้นเรียนที่</label>
                                 <select class="form-control select2bs4" id='ls_class' name="ls_class">
                                     <option>กรุณาเลือกชั้นเรียน</option>
                                     <option value='1/1'>ชั้นประถมศึกษาปีที่ 1/1</option>
@@ -252,6 +278,9 @@ if (
                                 </select>
                             </div>
                         </div>
+
+
+
                     </div>
                 </div>
                 <div class="modal-footer justify-content-between">
@@ -264,19 +293,20 @@ if (
 </div>
 
 <!-- //-------------------------------------------------------------------- เพิ่ม student -->
+
 <!-- //-------------------------------------------------------------------- แก้ไข student -->
-<div class="modal fade" id="modal-editstudent">
+<div class="modal fade" id="modal-editstudents">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Edit User</h4>
+                <h4 class="modal-title">Edit Student</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <form action="" method="POST">
-                <input type="hidden" name='form' value="edituser" />
-                <input type="hidden" name='edit' value="user" />
+                <input type="hidden" name='form' value="editstudents" />
+                <input type="hidden" name='edit' value="list_students" />
                 <input type="hidden" id='editID' name='editID' />
                 <input type="hidden" name='username' value="<?= $_SESSION['username']; ?>" />
                 <div class="modal-body">
@@ -284,57 +314,56 @@ if (
 
                         <div class="col-sm-12 col-md-12 col-lg-6 col-xl-3">
                             <div class="form-group">
-                                <label for="editusername">UserName</label>
-                                <input type="text" class="form-control" id="editusername" name="editusername" placeholder="Enter username">
+                                <label for="editls_student_id">รหัสประจำตัว</label>
+                                <input type="text" class="form-control" id="editls_student_id" name="editls_student_id" placeholder="Enter ID">
                             </div>
                         </div>
 
                         <div class="col-sm-12 col-md-12 col-lg-6 col-xl-3">
                             <div class="form-group">
-                                <label for="editpassword">password</label>
-                                <input type="text" class="form-control" id="editpassword" name="editpassword" placeholder="Enter password">
-                            </div>
-                        </div>
-                        <div class="col-sm-12 col-md-12 col-lg-6 col-xl-3">
-                            <div class="form-group">
-                                <label for="editfname">ชื่อ</label>
-                                <input type="text" class="form-control" id="editfname" name="editfname" placeholder="Enter fname">
-                            </div>
-                        </div>
-
-                        <div class="col-sm-12 col-md-12 col-lg-6 col-xl-3">
-                            <div class="form-group">
-                                <label for="editlname">สกุล</label>
-                                <input type="text" class="form-control" id="editlname" name="editlname" placeholder="Enter lname">
-                            </div>
-                        </div>
-                        <div class="col-sm-12 col-md-12 col-lg-6 col-xl-3">
-                            <div class="form-group">
-                                <label for="editcid">รหัสประจำตัว</label>
-                                <input type="text" class="form-control" id="editcid" name="editcid" placeholder="Enter cid">
-                            </div>
-                        </div>
-
-                        <div class="col-sm-12 col-md-12 col-lg-6 col-xl-3">
-                            <div class="form-group">
-                                <label for="edittel">เบอร์ติดต่อ</label>
-                                <input type="text" class="form-control" id="edittel" name="edittel" placeholder="Enter Tel">
-                            </div>
-                        </div>
-
-                        <div class="col-sm-12 col-md-12 col-lg-6 col-xl-3">
-                            <div class="form-group">
-                                <label for="editclass">ชั้นเรียนที่รับผิดชอบ</label>
-                                <select class="form-control select2bs4" id='editclass' name="editclass">
-                                    <option>กรุณาเลือกชั้นเรียน</option>
-                                    <option value='1/1'>ชั้นประถมศึกษาปีที่ 1/1</option>
-                                    <option value='1/2'>ชั้นประถมศึกษาปีที่ 1/2</option>
-                                    <option value='2/1'>ชั้นประถมศึกษาปีที่ 2/1</option>
-                                    <option value='2/2'>ชั้นประถมศึกษาปีที่ 2/2</option>
+                                <label for="editls_prefix">คำนำหน้า</label>
+                                <select class="form-control select2bs4" id='editls_prefix' name="editls_prefix">
+                                    <option>กรุณาเลือกคำนำหน้า</option>
+                                    <option value='ด.ช.'>ด.ช.</option>
+                                    <option value='ด.ญ.'>ด.ญ.</option>
+                                    <option value='นาย'>นาย</option>
+                                    <option value='นางสาว.'>นางสาว</option>
                                 </select>
                             </div>
                         </div>
 
+                        <div class="col-sm-12 col-md-12 col-lg-6 col-xl-3">
+                            <div class="form-group">
+                                <label for="editls_fname">fname</label>
+                                <input type="text" class="form-control" id="editls_fname" name="editls_fname" placeholder="Enter fname">
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12 col-md-12 col-lg-6 col-xl-3">
+                            <div class="form-group">
+                                <label for="editls_lname">lname</label>
+                                <input type="text" class="form-control" id="editls_lname" name="editls_lname" placeholder="Enter lname">
+                            </div>
+                        </div>
+
+
+                        <div class="col-sm-12 col-md-12 col-lg-6 col-xl-12">
+                            <div class="form-group">
+                                <label for="editls_class">ชั้นเรียนที่</label>
+                                <select class="form-control select2bs4" id='editls_class' name="editls_class">
+                                    <option>กรุณาเลือกชั้นเรียน</option>
+                                    <option value='1/1'>ชั้นประถมศึกษาปีที่ 1/1</option>
+                                    <option value='1/2'>ชั้นประถมศึกษาปีที่ 1/2</option>
+                                    <option value='1/3'>ชั้นประถมศึกษาปีที่ 1/3</option>
+                                    <option value='2/1'>ชั้นประถมศึกษาปีที่ 2/1</option>
+                                    <option value='2/2'>ชั้นประถมศึกษาปีที่ 2/2</option>
+                                    <option value='2/2'>ชั้นประถมศึกษาปีที่ 2/3</option>
+                                    <option value='3/1'>ชั้นประถมศึกษาปีที่ 3/1</option>
+                                    <option value='3/2'>ชั้นประถมศึกษาปีที่ 3/2</option>
+                                    <option value='3/3'>ชั้นประถมศึกษาปีที่ 3/3</option>
+                                </select>
+                            </div>
+                        </div>
 
                     </div>
                 </div>
@@ -353,23 +382,23 @@ if (
 
 
 <script>
-$(function() {
-    $("#usertable").DataTable({
-        "responsive": true,
-        "lengthChange": false,
-        "autoWidth": false,
-        "buttons": ["colvis"]
-    }).buttons().container().appendTo('#usertable_wrapper .col-md-6:eq(0)');
+    $(function() {
+        $("#usertable").DataTable({
+            "responsive": true,
+            "lengthChange": false,
+            "autoWidth": false,
+            "buttons": ["colvis"]
+        }).buttons().container().appendTo('#usertable_wrapper .col-md-6:eq(0)');
 
 
-    //searchdate picker
-    $('#searchdate').datetimepicker({
-        format: 'L'
+        //searchdate picker
+        $('#searchdate').datetimepicker({
+            format: 'L'
+        });
+
+        //reservationdate picker
+        $('#reservationdate').datetimepicker({
+            format: 'L'
+        });
     });
-
-    //reservationdate picker
-    $('#reservationdate').datetimepicker({
-        format: 'L'
-    });
-});
 </script>

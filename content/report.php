@@ -22,7 +22,21 @@
 <section class="content">
     <div class="container-fluid">
         <div class="row mb-4">
-            <div class='col-12 mb-3'>
+            <div class='col-6 mb-3'>
+                <select class="form-control select2bs4" id='editls_class' name="editls_class">
+                    <option>กรุณาเลือกชั้นเรียน</option>
+                    <option value='1/1'>ชั้นประถมศึกษาปีที่ 1/1</option>
+                    <option value='1/2'>ชั้นประถมศึกษาปีที่ 1/2</option>
+                    <option value='1/3'>ชั้นประถมศึกษาปีที่ 1/3</option>
+                    <option value='2/1'>ชั้นประถมศึกษาปีที่ 2/1</option>
+                    <option value='2/2'>ชั้นประถมศึกษาปีที่ 2/2</option>
+                    <option value='2/2'>ชั้นประถมศึกษาปีที่ 2/3</option>
+                    <option value='3/1'>ชั้นประถมศึกษาปีที่ 3/1</option>
+                    <option value='3/2'>ชั้นประถมศึกษาปีที่ 3/2</option>
+                    <option value='3/3'>ชั้นประถมศึกษาปีที่ 3/3</option>
+                </select>
+            </div>
+            <div class='col-6 mb-3'>
                 <select class="form-control select2bs4" id='student' name="student">
                     <option>กรุณาเลือกนักเรียน</option>
                     <option value='1'>นายเอ</option>
@@ -33,6 +47,8 @@
                     <option value='6'>นายเอง</option>
                 </select>
             </div>
+
+
             <div class='col-6 mb-3'>
                 <div class="input-group date" id="searchdate" data-target-input="nearest">
                     <input type="text" class="form-control datetimepicker-input" data-target="#searchdate" />

@@ -44,9 +44,6 @@ if (
 
 
 
-// echo "<pre>";
-// print_r($_POST);
-// echo "</pre>";
 
 
 //----------------------------------------------------------------------------------------------- START MODAL EDIT
@@ -60,20 +57,27 @@ if (
     && isset($_POST['editclass']) && $_POST['editclass'] != ''
     && isset($_POST['editcid']) && $_POST['editcid'] != ''
     && isset($_POST['edittel']) && $_POST['edittel'] != ''
+    && isset($_POST['editID']) && $_POST['editID'] != ''
 ) {
+    echo "<pre>";
+    print_r($_POST);
+    echo "</pre>";
+
     $edituserSQL = "UPDATE user SET ";
-    $edituserSQL .= "usr_username  = '" . $_POST['editusername'] . "' ";
-    $edituserSQL .= ",usr_passworde       = '" . $_POST['editpassworde'] . "' ";
-    $edituserSQL .= ",usr_fname     = '" . $_POST['editfname'] . "' ";
-    $edituserSQL .= ",usr_lname       = '" . $_POST['editlname'] . "' ";
-    $edituserSQL .= ",usr_class       = '" .  $_POST['editclass'] . "' ";
-    $edituserSQL .= ",usr_cid       = '" .  $_POST['editcid'] . "' ";
-    $edituserSQL .= ",usr_tel       = '" . $_POST['edittel'] . "' ";
+    $edituserSQL .= "usr_username       = '" . $_POST['editusername'] . "' ";
+    $edituserSQL .= ",usr_password      = '" . $_POST['editpassword'] . "' ";
+    $edituserSQL .= ",usr_fname         = '" . $_POST['editfname'] . "' ";
+    $edituserSQL .= ",usr_lname         = '" . $_POST['editlname'] . "' ";
+    $edituserSQL .= ",usr_class         = '" . $_POST['editclass'] . "' ";
+    $edituserSQL .= ",usr_cid           = '" . $_POST['editcid'] . "' ";
+    $edituserSQL .= ",usr_tel           = '" . $_POST['edittel'] . "' ";
 
 
     $edituserSQL .= "WHERE usr_id = '" . $_POST['editID'] . "' ";
+
+    // echo 'sql : ' . $edituserSQL;
     mysqli_query($conn, $edituserSQL);
-    header("location: " . $_SESSION['uri'] . "/" . $path . "/pages/main?path=controlUser&alert=edit-success");
+    header("location: " . $_SESSION['uri'] . "/" . $path . "/pages/main?path=controlUser&alert=edit-successNEW");
     exit(0);
 }
 // ----------------------------------------------------------------------------------------------- END MODAL EDIT
@@ -221,7 +225,7 @@ if (
                                             ?>
 
                                             <button type="button" class="btn btn-warning btn-sm edit" data-info="<?= $getUser['usr_id']; ?>|x|<?= $getUser['usr_username']; ?>|x|<?= $getUser['usr_password']; ?>|x|<?= $getUser['usr_fname']; ?>|x|<?= $getUser['usr_lname']; ?>|x|<?= $getUser['usr_cid']; ?>|x|<?= $getUser['usr_tel']; ?>|x|<?= $getUser['usr_class']; ?>" data-toggle="modal" data-target="#modal-edituser">
-                                            <i class='fas fa-edit'></i>
+                                                <i class='fas fa-edit'></i>
                                             </button>
                                             <script>
                                                 $(document).ready(function() {
@@ -335,11 +339,16 @@ if (
                             <div class="form-group">
                                 <label for="editclass">ชั้นเรียนที่รับผิดชอบ</label>
                                 <select class="form-control select2bs4" id='editclass' name="editclass">
-                                    <option>กรุณาเลือกชั้นเรียน</option>
+                                <option>กรุณาเลือกชั้นเรียน</option>
                                     <option value='1/1'>ชั้นประถมศึกษาปีที่ 1/1</option>
                                     <option value='1/2'>ชั้นประถมศึกษาปีที่ 1/2</option>
+                                    <option value='1/3'>ชั้นประถมศึกษาปีที่ 1/3</option>
                                     <option value='2/1'>ชั้นประถมศึกษาปีที่ 2/1</option>
                                     <option value='2/2'>ชั้นประถมศึกษาปีที่ 2/2</option>
+                                    <option value='2/2'>ชั้นประถมศึกษาปีที่ 2/3</option>
+                                    <option value='3/1'>ชั้นประถมศึกษาปีที่ 3/1</option>
+                                    <option value='3/2'>ชั้นประถมศึกษาปีที่ 3/2</option>
+                                    <option value='3/2'>ชั้นประถมศึกษาปีที่ 3/3</option>
                                 </select>
                             </div>
                         </div>

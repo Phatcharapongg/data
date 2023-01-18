@@ -2,6 +2,21 @@
 //Connect DB 
 require('config/config.php');
 
+// echo "<pre>";
+// print_r($_POST);
+// echo "</pre>";
+
+$selectClass = 0;
+
+if (isset($_POST['class']) && $_POST['class'] != '') {
+    $class = $_POST['class'];
+    $selectClass = 1;
+} else if (isset($_POST['student']) && $_POST['student'] != '') {
+    $studen  = $_POST['student'];
+    $selectClass = 2;
+} else {
+    $selectClass = 0;
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -65,55 +80,96 @@ require('config/config.php');
                 <h4>รายการฝาก ถอน</h4>
             </center>
             <br>
-            <div class="row mb-4">
-                <div class='col-6 mb-3'>
-                    <select class="form-control select2bs4" id='student' name="student">
-                        <option>กรุณาเลือกนักเรียน</option>
-                        <option value='1/1'>ชั้นประถมศึกษาปีที่ 1/1</option>
-                        <option value='1/2'>ชั้นประถมศึกษาปีที่ 1/2</option>
-                        <option value='1/3'>ชั้นประถมศึกษาปีที่ 1/3</option>
-                        <option value='2/1'>ชั้นประถมศึกษาปีที่ 2/1</option>
-                        <option value='2/2'>ชั้นประถมศึกษาปีที่ 2/2</option>
-                        <option value='2/3'>ชั้นประถมศึกษาปีที่ 2/3</option>
-                        <option value='3/1'>ชั้นประถมศึกษาปีที่ 3/1</option>
-                        <option value='3/2'>ชั้นประถมศึกษาปีที่ 3/2</option>
-                        <option value='3/3'>ชั้นประถมศึกษาปีที่ 3/3</option>
-                    </select>
-                </div>
-                <div class='col-6 mb-3'>
-                    <select class="form-control select2bs4" id='student' name="student">
-                        <option>กรุณาเลือกนักเรียน</option>
-                        <option value='1'>นายเอ</option>
-                        <option value='2'>นายเอ้</option>
-                        <option value='3'>นายเอก</option>
-                        <option value='4'>นายเอส</option>
-                        <option value='5'>นายเอว</option>
-                        <option value='6'>นายเอง</option>
-                    </select>
-                </div>
-                <div class='col-6 mb-3'>
-                    <div class="input-group date" id="searchdate" data-target-input="nearest">
-                        <input type="text" class="form-control datetimepicker-input" data-target="#searchdate" />
-                        <div class="input-group-append" data-target="#searchdate" data-toggle="datetimepicker">
-                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+            <?PHP
+            if ($selectClass == 0) {
+            ?>
+                <form action="" method="POST">
+                    <div class="row mb-4">
+                        <div class='col-12 mb-3'>
+                            <select class="form-control select2bs4" id='class' name="class">
+                                <option value="">กรุณาเลือกชั้นเรียน</option>
+                                <option value='1/1'>ชั้นประถมศึกษาปีที่ 1/1</option>
+                                <option value='1/2'>ชั้นประถมศึกษาปีที่ 1/2</option>
+                                <option value='1/3'>ชั้นประถมศึกษาปีที่ 1/3</option>
+                                <option value='2/1'>ชั้นประถมศึกษาปีที่ 2/1</option>
+                                <option value='2/2'>ชั้นประถมศึกษาปีที่ 2/2</option>
+                                <option value='2/3'>ชั้นประถมศึกษาปีที่ 2/3</option>
+                                <option value='3/1'>ชั้นประถมศึกษาปีที่ 3/1</option>
+                                <option value='3/2'>ชั้นประถมศึกษาปีที่ 3/2</option>
+                                <option value='3/3'>ชั้นประถมศึกษาปีที่ 3/3</option>
+                            </select>
+                        </div>
+                        <div class="col-12 mb-3">
+                            <button type="submit" id="btns" class='btn btn-info btn-block mb-3'>ค้นหา</button>
                         </div>
                     </div>
-                </div>
-                <div class='col-6 mb-3'>
-                    <div class="input-group date" id="reservationdate" data-target-input="nearest">
-                        <input type="text" class="form-control datetimepicker-input" data-target="#reservationdate" />
-                        <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
-                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                </form>
+
+                <script>
+                    $(document).ready(function() {
+                        $('#btns').attr('disabled', 'disabled');
+                        $('#class').change(function() {
+                            if ($(this).val != '') {
+                                $('#btns').removeAttr('disabled');
+                            }
+                        });
+                    });
+                </script>
+            <?PHP } else if ($selectClass == 1) { ?>
+                <?PHP
+                // echo 'class : ' . $class;
+                // echo '<br/>';
+                // echo 'selectClass : ' . $selectClass;
+                ?>
+                <form action="" method="POST">
+                    <div class="row">
+                        <div class='col-6 mb-3'>
+                            <select class="form-control select2bs4" id='student' name="student">
+                                <option>กรุณาเลือกนักเรียน</option>
+                                <?PHP
+                                $getStudenSQL = "SELECT * FROM list_students WHERE ls_class = '$class' ";
+                                $getStudenARR = mysqli_query($conn, $getStudenSQL);
+                                $getStudenNUM = mysqli_num_rows($getStudenARR);
+                                if ($getStudenNUM > 0) {
+                                    foreach ($getStudenARR as $getStuden) {
+                                        $fullname = $getStuden['ls_prefix'] . ' ' .  $getStuden['ls_fname'] . ' ' . $getStuden['ls_lname'];
+                                ?>
+                                        <option value=<?= $getStuden['ls_student_id']; ?>><?= $fullname ?></option>
+                                <?PHP
+                                    }
+                                }
+                                ?>
+                            </select>
+                        </div>
+                        <div class='col-6 mb-3'>
+                            <div class="input-group date" id="fdate" data-target-input="nearest">
+                                <input name="fdate" type="text" class="form-control datetimepicker-input" data-target="#fdate" />
+                                <div class="input-group-append" data-target="#fdate" data-toggle="datetimepicker">
+                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class='col-6 mb-3'>
+                            <div class="input-group date" id="ldate" data-target-input="nearest">
+                                <input name="ldate" type="text" class="form-control datetimepicker-input" data-target="#ldate" />
+                                <div class="input-group-append" data-target="#ldate" data-toggle="datetimepicker">
+                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+
+                            <button type="submit" class='btn btn-info btn-block mb-3 '>ประมวลผล</button>
                         </div>
                     </div>
-                </div>
-                <div class="col-12">
-
-                    <button class='btn btn-info btn-block mb-3 '>ค้นหา</button>
-                </div>
-            </div>
+                </form>
+            <?PHP } ?>
+        </div>
 
 
+        <?PHP
+        if ($selectClass == 2) {
+        ?>
 
             <h3>ด.ช. กร ชั้น ป.1/2</h3>
             <center>
@@ -132,13 +188,25 @@ require('config/config.php');
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td><?= KTgetData::convertTHDate(date("Y-m-d H:i:s"), 'DMY') ?></td>
-                        <td>ฝาก</td>
-                        <td>100.-</td>
-                        <td>100.-</td>
-                        <td>คุณแม่ให้มากฝากไว้</td>
-                    </tr>
+                    <?PHP
+                    $getDepositByIdSQL = "SELECT * FROM deposit WHERE dep_student_id = '$studen' ";
+                    $getDepositByIdARR = mysqli_query($conn, $getDepositByIdSQL);
+                    $getDepositByIdNUM = mysqli_num_rows($getDepositByIdARR);
+                    if ($getDepositByIdNUM > 0) {
+                        foreach ($getDepositByIdARR as $getDepositById) {
+
+                    ?>
+                            <tr>
+                                <td><?= KTgetData::convertTHDate(date("Y-m-d H:i:s"), 'DMY') ?></td>
+                                <td>ฝาก</td>
+                                <td>100.-</td>
+                                <td>100.-</td>
+                                <td>คุณแม่ให้มากฝากไว้</td>
+                            </tr>
+                    <?PHP
+                        }
+                    }
+                    ?>
                 </tbody>
                 <tfoot>
                     <tr>
@@ -147,8 +215,9 @@ require('config/config.php');
                     </tr>
                 </tfoot>
             </table>
-            <h6>ครู กนต์ธร สามารถติดต่อได้ที่ เบอร์ 2143</h6>
-        </div>
+        <?PHP  } ?>
+        <h6>ครู กนต์ธร สามารถติดต่อได้ที่ เบอร์ 2143</h6>
+    </div>
     </div>
 
 
@@ -158,7 +227,7 @@ require('config/config.php');
     <script src="plugins/jquery-ui/jquery-ui.min.js"></script>
     <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
     <script>
-    $.widget.bridge('uibutton', $.ui.button)
+        $.widget.bridge('uibutton', $.ui.button)
     </script>
     <!-- Bootstrap 4 -->
     <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -214,7 +283,27 @@ require('config/config.php');
     <script src="plugins/pace-progress/pace.min.js"></script>
 
     <script src="https://rawgit.com/RobinHerbots/jquery.inputmask/3.x/dist/jquery.inputmask.bundle.js"></script>
+    <script>
+        $(function() {
+            // $("#usertable").DataTable({
+            //     "responsive": true,
+            //     "lengthChange": false,
+            //     "autoWidth": false,
+            //     "buttons": ["excel", "pdf", "print", "colvis"]
+            // }).buttons().container().appendTo('#usertable_wrapper .col-md-6:eq(0)');
 
+
+            //searchdate picker
+            $('#fdate').datetimepicker({
+                format: 'L'
+            });
+
+            //reservationdate picker
+            $('#ldate').datetimepicker({
+                format: 'L'
+            });
+        });
+    </script>
 </body>
 
 </html>

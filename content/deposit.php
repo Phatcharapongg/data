@@ -36,6 +36,7 @@ if (
     && isset($_POST['editStudentID']) && $_POST['editStudentID'] != ''
     && isset($_POST['editType']) && $_POST['editType'] != ''
     && isset($_POST['editAmount']) && $_POST['editAmount'] != ''
+    
 ) {
 
     $editDepositSQL = "UPDATE deposit SET ";
