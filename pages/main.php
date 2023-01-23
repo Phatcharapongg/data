@@ -14,9 +14,10 @@ $getUserNUM = mysqli_num_rows($getUserARR);
 if ($getUserNUM == 1) {
     foreach ($getUserARR as $getUser) {
 
-        $fullname   = $getUser['usr_fname'] . " " . $getUser['usr_lname'];
-        $class      = $getUser['usr_class'];
-        $status     = $getUser['usr_status'];
+        $fullname         = $getUser['usr_fname'] . " " . $getUser['usr_lname'];
+        $class            = $getUser['usr_class'];
+        $status           = $getUser['usr_status'];
+        $usr_username     = $getUser['usr_username'];
     }
 } else {
     session_destroy();
@@ -93,8 +94,7 @@ if ($getUserNUM == 1) {
                     <a href="<?= $_SESSION['uri']; ?>/<?= $path; ?>/pages/main?path=dashboard" class="nav-link">Home</a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a href="<?= $_SESSION['uri']; ?>/<?= $path; ?>/pages/main?path=contact"
-                        class="nav-link">Contact</a>
+                    <a href="<?= $_SESSION['uri']; ?>/<?= $path; ?>/pages/main?path=contact" class="nav-link">Contact</a>
                 </li>
             </ul>
 
@@ -118,8 +118,7 @@ if ($getUserNUM == 1) {
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
             <!-- Brand Logo -->
             <a href="<?= $_SESSION['uri']; ?>/<?= $path; ?>/pages/main?path=dashboard" class="brand-link">
-                <img src="../dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
-                    style="opacity: .8">
+                <img src="../dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
                 <span class="brand-text font-weight-light">AdminLTE 3</span>
             </a>
 
@@ -128,19 +127,17 @@ if ($getUserNUM == 1) {
                 <!-- Sidebar user (optional) -->
                 <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                     <div class="image">
-                        <img src="../dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+                        <img src="../dist/img/default01.jpg" class="img-circle elevation-2" alt="User Image">
                     </div>
                     <div class="info">
-                        <a href="<?= $_SESSION['uri']; ?>/<?= $path; ?>/pages/main?path=dashboard"
-                            class="d-block"><?= strtoupper($fullname); ?></a>
+                        <a href="<?= $_SESSION['uri']; ?>/<?= $path; ?>/pages/main?path=dashboard" class="d-block"><?= strtoupper($fullname); ?></a>
                     </div>
                 </div>
 
                 <!-- SidebarSearch Form -->
                 <div class="form-inline">
                     <div class="input-group" data-widget="sidebar-search">
-                        <input class="form-control form-control-sidebar" type="search" placeholder="Search"
-                            aria-label="Search">
+                        <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
                         <div class="input-group-append">
                             <button class="btn btn-sidebar">
                                 <i class="fas fa-search fa-fw"></i>
@@ -151,8 +148,7 @@ if ($getUserNUM == 1) {
 
                 <!-- Sidebar Menu -->
                 <nav class="mt-2">
-                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
-                        data-accordion="false">
+                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
 
                         <!-- เช๊คว่ามีค่าหรือเปล่ากดแถบเลือกให้เป็นสี active -->
                         <?PHP
@@ -162,7 +158,7 @@ if ($getUserNUM == 1) {
                             $report = 'active';
                         } else if (isset($_GET['path']) && $_GET['path'] == 'deposit') {
                             $deposit = 'active';
-                            } else if (isset($_GET['path']) && $_GET['path'] == 'addstudent') {
+                        } else if (isset($_GET['path']) && $_GET['path'] == 'addstudent') {
                             $addstudent = 'active';
                         } else {
                             $controlUser = '';
@@ -172,43 +168,41 @@ if ($getUserNUM == 1) {
                         }
                         ?>
                         <!-- หน้าต่างๆในแถบเมนู -->
-                       
+                        <?PHP if ($usr_username == 'ict1') { ?>
+                            <li class="nav-item">
+                                <a href="<?= $_SESSION['uri']; ?>/<?= $path; ?>/pages/main?path=controlUser" class="nav-link <?= $controlUser; ?>">
+                                    <i class="nav-icon fas fa-user-cog"></i>
+                                    <p>
+                                        Control User
+                                    </p>
+                                </a>
+                            </li>
+                        <?PHP } ?>
                         <li class="nav-item">
-                            <a href="<?= $_SESSION['uri']; ?>/<?= $path; ?>/pages/main?path=deposit"
-                                class="nav-link <?= $deposit; ?>">
-                                <i class="nav-icon fas fa-tachometer-alt"></i>
+                            <a href="<?= $_SESSION['uri']; ?>/<?= $path; ?>/pages/main?path=deposit" class="nav-link <?= $deposit; ?>">
+                                <i class="nav-icon fas fa-coins"></i>
                                 <p>
                                     Deposit
                                 </p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="<?= $_SESSION['uri']; ?>/<?= $path; ?>/pages/main?path=report"
-                                class="nav-link <?= $report; ?>">
-                                <i class="nav-icon fas fa-tachometer-alt"></i>
+                            <a href="<?= $_SESSION['uri']; ?>/<?= $path; ?>/pages/main?path=report" class="nav-link <?= $report; ?>">
+                                <i class="nav-icon fas fa-paste"></i>
                                 <p>
                                     Report
                                 </p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="<?= $_SESSION['uri']; ?>/<?= $path; ?>/pages/main?path=addstudent"
-                                class="nav-link <?= $addstudent; ?>">
-                                <i class="nav-icon fas fa-tachometer-alt"></i>
+                            <a href="<?= $_SESSION['uri']; ?>/<?= $path; ?>/pages/main?path=addstudent" class="nav-link <?= $addstudent; ?>">
+                                <i class="nav-icon fas fa-user-plus"></i>
                                 <p>
                                     Add Student
                                 </p>
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a href="<?= $_SESSION['uri']; ?>/<?= $path; ?>/pages/main?path=controlUser"
-                                class="nav-link <?= $controlUser; ?>">
-                                <i class="nav-icon fas fa-tachometer-alt"></i>
-                                <p>
-                                    Control User
-                                </p>
-                            </a>
-                        </li>
+
 
                     </ul>
                 </nav>
@@ -238,8 +232,8 @@ if ($getUserNUM == 1) {
                         $content = 'controluser.php';
                         break;
                     case 'addstudent':
-                            $content = 'addstudent.php';
-                            break;
+                        $content = 'addstudent.php';
+                        break;
                     default:
                         $content = 'dashboard.php';
                         break;
@@ -268,7 +262,7 @@ if ($getUserNUM == 1) {
     <script src="../plugins/jquery-ui/jquery-ui.min.js"></script>
     <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
     <script>
-    $.widget.bridge('uibutton', $.ui.button)
+        $.widget.bridge('uibutton', $.ui.button)
     </script>
     <!-- Bootstrap 4 -->
     <script src="../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -326,21 +320,21 @@ if ($getUserNUM == 1) {
     <script src="https://rawgit.com/RobinHerbots/jquery.inputmask/3.x/dist/jquery.inputmask.bundle.js"></script>
 
     <script>
-    $(function() {
-        bsCustomFileInput.init();
-        $('.select2').select2()
-    });
+        $(function() {
+            bsCustomFileInput.init();
+            $('.select2').select2()
+        });
 
-    $('.confirm').click(function() {
-        var getTxt = $(this).attr('txtAlert');
-        var text = confirm(getTxt);
+        $('.confirm').click(function() {
+            var getTxt = $(this).attr('txtAlert');
+            var text = confirm(getTxt);
 
-        if (text == true) {
-            return true;
-        } else {
-            return false;
-        }
-    })
+            if (text == true) {
+                return true;
+            } else {
+                return false;
+            }
+        })
     </script>
 
 </body>

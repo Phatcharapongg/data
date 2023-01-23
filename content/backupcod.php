@@ -416,3 +416,6 @@ WHERE dep_id = '3'
                         //             <td><?= $getlist_student['ls_student_id']; ?></td>
                         //             <td><?= $getlist_student['ls_fname']; ?> <?= $getlist_student['ls_lname']; ?></td>
                         //             <td>ชั้นประถมศึกษาปีที่ <?= $getlist_student['ls_class']; ?></td> -->
+
+
+                                  <!-- <h3> <?= $studen;?></h3> -->

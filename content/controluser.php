@@ -59,9 +59,9 @@ if (
     && isset($_POST['edittel']) && $_POST['edittel'] != ''
     && isset($_POST['editID']) && $_POST['editID'] != ''
 ) {
-    echo "<pre>";
-    print_r($_POST);
-    echo "</pre>";
+    // echo "<pre>";
+    // print_r($_POST);
+    // echo "</pre>";
 
     $edituserSQL = "UPDATE user SET ";
     $edituserSQL .= "usr_username       = '" . $_POST['editusername'] . "' ";

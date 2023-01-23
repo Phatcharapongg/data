@@ -149,9 +149,6 @@
                     <input type="hidden" name="type" value="editworklist">
                     <input type="hidden" id="id_edit" name="id_edit">
 
-
-
-
                     <div class="form-group">
                         <label for="dept_edit">ที่ไหนแจ้งมา</label>
                         <input type="text" class="form-control" id="dept_edit" disabled>
@@ -235,8 +232,6 @@
 <!-- /.modal -->
 
 <!-- //-------------------------------------------------------------------- ฝากเงิน -->
-
-
 <script>
     $(function() {
         $("#usertable").DataTable({

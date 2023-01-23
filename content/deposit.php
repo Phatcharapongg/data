@@ -1,6 +1,9 @@
 <?PHP
 
 //----------------------------------------------------------------------------------------------- START MODAL ADD
+
+use function PHPSTORM_META\type;
+
 if (
     isset($_POST['form']) && $_POST['form'] == 'insertDeposit'
     && isset($_POST['insert']) && $_POST['insert'] == 'deposit'
@@ -8,18 +11,53 @@ if (
     && isset($_POST['type']) && $_POST['type'] != ''
     && isset($_POST['amount']) && $_POST['amount'] != ''
 ) {
+
+    $type = $_POST['type'];
+    $sumAmount = 0;
+
+    $chkMaxBalanceSQL = "SELECT dep_amount_balance AS NowBalance FROM deposit WHERE dep_student_id = '" . $_POST['studentID'] . "' ORDER BY dep_id DESC LIMIT 1";
+    $chkMaxBalanceARR = mysqli_query($conn, $chkMaxBalanceSQL);
+    $chkMaxBalanceNUM = mysqli_num_rows($chkMaxBalanceARR);
+
+    foreach ($chkMaxBalanceARR as $chkMaxBalance) {
+        if ($type == 'ฝาก') {
+            $sumAmount =  intval($chkMaxBalance['NowBalance']) + $_POST['amount'];
+        } else {
+            $sumAmount =  intval($chkMaxBalance['NowBalance']) - $_POST['amount'];
+        }
+    }
+
     // Insert
-    $InsertDepositSQL = "INSERT INTO deposit (dep_type, dep_amount, dep_insby, dep_insdt, dep_status, dep_student_id, dep_note)
-    VALUES (
-        '" . $_POST['type'] . "',
-        '" . $_POST['amount'] . "',
-        '" . $_POST['username'] . "',
-        '" . date("Y-m-d H:i:s") . "',
-        '1',
-        '" . $_POST['studentID'] . "',
-        '" . $_POST['note'] . "'
-        )";
-    mysqli_query($conn, $InsertDepositSQL);
+
+    if ($type == 'ฝาก') {
+        $InsertDepositSQL = "INSERT INTO deposit (dep_type, dep_amount_in, dep_amount_out, dep_amount_balance, dep_insby, dep_insdt, dep_status, dep_student_id, dep_note)
+        VALUES (
+            '" . $type . "',
+            '" . $_POST['amount'] . "',
+            '0',
+            '" .  $sumAmount . "',
+            '" . $_POST['username'] . "',
+            '" . date("Y-m-d H:i:s") . "',
+            '1',
+            '" . $_POST['studentID'] . "',
+            '" . $_POST['note'] . "'
+            )";
+        mysqli_query($conn, $InsertDepositSQL);
+    } else {
+        $InsertDepositSQL = "INSERT INTO deposit (dep_type, dep_amount_in,dep_amount_out, dep_amount_balance, dep_insby, dep_insdt, dep_status, dep_student_id, dep_note)
+        VALUES (
+            '" . $type . "',
+            '0',
+            '" . $_POST['amount'] . "',
+            '" .  $sumAmount . "',
+            '" . $_POST['username'] . "',
+            '" . date("Y-m-d H:i:s") . "',
+            '1',
+            '" . $_POST['studentID'] . "',
+            '" . $_POST['note'] . "'
+            )";
+        mysqli_query($conn, $InsertDepositSQL);
+    }
 
     header("location: " . $_SESSION['uri'] . "/" . $path . "/pages/main?path=deposit&alert=insert-success");
     exit(0);
@@ -36,7 +74,7 @@ if (
     && isset($_POST['editStudentID']) && $_POST['editStudentID'] != ''
     && isset($_POST['editType']) && $_POST['editType'] != ''
     && isset($_POST['editAmount']) && $_POST['editAmount'] != ''
-    
+
 ) {
 
     $editDepositSQL = "UPDATE deposit SET ";
@@ -104,12 +142,11 @@ function getNameUser($conn, $username)
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1>ฝากเงิน</h1>
+                <h1>ฝาก-ถอนเงินฝาก</h1>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a
-                            href="<?= $_SESSION['uri']; ?>/<?= $path; ?>/pages/main?path=dashboard">Home</a></li>
+                    <li class="breadcrumb-item"><a href="<?= $_SESSION['uri']; ?>/<?= $path; ?>/pages/main?path=dashboard">Home</a></li>
                     <li class="breadcrumb-item active">ฝากเงิน</li>
                 </ol>
             </div>
@@ -131,12 +168,12 @@ function getNameUser($conn, $username)
                     <table id="usertable" class="table table-bordered table-striped">
 
                         <thead>
-                            <tr>
+                            <tr class="text-center">
                                 <th>#</th>
                                 <th>รหัสประจำตัวนักเรียน</th>
                                 <th>ชื่อ - นามสกุล</th>
                                 <th>รายการ</th>
-                                <th>จำนวนเงิน (บาท)</th>
+                                <th>ฝาก / ถอน</th>
                                 <th>ชื่อครูผู้เพิ่มข้อมูล</th>
                                 <th>วันที่</th>
                                 <th>ชื่อครูผู้แก้ไขข้อมูล</th>
@@ -157,70 +194,87 @@ function getNameUser($conn, $username)
                             $getDepositARR = mysqli_query($conn, $getDepositSQL);
                             $getDepositNUM = mysqli_num_rows($getDepositARR);
 
+
                             if ($getDepositNUM > 0) {
                                 $id = 1;
                                 foreach ($getDepositARR as $getDeposit) {
                                     $fullname = $getDeposit['ls_prefix'] . '' . $getDeposit['ls_fname'] . ' ' . $getDeposit['ls_lname']
                             ?>
-                            <tr class="text-center">
-                                <td><?= $id; ?></td>
-                                <td><?= $getDeposit['ls_student_id']; ?></td>
-                                <td><?= $fullname; ?></td>
-                                <td>
-                                    <?PHP
+                                    <tr class="text-center">
+                                        <td><?= $id; ?></td>
+                                        <td><?= $getDeposit['ls_student_id']; ?></td>
+                                        <td><?= $fullname; ?></td>
+                                        <td>
+                                            <?PHP
                                             if ($getDeposit['dep_type'] == 'ฝาก') {
                                                 echo "<span class='text-success'>ฝาก</span>";
                                             } else {
                                                 echo "<span class='text-red'>ถอน</span>";
                                             }
                                             ?>
-                                </td>
-                                <td><?= $getDeposit['dep_amount']; ?></td>
-                                <td><?= getNameUser($conn, $getDeposit['dep_insby']); ?></td>
-                                <td><?= KTgetData::convertTHDate($getDeposit['dep_insdt'], 'DMY'); ?></td>
-                                <td><?= $getDeposit['dep_upby'] != null ? getNameUser($conn, $getDeposit['dep_upby']) : '-'; ?>
-                                </td>
-                                <td><?= $getDeposit['dep_updt'] != null ? KTgetData::convertTHDate($getDeposit['dep_updt'], 'DMY') : '-'; ?>
-                                </td>
-                                <td><?= $getDeposit['dep_note'] != '' ? $getDeposit['dep_note'] : '-'; ?></td>
+                                        </td>
+
+                                        <td>
+
+                                            <?PHP
+                                            if ($getDeposit['dep_amount_in'] != 0) {
+                                            ?>
+                                                <span class="text-success">+<?= $getDeposit['dep_amount_in']; ?>.-</span>
+                                            <?PHP
+                                            } else {
+                                            ?>
+                                                <span class="text-danger ml-5">-<?= $getDeposit['dep_amount_out']; ?>.-</span>
+                                            <?PHP
+                                            }
+                                            ?>
+
+                                        </td>
 
 
 
-                                <td class="project-actions text-center">
-                                    <button type="button" class="btn btn-warning btn-sm edit"
-                                        data-info="<?= $getDeposit['dep_id']; ?>|x|<?= $getDeposit['ls_student_id']; 
-                                            ?>|x|<?= $getDeposit['dep_type']; ?>|x|<?= $getDeposit['dep_amount']; 
-                                            ?>|x|<?= $getDeposit['dep_note']; ?>" data-toggle="modal"
-                                        data-target="#modal-editdata">
-                                        <i class='fas fa-edit'></i>
-                                    </button>
-                                    <script>
-                                    $(document).ready(function() {
-                                        $('.edit').click(function() {
-                                            var getInfo = $(this).attr('data-info')
-                                            var splitARR = getInfo.split('|x|')
-                                            $("#editID").val(splitARR[0])
-                                            $("#editStudentID").val(splitARR[1])
-                                            $("#editType").val(splitARR[2])
-                                            $("#editAmount").val(splitARR[3])
-                                            $("#editNote").val(splitARR[4])
-                                        })
-                                    })
-                                    </script>
 
-                                    <div class="btn-group">
-                                        <form action="" method="POST">
-                                            <input type="hidden" name="form" value="delDeposit">
-                                            <input type="hidden" name="delete" value="deposit">
-                                            <input type="hidden" name="idDel" value="<?= $getDeposit['dep_id']; ?>">
-                                            <button type="submit" class="btn btn-danger btn-sm confirm"
-                                                txtAlert='คุณต้องการลบข้อมูลนี้จริงหรือไม่ ?' name="valueDel" value="9">
-                                                <i class="fas fa-trash-alt"></i>
+                                        <td><?= getNameUser($conn, $getDeposit['dep_insby']); ?></td>
+                                        <td><?= KTgetData::convertTHDate($getDeposit['dep_insdt'], 'DMY'); ?></td>
+                                        <td><?= $getDeposit['dep_upby'] != null ? getNameUser($conn, $getDeposit['dep_upby']) : '-'; ?>
+                                        </td>
+                                        <td><?= $getDeposit['dep_updt'] != null ? KTgetData::convertTHDate($getDeposit['dep_updt'], 'DMY') : '-'; ?>
+                                        </td>
+                                        <td><?= $getDeposit['dep_note'] != '' ? $getDeposit['dep_note'] : '-'; ?></td>
+
+
+
+                                        <td class="project-actions text-center">
+                                            <button type="button" class="btn btn-warning btn-sm edit" data-info="<?= $getDeposit['dep_id']; ?>|x|<?= $getDeposit['ls_student_id'];
+                                                                                                                                                    ?>|x|<?= $getDeposit['dep_type']; ?>|x|<?= $getDeposit['dep_amount'];
+                                                                                                                                                                                            ?>|x|<?= $getDeposit['dep_note']; ?>" data-toggle="modal" data-target="#modal-editdata">
+                                                <i class='fas fa-edit'></i>
                                             </button>
-                                        </form>
-                                    </div>
-                                </td>
-                            </tr>
+                                            <script>
+                                                $(document).ready(function() {
+                                                    $('.edit').click(function() {
+                                                        var getInfo = $(this).attr('data-info')
+                                                        var splitARR = getInfo.split('|x|')
+                                                        $("#editID").val(splitARR[0])
+                                                        $("#editStudentID").val(splitARR[1])
+                                                        $("#editType").val(splitARR[2])
+                                                        $("#editAmount").val(splitARR[3])
+                                                        $("#editNote").val(splitARR[4])
+                                                    })
+                                                })
+                                            </script>
+
+                                            <div class="btn-group">
+                                                <form action="" method="POST">
+                                                    <input type="hidden" name="form" value="delDeposit">
+                                                    <input type="hidden" name="delete" value="deposit">
+                                                    <input type="hidden" name="idDel" value="<?= $getDeposit['dep_id']; ?>">
+                                                    <button type="submit" class="btn btn-danger btn-sm confirm" txtAlert='คุณต้องการลบข้อมูลนี้จริงหรือไม่ ?' name="valueDel" value="9">
+                                                        <i class="fas fa-trash-alt"></i>
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </td>
+                                    </tr>
                             <?PHP
                                     $id++;
                                 }
@@ -254,8 +308,8 @@ function getNameUser($conn, $username)
                                 <label for="studentID">ชื่อนักเรียน</label>
                                 <select class="form-control select2bs4" id='studentID' name="studentID">
                                     <option>กรุณาเลือกนักเรียน</option>
-                                    <option value='4017'>นายเอ</option>
-                                    <option value='4018'>นายเอ้</option>
+                                    <option value='100'>นายเอ</option>
+                                    <option value='101'>นายเอ้</option>
                                 </select>
                             </div>
                         </div>
@@ -272,8 +326,7 @@ function getNameUser($conn, $username)
                         <div class="col-sm-12 col-md-12 col-lg-6 col-xl-3">
                             <div class="form-group">
                                 <label for="amount">amount</label>
-                                <input type="number" class="form-control" id="amount" name="amount"
-                                    placeholder="Enter amount">
+                                <input type="number" class="form-control" id="amount" name="amount" placeholder="Enter amount">
                             </div>
                         </div>
                         <div class="col-sm-12 col-md-12 col-lg-6 col-xl-3">
@@ -337,16 +390,14 @@ function getNameUser($conn, $username)
                         <div class="col-sm-12 col-md-12 col-lg-6 col-xl-3">
                             <div class="form-group">
                                 <label for="editAmount">amount</label>
-                                <input type="number" class="form-control" id="editAmount" name="editAmount"
-                                    placeholder="Enter amount">
+                                <input type="number" class="form-control" id="editAmount" name="editAmount" placeholder="Enter amount">
                             </div>
                         </div>
 
                         <div class="col-sm-12 col-md-12 col-lg-6 col-xl-3">
                             <div class="form-group">
                                 <label for="editNote">หมายเหตุ</label>
-                                <input type="text" class="form-control" id="editNote" name="editNote"
-                                    placeholder="Enter note">
+                                <input type="text" class="form-control" id="editNote" name="editNote" placeholder="Enter note">
                             </div>
                         </div>
 
@@ -363,12 +414,12 @@ function getNameUser($conn, $username)
 <!-- //-------------------------------------------------------------------- แก้ไขการฝากเงิน -->
 
 <script>
-$(function() {
-    $("#usertable").DataTable({
-        "responsive": true,
-        "lengthChange": false,
-        "autoWidth": false,
-        "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-    }).buttons().container().appendTo('#usertable_wrapper .col-md-6:eq(0)');
-});
+    $(function() {
+        $("#usertable").DataTable({
+            "responsive": true,
+            "lengthChange": false,
+            "autoWidth": false,
+            "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+        }).buttons().container().appendTo('#usertable_wrapper .col-md-6:eq(0)');
+    });
 </script>

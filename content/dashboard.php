@@ -26,24 +26,9 @@
     <!-- Small Box (Stat card) -->
 
     <div class="row">
-      <div class="col-lg-3 col-6">
-        <!-- small card -->
-        <div class="small-box bg-info">
-          <div class="inner">
-            <h3>150</h3>
 
-            <p>New Orders</p>
-          </div>
-          <div class="icon">
-            <i class="fas fa-shopping-cart"></i>
-          </div>
-          <a href="#" class="small-box-footer">
-            More info <i class="fas fa-arrow-circle-right"></i>
-          </a>
-        </div>
-      </div>
       <!-- ./col -->
-      <div class="col-lg-3 col-6">
+      <div class="col-lg-4 col-6">
         <!-- small card -->
         <div class="small-box bg-success">
           <div class="inner">
@@ -60,7 +45,7 @@
         </div>
       </div>
       <!-- ./col -->
-      <div class="col-lg-3 col-6">
+      <div class="col-lg-4 col-6">
         <!-- small card -->
         <div class="small-box bg-warning">
           <div class="inner">
@@ -77,7 +62,7 @@
         </div>
       </div>
       <!-- ./col -->
-      <div class="col-lg-3 col-6">
+      <div class="col-lg-4 col-6">
         <!-- small card -->
         <div class="small-box bg-danger">
           <div class="inner">
@@ -224,18 +209,14 @@
           </div>
           <!-- /.card-body -->
           <div class="card-footer clearfix">
-            <button type="button" class="btn btn-primary float-right"><i class="fas fa-plus"></i> Add item</button>
+            <button type="button" class="btn btn-primary float-right"><i class="fas fa-plus"></i> Add
+              item</button>
           </div>
         </div>
       </div>
-      <div class="col-6">
-
-      </div>
-
-
     </div>
-
   </div>
-
-
 </section>
+<script>
+
+</script>
