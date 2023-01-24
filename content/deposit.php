@@ -1,5 +1,7 @@
 <?PHP
-
+     echo '<pre>';
+     print_r($_POST);
+     echo '</pre>';
 //----------------------------------------------------------------------------------------------- START MODAL ADD
 
 use function PHPSTORM_META\type;
@@ -29,41 +31,42 @@ if (
 
     // Insert
 
-    if ($type == 'ฝาก') {
-        $InsertDepositSQL = "INSERT INTO deposit (dep_type, dep_amount_in, dep_amount_out, dep_amount_balance, dep_insby, dep_insdt, dep_status, dep_student_id, dep_note)
-        VALUES (
-            '" . $type . "',
-            '" . $_POST['amount'] . "',
-            '0',
-            '" .  $sumAmount . "',
-            '" . $_POST['username'] . "',
-            '" . date("Y-m-d H:i:s") . "',
-            '1',
-            '" . $_POST['studentID'] . "',
-            '" . $_POST['note'] . "'
-            )";
-        mysqli_query($conn, $InsertDepositSQL);
-    } else {
-        $InsertDepositSQL = "INSERT INTO deposit (dep_type, dep_amount_in,dep_amount_out, dep_amount_balance, dep_insby, dep_insdt, dep_status, dep_student_id, dep_note)
-        VALUES (
-            '" . $type . "',
-            '0',
-            '" . $_POST['amount'] . "',
-            '" .  $sumAmount . "',
-            '" . $_POST['username'] . "',
-            '" . date("Y-m-d H:i:s") . "',
-            '1',
-            '" . $_POST['studentID'] . "',
-            '" . $_POST['note'] . "'
-            )";
-        mysqli_query($conn, $InsertDepositSQL);
-    }
+    // if ($type == 'ฝาก') {
+    //     $InsertDepositSQL = "INSERT INTO deposit (dep_type, dep_amount_in, dep_amount_out, dep_amount_balance, dep_insby, dep_insdt, dep_status, dep_student_id, dep_note)
+    //     VALUES (
+    //         '" . $type . "',
+    //         '" . $_POST['amount'] . "',
+    //         '0',
+    //         '" .  $sumAmount . "',
+    //         '" . $_POST['username'] . "',
+    //         '" . date("Y-m-d H:i:s") . "',
+    //         '1',
+    //         '" . $_POST['studentID'] . "',
+    //         '" . $_POST['note'] . "'
+    //         )";
+    //     mysqli_query($conn, $InsertDepositSQL);
+    // } else {
+    //     $InsertDepositSQL = "INSERT INTO deposit (dep_type, dep_amount_in,dep_amount_out, dep_amount_balance, dep_insby, dep_insdt, dep_status, dep_student_id, dep_note)
+    //     VALUES (
+    //         '" . $type . "',
+    //         '0',
+    //         '" . $_POST['amount'] . "',
+    //         '" .  $sumAmount . "',
+    //         '" . $_POST['username'] . "',
+    //         '" . date("Y-m-d H:i:s") . "',
+    //         '1',
+    //         '" . $_POST['studentID'] . "',
+    //         '" . $_POST['note'] . "'
+    //         )";
+    //     mysqli_query($conn, $InsertDepositSQL);
+    // }
 
-    header("location: " . $_SESSION['uri'] . "/" . $path . "/pages/main?path=deposit&alert=insert-success");
-    exit(0);
+    // header("location: " . $_SESSION['uri'] . "/" . $path . "/pages/main?path=deposit&alert=insert-success");
+    // exit(0);
+
+
 }
 //----------------------------------------------------------------------------------------------- END MODAL ADD
-
 
 
 
@@ -306,16 +309,30 @@ function getNameUser($conn, $username)
                         <div class="col-sm-12 col-md-12 col-lg-6 col-xl-3">
                             <div class="form-group">
                                 <label for="studentID">ชื่อนักเรียน</label>
-                                <select class="form-control select2bs4" id='studentID' name="studentID">
-                                    <option>กรุณาเลือกนักเรียน</option>
-                                    <option value='100'>นายเอ</option>
-                                    <option value='101'>นายเอ้</option>
-                                </select>
+                                <select class="form-control select2bs4" id='fullname' name="fullname">
+                            <option>กรุณาเลือกนักเรียน</option>
+                            <?PHP
+                                $getStudenSQL = "SELECT * FROM list_students WHERE ls_class = '$class' ";
+                                $getStudenARR = mysqli_query($conn, $getStudenSQL);
+                                $getStudenNUM = mysqli_num_rows($getStudenARR);
+                                if ($getStudenNUM > 0) {
+                                    foreach ($getStudenARR as $getStuden) {
+                                        $classByStuden = $getStuden['ls_class'];
+                                        $fullname = $getStuden['ls_prefix'] . ' ' .  $getStuden['ls_fname'] . ' ' . $getStuden['ls_lname'];
+                                ?>
+                            <option
+                                value="<?= $getStuden['ls_student_id']; ?>|x|<?= $fullname; ?>|x|<?= $classByStuden; ?>">
+                                <?= $fullname ?></option>
+                            <?PHP
+                                    }
+                                }
+                                ?>
+                        </select>
                             </div>
                         </div>
                         <div class="col-sm-12 col-md-12 col-lg-6 col-xl-3">
                             <div class="form-group">
-                                <label for="type">ประเภท</label>
+                                <label for="type">รายการ</label>
                                 <select class="form-control" id='type' name="type">
                                     <option value=''>กรุณาเลือกประเภท</option>
                                     <option value='ฝาก'>ฝาก</option>
