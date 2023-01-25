@@ -15,7 +15,7 @@ if ($getUserNUM == 1) {
     foreach ($getUserARR as $getUser) {
 
         $fullname         = $getUser['usr_fname'] . " " . $getUser['usr_lname'];
-        $class            = $getUser['usr_class'];
+        $classTeacher     = $getUser['usr_class'];
         $status           = $getUser['usr_status'];
         $usr_username     = $getUser['usr_username'];
     }
