@@ -93,9 +93,6 @@ if ($getUserNUM == 1) {
                 <li class="nav-item d-none d-sm-inline-block">
                     <a href="<?= $_SESSION['uri']; ?>/<?= $path; ?>/pages/main?path=dashboard" class="nav-link">Home</a>
                 </li>
-                <li class="nav-item d-none d-sm-inline-block">
-                    <a href="<?= $_SESSION['uri']; ?>/<?= $path; ?>/pages/main?path=contact" class="nav-link">Contact</a>
-                </li>
             </ul>
 
             <!-- Right navbar links -->
@@ -127,7 +124,7 @@ if ($getUserNUM == 1) {
                 <!-- Sidebar user (optional) -->
                 <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                     <div class="image">
-                        <img src="../dist/img/default01.jpg" class="img-circle elevation-2" alt="User Image">
+                        <img src="../dist/img/user6.jpg" class="img-circle elevation-2" alt="User Image">
                     </div>
                     <div class="info">
                         <a href="<?= $_SESSION['uri']; ?>/<?= $path; ?>/pages/main?path=dashboard" class="d-block"><?= strtoupper($fullname); ?></a>
@@ -173,7 +170,7 @@ if ($getUserNUM == 1) {
                                 <a href="<?= $_SESSION['uri']; ?>/<?= $path; ?>/pages/main?path=controlUser" class="nav-link <?= $controlUser; ?>">
                                     <i class="nav-icon fas fa-user-cog"></i>
                                     <p>
-                                        Control User
+                                        ควบคุมผู้ใช้งาน
                                     </p>
                                 </a>
                             </li>
@@ -182,7 +179,7 @@ if ($getUserNUM == 1) {
                             <a href="<?= $_SESSION['uri']; ?>/<?= $path; ?>/pages/main?path=deposit" class="nav-link <?= $deposit; ?>">
                                 <i class="nav-icon fas fa-coins"></i>
                                 <p>
-                                    Deposit
+                                ฝาก-ถอนเงิน
                                 </p>
                             </a>
                         </li>
@@ -190,7 +187,7 @@ if ($getUserNUM == 1) {
                             <a href="<?= $_SESSION['uri']; ?>/<?= $path; ?>/pages/main?path=report" class="nav-link <?= $report; ?>">
                                 <i class="nav-icon fas fa-paste"></i>
                                 <p>
-                                    Report
+                               รายงานการฝาก-ถอนเงิน
                                 </p>
                             </a>
                         </li>
@@ -198,7 +195,7 @@ if ($getUserNUM == 1) {
                             <a href="<?= $_SESSION['uri']; ?>/<?= $path; ?>/pages/main?path=addstudent" class="nav-link <?= $addstudent; ?>">
                                 <i class="nav-icon fas fa-user-plus"></i>
                                 <p>
-                                    Add Student
+                                    เพิ่ม,แก้ไขข้อมูลนักเรียน
                                 </p>
                             </a>
                         </li>

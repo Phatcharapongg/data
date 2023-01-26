@@ -132,7 +132,7 @@ if (
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1>Control User</h1>
+                <h1 class="text-bold">Control User</h1>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
@@ -150,7 +150,7 @@ if (
     <div class="container-fluid">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title"><b> บันทึกการรับฝากเงินนักเรียนชั้ันประศึกษาปีที่ 1 </b></h3>
+                <h3 class="card-title"><b>ควบคุมผู้ใช้งาน</b></h3>
                 <div class='text-right'>
                     <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal-adduser">
                         <i class="fas fa-user-plus"></i>
@@ -339,7 +339,7 @@ if (
                             <div class="form-group">
                                 <label for="editclass">ชั้นเรียนที่รับผิดชอบ</label>
                                 <select class="form-control select2bs4" id='editclass' name="editclass">
-                                <option>กรุณาเลือกชั้นเรียน</option>
+                                    <option>กรุณาเลือกชั้นเรียน</option>
                                     <option value='1/1'>ชั้นประถมศึกษาปีที่ 1/1</option>
                                     <option value='1/2'>ชั้นประถมศึกษาปีที่ 1/2</option>
                                     <option value='1/3'>ชั้นประถมศึกษาปีที่ 1/3</option>

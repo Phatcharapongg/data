@@ -674,3 +674,182 @@ WHERE dep_id = '3'
         });
     }); -->
 <!-- </script> --> -->
+
+
+
+<?PHP } else if ($selectClass == 1) { ?>
+    <?PHP
+
+                ?>
+    <!-- // echo 'class : ' . $class;
+                // echo '<br/>';
+                // echo 'selectClass : ' . $selectClass; -->
+    <form action="" method="POST">
+        <div class="row mb-1">
+            <div class='col-12 mb-3'>
+                <select class="form-control select2bs4" id='student' name="student">
+                    <option>กรุณาเลือกนักเรียน</option>
+                    <?PHP
+                                $getStudenSQL = "SELECT * FROM list_students WHERE ls_class = '$class' ";
+                                $getStudenARR = mysqli_query($conn, $getStudenSQL);
+                                $getStudenNUM = mysqli_num_rows($getStudenARR);
+                                if ($getStudenNUM > 0) {
+                                    foreach ($getStudenARR as $getStuden) {
+                                        $classByStuden = $getStuden['ls_class'];
+                                        $fullname = $getStuden['ls_prefix'] . ' ' .  $getStuden['ls_fname'] . ' ' . $getStuden['ls_lname'];
+                                ?>
+                    <option value="<?= $getStuden['ls_student_id']; ?>|x|<?= $fullname; ?>|x|<?= $classByStuden; ?>">
+                        <?= $fullname ?></option>
+                    <?PHP
+                                    }
+                                }
+                                ?>
+                </select>
+            </div>
+        </div>
+
+        <div class="row mb-2">
+            <div class='col-6 mb-3'>
+                <div class="input-group date" id="fdate" data-target-input="nearest">
+                    <input name="fdate" type="text" class="form-control datetimepicker-input" data-target="#fdate" />
+                    <div class="input-group-append" data-target="#fdate" data-toggle="datetimepicker">
+                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class='col-6 mb-3'>
+                <div class="input-group date" id="ldate" data-target-input="nearest">
+                    <input name="ldate" type="text" class="form-control datetimepicker-input" data-target="#ldate" />
+                    <div class="input-group-append" data-target="#ldate" data-toggle="datetimepicker">
+                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12">
+
+            <button type="submit" class='btn btn-info btn-block mb-3 '>ค้นหา</button>
+        </div>
+        </div>
+    </form>
+    <?PHP } ?>
+
+    <?PHP
+            if ($selectClass == 2) {
+            ?>
+    <br>
+    <h4 class="text-bold"> <?= $studenFullname; ?> ชั้นประถมศึกษาปีที่ : <?= $classNumber; ?></h4>
+
+
+
+    <center>
+        <h5 class="text-bold">รายการตั้งแต่วันที่ <?= KTgetData::convertTHDate($fdate, "DMY"); ?> -
+            <?= KTgetData::convertTHDate($ldate, "DMY"); ?></h5>
+    </center>
+
+<br>
+<br>
+<br>
+    <table id="reporttable" class="table table-bordered table-striped">
+        <thead>
+
+            <tr  class="text-center">
+                <th>วันที่</th>
+                <th>รายการ</th>
+                <th>ฝาก / ถอน</th>
+                <th>ยอดคงเหลือ (บาท)</th>
+                <th>รายละเอียด</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?PHP
+
+                        $getDepositByIdSQL = "SELECT * FROM deposit WHERE dep_student_id = '$studenID' AND dep_status != '9' ";
+                        $getDepositByIdARR = mysqli_query($conn, $getDepositByIdSQL);
+                        $getDepositByIdNUM = mysqli_num_rows($getDepositByIdARR);
+                        if ($getDepositByIdNUM > 0) {
+                            foreach ($getDepositByIdARR as $getDepositById) {
+                                $dep_amount_in      =  $getDepositById['dep_amount_in'];
+                                $dep_amount_out     =  $getDepositById['dep_amount_out'];
+                                $dep_amount_balance =  $getDepositById['dep_amount_balance'];
+                                $dep_type           =  $getDepositById['dep_type'];
+                                $dep_note           =  $getDepositById['dep_note'];
+                                // echo "<pre>";
+                                // print_r($getDepositById);
+                                // echo "</pre>";
+                        ?>
+            <tr class="text-center">
+                <td class="text-bold"><?= KTgetData::convertTHDate($getDepositById['dep_insdt'], 'DMY') ?></td>
+                <td class="text-bold">
+                    <?PHP
+                                        if ($dep_type != 'ถอน') {
+                                        ?>
+                    <span class="text-success"><?= $dep_type; ?></span>
+                    <?PHP
+                                        } else {
+                                        ?>
+                    <span class="text-danger"><?= $dep_type; ?></span>
+                    <?PHP
+                                        }
+                                        ?>
+                </td>
+                <td class="text-bold">
+                    <?PHP
+                                        if ($dep_amount_in != 0) {
+                                        ?>
+                    <span class="text-success">+<?= $dep_amount_in; ?>.-</span>
+                    <?PHP
+                                        } else {
+                                        ?>
+                    <span class="text-danger ml-5">-<?= $dep_amount_out; ?>.-</span>
+                    <?PHP
+                                        }
+                                        ?>
+                </td>
+                <td class="text-bold"><?= $dep_amount_balance; ?>.-</td>
+                <td class="text-bold"><?= $dep_note; ?></td>
+               
+            </tr>
+            <?PHP
+                            }
+                        } else {
+                            ?>
+            <tr>
+                <td colspan="5" class="text-bold text-center bg-danger">ยังไม่มีการฝากเงิน</td>
+            </tr>
+            <?PHP
+                        }
+                        ?>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td class="text-bold" colspan="4" style="text-align: right;">จำนวนเงินสะสม</td>
+                <td class="text-bold"><?= isset($dep_amount_balance) ? $dep_amount_balance : '0'; ?> บาท</td>
+            </tr>
+        </tfoot>
+    </table>
+    <?PHP  } ?>
+
+
+    <?PHP
+            if ($selectClass == 2) {
+            ?>
+
+    <?PHP
+                $getTeacherSQL = "SELECT * FROM user WHERE usr_class = '$classNumber'";
+                $getTeacherARR = mysqli_query($conn, $getTeacherSQL);
+                $getTeacherNUM = mysqli_num_rows($getTeacherARR);
+
+                foreach ($getTeacherARR as $getTeacher) {
+                    $fullnameTeacher =  $getTeacher['usr_fname'] . ' ' . $getTeacher['usr_lname'];
+                    $TelTeacher =  $getTeacher['usr_tel'];
+                }
+                ?>
+    <h6 class="text-bold">ครู <?= $fullnameTeacher; ?> สามารถติดต่อได้ที่ เบอร์ <?= $TelTeacher; ?></h6>
+
+    </div>
+    <?PHP  } ?>
+
+
+

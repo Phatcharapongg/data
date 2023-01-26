@@ -79,14 +79,14 @@ if (isset($_POST['class']) && $_POST['class'] != '') {
     <script src="plugins/jquery/jquery.min.js"></script>
 
 </head>
-<br><br><br>
+<br><br><br><br><br><br><br><br>
 
-<body style="font-family: 'Kanit', sans-serif;  background-image: url('./dist/img/bgg.jpg');">
+<body style="font-family: 'Kanit', sans-serif;  background-image: url('./dist/img/do.jfif');">
 
     <div class="contect">
         <div class="container">
             <center>
-                <h3 class="text-bold">บันทึกการฝากออมเงินของนักเรียน</h3>
+                <h3 class="text-bold">บันทึกรายการฝากออมเงินของนักเรียน</h3>
             </center>
 
             <br>

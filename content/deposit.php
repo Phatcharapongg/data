@@ -211,7 +211,7 @@ function getNameUser($conn, $username)
 if (isset($_GET['error']) && $_GET['error'] == 'insert-error-not-enough-money') {
     $alert = 1;
     $icon = 'error';
-    $title = 'เงินมึงไม่พอ';
+    $title = 'ยอดเงินไม่เพียงพอ';
 } else {
     $alert = 0;
 }
@@ -234,7 +234,7 @@ $(document).ready(function() {
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1>ฝาก-ถอนเงินฝาก</h1>
+                <h1 class="text-bold">Deposit</h1>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
@@ -251,7 +251,7 @@ $(document).ready(function() {
     <div class="container-fluid">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title"><b> บันทึกการรับฝากเงินนักเรียนชั้ันประศึกษาปีที่ 1 </b></h3>
+                <h3 class="card-title"><b> บันทึกรายการฝาก-ถอนเงิน</b></h3>
                 <div class='text-right'>
                     <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal-adddata">
                         <i class='fas fa-coins'></i> Add

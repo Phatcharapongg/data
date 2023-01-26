@@ -103,7 +103,7 @@ if (
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1>Control Student</h1>
+                <h1 class="text-bold">Control Student</h1>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
@@ -121,7 +121,7 @@ if (
     <div class="container-fluid">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title"><b> บันทึกการรับฝากเงินนักเรียนชั้ันประศึกษาปีที่ 1 </b></h3>
+                <h3 class="card-title"><b> ข้อมูลรายชื่อนักเรียน </b></h3>
                 <div class='text-right'>
                     <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal-addstudents">
                         <i class="fas fa-user-plus"></i>
@@ -143,7 +143,8 @@ if (
                     </thead>
                     <tbody>
                         <?PHP
-                        $getlist_studentsSQL = "SELECT * FROM list_students WHERE ls_status != '9'";
+                        // $getlist_studentsSQL = "SELECT * FROM list_students WHERE ls_status != '9'";
+                        $getlist_studentsSQL = "SELECT * FROM list_students WHERE ls_class = '" . $classTeacher . "' AND ls_status != '9'";
                         $getlist_studentsARR = mysqli_query($conn, $getlist_studentsSQL);
                         $getlist_studentsNUM = mysqli_num_rows($getlist_studentsARR);
 
