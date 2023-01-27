@@ -26,7 +26,7 @@ if (isset($_POST['class']) && $_POST['class'] != '') {
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="<?= $_SESSION['uri']; ?>/<?= $path; ?>/pages/main?path=dashboard">Home</a></li>
-                    <li class="breadcrumb-item active">Report</li>
+                    <li class="breadcrumb-item active">รายงาน</li>
                 </ol>
             </div>
         </div>
@@ -278,6 +278,15 @@ if (isset($_POST['class']) && $_POST['class'] != '') {
 
         //reservationdate picker
         $('#reservationdate').datetimepicker({
+            format: 'L'
+        });
+        //searchdate picker
+        $('#fdate').datetimepicker({
+            format: 'L'
+        });
+
+        //reservationdate picker
+        $('#ldate').datetimepicker({
             format: 'L'
         });
     });

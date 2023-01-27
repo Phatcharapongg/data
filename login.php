@@ -143,15 +143,17 @@ if (isset($_GET["error"])) {
 
 <!-- From Login -->
 
-<body class="hold-transition login-page">
+<body style="font-family: 'Kanit', sans-serif;  background-image: url('./dist/img/do.jfif');"></body>
+<body  class="hold-transition login-page   ">
+    
 
     <div class="login-box">
         <div class="login-logo">
-            <h2><a href="#"><b>Deposit Login</b></a> </h2>
+            <h2><a href="#"><b> Student Deposit Login</b></a> </h2>
         </div>
         <!-- /.login-logo -->
         <div class="card">
-            <div class="card-body login-card-body">
+            <div class="card-body login-card-body ">
                 <h6>
                     <p class="login-box-msg"><b>Sign in to access your account.</b></p>
                 </h6>

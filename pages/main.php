@@ -115,16 +115,16 @@ if ($getUserNUM == 1) {
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
             <!-- Brand Logo -->
             <a href="<?= $_SESSION['uri']; ?>/<?= $path; ?>/pages/main?path=dashboard" class="brand-link">
-                <img src="../dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-                <span class="brand-text font-weight-light">AdminLTE 3</span>
+                <img src="../dist/img/2.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+                <span class="brand-text font-weight-light">Student Deposit</span>
             </a>
-
+            <!-- Student Deposit -->
             <!-- Sidebar -->
             <div class="sidebar">
                 <!-- Sidebar user (optional) -->
                 <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                     <div class="image">
-                        <img src="../dist/img/user6.jpg" class="img-circle elevation-2" alt="User Image">
+                        <img src="../dist/img/default.jpg" class="img-circle elevation-2" alt="User Image">
                     </div>
                     <div class="info">
                         <a href="<?= $_SESSION['uri']; ?>/<?= $path; ?>/pages/main?path=dashboard" class="d-block"><?= strtoupper($fullname); ?></a>
@@ -179,7 +179,7 @@ if ($getUserNUM == 1) {
                             <a href="<?= $_SESSION['uri']; ?>/<?= $path; ?>/pages/main?path=deposit" class="nav-link <?= $deposit; ?>">
                                 <i class="nav-icon fas fa-coins"></i>
                                 <p>
-                                ฝาก-ถอนเงิน
+                                    ฝาก-ถอนเงิน
                                 </p>
                             </a>
                         </li>
@@ -187,7 +187,7 @@ if ($getUserNUM == 1) {
                             <a href="<?= $_SESSION['uri']; ?>/<?= $path; ?>/pages/main?path=report" class="nav-link <?= $report; ?>">
                                 <i class="nav-icon fas fa-paste"></i>
                                 <p>
-                               รายงานการฝาก-ถอนเงิน
+                                    รายงานการฝาก-ถอนเงิน
                                 </p>
                             </a>
                         </li>

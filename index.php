@@ -100,7 +100,7 @@ if (isset($_POST['class']) && $_POST['class'] != '') {
                 <form action="" method="POST">
                     <div class="row mb-4">
                         <div class='col-12 mb-3'>
-                            <select class="form-control select2bs4 " id='class' name="class" >
+                            <select class="form-control select2bs4 " id='class' name="class">
                                 <option value="">กรุณาเลือกชั้นเรียน</option>
                                 <option value='1/1'>ชั้นประถมศึกษาปีที่ 1/1</option>
                                 <option value='1/2'>ชั้นประถมศึกษาปีที่ 1/2</option>
@@ -121,11 +121,11 @@ if (isset($_POST['class']) && $_POST['class'] != '') {
                                 <option value='6/2'>ชั้นประถมศึกษาปีที่ 6/2</option>
                                 <option value='6/3'>ชั้นประถมศึกษาปีที่ 6/3</option>
                             </select>
-                <br>
-                        <div class="col-12 mb-3">
-                            <button type="submit" id="btns" class='btn btn-info btn-block mb-3'>ค้นหา</button>
+                            <br>
+                            <div class="col-12 mb-3">
+                                <button type="submit" id="btns" class='btn btn-info btn-block mb-3'>ค้นหา</button>
+                            </div>
                         </div>
-                    </div>
                 </form>
 
                 <script>
@@ -139,7 +139,7 @@ if (isset($_POST['class']) && $_POST['class'] != '') {
                     });
                 </script>
 
-                
+
 
             <?PHP } else if ($selectClass == 1) { ?>
                 <?PHP
@@ -383,6 +383,7 @@ if (isset($_POST['class']) && $_POST['class'] != '') {
 
 
             //searchdate picker
+
             $('#fdate').datetimepicker({
                 format: 'L'
             });

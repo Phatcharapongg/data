@@ -103,12 +103,14 @@ if (
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1 class="text-bold">Control Student</h1>
+                <h1 class="text-bold"> เพิ่ม,แก้ไขข้อมูลนักเรียน
+                </h1>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="<?= $_SESSION['uri']; ?>/<?= $path; ?>/pages/main?path=dashboard">Home</a></li>
-                    <li class="breadcrumb-item active">Control Student</li>
+                    <li class="breadcrumb-item active"> เพิ่ม,แก้ไขข้อมูลนักเรียน
+                    </li>
                 </ol>
             </div>
         </div>
@@ -159,11 +161,6 @@ if (
                                     <td><?= $getlist_students['ls_prefix']; ?><?= $getlist_students['ls_fname']; ?><?= $getlist_students['ls_lname']; ?>
                                     </td>
                                     <td>ชั้นประถมศึกษาปีที่ <?= $getlist_students['ls_class']; ?></td>
-
-
-
-
-
                                     <td class="project-actions text-center">
                                         <button type="button" class="btn btn-warning btn-sm edit" data-info="<?= $getlist_students['ls_id']; ?>|x|<?= $getlist_students['ls_student_id']; ?>|x|<?= $getlist_students['ls_prefix']; ?>|x|<?= $getlist_students['ls_fname']; ?>|x|<?= $getlist_students['ls_lname']; ?>|x|<?= $getlist_students['ls_class']; ?>" data-toggle="modal" data-target="#modal-editstudents">
                                             <i class='fas fa-edit'></i>
@@ -279,9 +276,6 @@ if (
                                 </select>
                             </div>
                         </div>
-
-
-
                     </div>
                 </div>
                 <div class="modal-footer justify-content-between">
@@ -292,7 +286,6 @@ if (
         </div>
     </div>
 </div>
-
 <!-- //-------------------------------------------------------------------- เพิ่ม student -->
 
 <!-- //-------------------------------------------------------------------- แก้ไข student -->
