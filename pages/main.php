@@ -248,7 +248,7 @@ if ($getUserNUM == 1) {
             <div class="float-right d-none d-sm-block">
                 <b>Version</b> 3.2.0
             </div>
-            <strong>Copyright &copy; 2021-2021 <a href="#">AdminLTE.io</a>.</strong> All rights
+            <strong>Copyright &copy; 2021-2021 <a href="#">Phatcharapong Timmanee</a>.</strong> All rights
             reserved.
         </footer>
     </div>

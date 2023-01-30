@@ -1,5 +1,7 @@
 <?PHP
 
+use function PHPSTORM_META\type;
+
 ?>
 <section class="content-header">
   <div class="container-fluid">
@@ -19,11 +21,11 @@
 <section class="content">
   <div class="container-fluid">
     <div class="row">
-      <div class="col-lg-3 col-6">
+      <div class="col-lg-4 col-6">
         <div class="small-box bg-success">
           <div class="inner">
-            <h3> 3 <sup style="font-size: 20px"></sup></h3>
-            <p>จำนวนนักเรียนขั้นประถมศึกษาปีที่....1/1</p>
+            <h3> <?= KTgetData::getNumberBoxInDashboard($conn, 'numberofstudents', $classTeacher) != NULL ?  KTgetData::getNumberBoxInDashboard($conn, 'numberofstudents', $classTeacher) : '0'; ?><sup style="font-size: 20px"></sup></h3>
+            <p>จำนวนนักเรียนขั้นประถมศึกษาปีที่ <?= $classTeacher; ?></p>
           </div>
           <div class="icon">
             <i class="fas fa-users"></i>
@@ -31,29 +33,10 @@
           <a href="#" class="small-box-footer  "> Total number of classes </a>
         </div>
       </div>
-      <!-- ./col -->
-      <div class="col-lg-3 col-6">
-        <!-- small card -->
-        <div class="small-box bg-warning">
-          <div class="inner">
-            <h3>1</h3>
-            <h3>
-              <p>จำนวนรายการฝาก-ถอนเงินภายในวันนี้</p>
-            </h3>
-          </div>
-          <div class="icon">
-            <i class="	fas fa-user-clock"></i>
-          </div>
-          <a href="#" class="small-box-footer text-bold">
-            Today's deposit-withdrawal list</a>
-        </div>
-      </div>
-      <!-- ./col -->
-      <div class="col-lg-3 col-6">
-        <!-- small card -->
+      <div class="col-lg-4 col-6">
         <div class="small-box bg-danger">
           <div class="inner">
-            <h3>1000</h3>
+            <h3> <?= KTgetData::getNumberBoxInDashboard($conn, 'sumAmountByDay', date('Y-m-d')) != NULL ? KTgetData::getNumberBoxInDashboard($conn, 'sumAmountByDay', date('Y-m-d')) : '0'; ?></h3>
             <p>ยอดรวมเงินฝากในวันนี้ </p>
           </div>
           <div class="icon">
@@ -62,16 +45,16 @@
           <a href="#" class="small-box-footer"> Today's total deposit</a>
         </div>
       </div>
-      <div class="col-lg-3 col-6">
+      <div class="col-lg-4 col-6">
         <div class="small-box bg-primary">
           <div class="inner">
-            <h3>1500</h3>
+            <h3> <?= KTgetData::getNumberBoxInDashboard($conn, 'sumAmountAll', 'all') != NULL ?  KTgetData::getNumberBoxInDashboard($conn, 'sumAmountAll', 'all') : '0'; ?></h3>
             <p>ยอดรวมเงินฝากทั้งหมด</p>
           </div>
           <div class="icon">
             <i class="fas fa-landmark"></i>
           </div>
-          <a href="#" class="small-box-footer"> Total amount of all deposits</a>
+          <a href="#" class="small-box-footer"> Total amount of all depoits</a>
         </div>
       </div>
     </div>
@@ -102,9 +85,9 @@
       <div class="col-md-6">
         <div class="card">
           <div class="card-header">
-            <h3 class="card-title">
+            <h3 class="card-title text-bold">
               <i class="ion ion-clipboard mr-1"></i>
-              To Do List
+              จำนวนการฝากเงินนักเรียนเรียงตามลำดับ
             </h3>
 
             <div class="card-tools">
@@ -308,9 +291,9 @@
       },
       themeSystem: 'bootstrap',
       //Random default events
-        events: [
-       
-      
+      events: [
+
+
       ],
       editable: true,
       droppable: true, // this allows things to be dropped onto the calendar !!!

@@ -25,6 +25,44 @@ if (!$conn) {
 class KTgetData
 {
 
+    public static function getNumberBoxInDashboard($conn, $type, $data)
+    {
+        if ($type == 'numberofstudents' && $data != '') {
+            $getNBSTNSQL = "SELECT COUNT(ls_id) AS numberofstudents FROM list_students WHERE ls_class = '" . $data . "'";
+            $getNBSTNARR = mysqli_query($conn, $getNBSTNSQL);
+            $getNBSTNNUM = mysqli_num_rows($getNBSTNARR);
+            if ($getNBSTNNUM > 0) {
+                foreach ($getNBSTNARR as  $getNBSTN) {
+                    return $getNBSTN['numberofstudents'];
+                }
+            } else {
+                return 0;
+            }
+        } elseif ($type == 'sumAmountByDay' && $data != '') {
+            $getSAMBDSQL = "SELECT SUM(dep_amount_in) AS sumAmountByDay FROM deposit WHERE dep_insdt LIKE '" . $data . "%' AND dep_status != '9'";
+            $getSAMBDARR = mysqli_query($conn, $getSAMBDSQL);
+            $getSAMBDNUM = mysqli_num_rows($getSAMBDARR);
+            if ($getSAMBDNUM > 0) {
+                foreach ($getSAMBDARR as  $getSAMBD) {
+                    return $getSAMBD['sumAmountByDay'];
+                }
+            } else {
+                return 0;
+            }
+        } else {
+            $getSAMASQL = "SELECT SUM(dep_amount_in) AS sumAmountAll FROM deposit WHERE dep_status != '9'";
+            $getSAMAARR = mysqli_query($conn, $getSAMASQL);
+            $getSAMANUM = mysqli_num_rows($getSAMAARR);
+            if ($getSAMANUM > 0) {
+                foreach ($getSAMAARR as  $getSAMA) {
+                    return $getSAMA['sumAmountAll'];
+                }
+            } else {
+                return 0;
+            }
+        }
+    }
+
     public static function formatNumber($number)
     {
 

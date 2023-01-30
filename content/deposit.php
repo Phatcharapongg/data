@@ -84,6 +84,11 @@ if (
         mysqli_query($conn, $InsertDepositSQL);
     }
 
+    //---------------START  UPDATE BALANCE NOW BY STUDENT -----------//
+
+
+    //--------------- END UPDATE BALANCE NOW BY STUDENT -----------//
+
     header("location: " . $_SESSION['uri'] . "/" . $path . "/pages/main?path=deposit&alert=insert-success");
     exit(0);
 }
@@ -158,9 +163,17 @@ if (
         $editDepositSQL .= ",dep_updt       = '" . date("Y-m-d H:i:s") . "' ";
 
         $editDepositSQL .= "WHERE dep_id = '" . $_POST['editID'] . "' ";
-        // echo $editDepositSQL;
+        mysqli_query($conn, $editDepositSQL);
+        
+        
+        //---------------START  UPDATE BALANCE NOW BY STUDENT -----------//
+    
+    
+        //--------------- END UPDATE BALANCE NOW BY STUDENT -----------//
     }
-    mysqli_query($conn, $editDepositSQL);
+
+
+    
     header("location: " . $_SESSION['uri'] . "/" . $path . "/pages/main?path=deposit&alert=edit-success");
     exit(0);
 }
