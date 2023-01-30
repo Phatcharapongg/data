@@ -108,7 +108,8 @@ if (
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="<?= $_SESSION['uri']; ?>/<?= $path; ?>/pages/main?path=dashboard">Home</a></li>
+                    <li class="breadcrumb-item"><a
+                            href="<?= $_SESSION['uri']; ?>/<?= $path; ?>/pages/main?path=dashboard">Home</a></li>
                     <li class="breadcrumb-item active"> เพิ่ม,แก้ไขข้อมูลนักเรียน
                     </li>
                 </ol>
@@ -154,45 +155,48 @@ if (
                             $id = 1;
                             foreach ($getlist_studentsARR as $getlist_students) {
                         ?>
-                                <tr class="text-center">
+                        <tr class="text-center">
 
-                                    <td><?= $id; ?></td>
-                                    <td><?= $getlist_students['ls_student_id']; ?></td>
-                                    <td><?= $getlist_students['ls_prefix']; ?><?= $getlist_students['ls_fname']; ?><?= $getlist_students['ls_lname']; ?>
-                                    </td>
-                                    <td>ชั้นประถมศึกษาปีที่ <?= $getlist_students['ls_class']; ?></td>
-                                    <td class="project-actions text-center">
-                                        <button type="button" class="btn btn-warning btn-sm edit" data-info="<?= $getlist_students['ls_id']; ?>|x|<?= $getlist_students['ls_student_id']; ?>|x|<?= $getlist_students['ls_prefix']; ?>|x|<?= $getlist_students['ls_fname']; ?>|x|<?= $getlist_students['ls_lname']; ?>|x|<?= $getlist_students['ls_class']; ?>" data-toggle="modal" data-target="#modal-editstudents">
-                                            <i class='fas fa-edit'></i>
+                            <td><?= $id; ?></td>
+                            <td><?= $getlist_students['ls_student_id']; ?></td>
+                            <td><?= $getlist_students['ls_prefix']; ?><?= $getlist_students['ls_fname']; ?><?= $getlist_students['ls_lname']; ?>
+                            </td>
+                            <td>ชั้นประถมศึกษาปีที่ <?= $getlist_students['ls_class']; ?></td>
+                            <td class="project-actions text-center">
+                                <button type="button" class="btn btn-warning btn-sm edit"
+                                    data-info="<?= $getlist_students['ls_id']; ?>|x|<?= $getlist_students['ls_student_id']; ?>|x|<?= $getlist_students['ls_prefix']; ?>|x|<?= $getlist_students['ls_fname']; ?>|x|<?= $getlist_students['ls_lname']; ?>|x|<?= $getlist_students['ls_class']; ?>"
+                                    data-toggle="modal" data-target="#modal-editstudents">
+                                    <i class='fas fa-edit'></i>
+                                </button>
+                                <script>
+                                $(document).ready(function() {
+                                    $('.edit').click(function() {
+                                        var getInfo = $(this).attr('data-info')
+                                        var splitARR = getInfo.split('|x|')
+                                        // alert(splitARR)
+                                        $("#editID").val(splitARR[0])
+                                        $("#editls_student_id").val(splitARR[1])
+                                        $("#editls_prefix").val(splitARR[2])
+                                        $("#editls_fname").val(splitARR[3])
+                                        $("#editls_lname").val(splitARR[4])
+                                        $("#editls_class").val(splitARR[5])
+
+                                    })
+                                })
+                                </script>
+
+                                <div class="btn-group">
+                                    <form action="" method="POST">
+                                        <input type="hidden" name="form" value="list_students">
+                                        <input type="hidden" name="delete" value="list_students">
+                                        <input type="hidden" name="idDel" value="<?= $getlist_students['ls_id']; ?>">
+                                        <button type="submit" class="btn btn-danger btn-sm confirm"
+                                            txtAlert='คุณต้องการลบข้อมูลนี้จริงหรือไม่ ?' name="valueDel" value="9">
+                                            <i class="fas fa-trash-alt"></i>
                                         </button>
-                                        <script>
-                                            $(document).ready(function() {
-                                                $('.edit').click(function() {
-                                                    var getInfo = $(this).attr('data-info')
-                                                    var splitARR = getInfo.split('|x|')
-                                                    // alert(splitARR)
-                                                    $("#editID").val(splitARR[0])
-                                                    $("#editls_student_id").val(splitARR[1])
-                                                    $("#editls_prefix").val(splitARR[2])
-                                                    $("#editls_fname").val(splitARR[3])
-                                                    $("#editls_lname").val(splitARR[4])
-                                                    $("#editls_class").val(splitARR[5])
-
-                                                })
-                                            })
-                                        </script>
-
-                                        <div class="btn-group">
-                                            <form action="" method="POST">
-                                                <input type="hidden" name="form" value="list_students">
-                                                <input type="hidden" name="delete" value="list_students">
-                                                <input type="hidden" name="idDel" value="<?= $getlist_students['ls_id']; ?>">
-                                                <button type="submit" class="btn btn-danger btn-sm confirm" txtAlert='คุณต้องการลบข้อมูลนี้จริงหรือไม่ ?' name="valueDel" value="9">
-                                                    <i class="fas fa-trash-alt"></i>
-                                                </button>
-                                            </form>
-                                        </div>
-                                    </td>
+                                    </form>
+                                </div>
+                            </td>
 
                             <?PHP
                                 $id++;
@@ -225,7 +229,8 @@ if (
                         <div class="col-sm-12 col-md-12 col-lg-6 col-xl-3">
                             <div class="form-group">
                                 <label for="ls_student_id">รหัสประจำตัว</label>
-                                <input type="text" class="form-control" id="ls_student_id" name="ls_student_id" placeholder=" ID">
+                                <input type="text" class="form-control" id="ls_student_id" name="ls_student_id"
+                                    placeholder=" ID">
                             </div>
                         </div>
 
@@ -246,7 +251,8 @@ if (
                         <div class="col-sm-12 col-md-12 col-lg-6 col-xl-3">
                             <div class="form-group">
                                 <label for="ls_fname">ชื่อ</label>
-                                <input type="text" class="form-control" id="ls_fname" name="ls_fname" placeholder="Enter fname">
+                                <input type="text" class="form-control" id="ls_fname" name="ls_fname"
+                                    placeholder="Enter fname">
                             </div>
                         </div>
 
@@ -254,7 +260,8 @@ if (
                         <div class="col-sm-12 col-md-12 col-lg-6 col-xl-3">
                             <div class="form-group">
                                 <label for="ls_lname">สกุล</label>
-                                <input type="text" class="form-control" id="ls_lname" name="ls_lname" placeholder="Enter lname">
+                                <input type="text" class="form-control" id="ls_lname" name="ls_lname"
+                                    placeholder="Enter lname">
                             </div>
                         </div>
 
@@ -309,7 +316,8 @@ if (
                         <div class="col-sm-12 col-md-12 col-lg-6 col-xl-3">
                             <div class="form-group">
                                 <label for="editls_student_id">รหัสประจำตัว</label>
-                                <input type="text" class="form-control" id="editls_student_id" name="editls_student_id" placeholder="Enter ID">
+                                <input type="text" class="form-control" id="editls_student_id" name="editls_student_id"
+                                    placeholder="Enter ID">
                             </div>
                         </div>
 
@@ -329,14 +337,16 @@ if (
                         <div class="col-sm-12 col-md-12 col-lg-6 col-xl-3">
                             <div class="form-group">
                                 <label for="editls_fname">fname</label>
-                                <input type="text" class="form-control" id="editls_fname" name="editls_fname" placeholder="Enter fname">
+                                <input type="text" class="form-control" id="editls_fname" name="editls_fname"
+                                    placeholder="Enter fname">
                             </div>
                         </div>
 
                         <div class="col-sm-12 col-md-12 col-lg-6 col-xl-3">
                             <div class="form-group">
                                 <label for="editls_lname">lname</label>
-                                <input type="text" class="form-control" id="editls_lname" name="editls_lname" placeholder="Enter lname">
+                                <input type="text" class="form-control" id="editls_lname" name="editls_lname"
+                                    placeholder="Enter lname">
                             </div>
                         </div>
 
@@ -376,23 +386,23 @@ if (
 
 
 <script>
-    $(function() {
-        $("#usertable").DataTable({
-            "responsive": true,
-            "lengthChange": false,
-            "autoWidth": false,
-            "buttons": ["colvis"]
-        }).buttons().container().appendTo('#usertable_wrapper .col-md-6:eq(0)');
+$(function() {
+    $("#usertable").DataTable({
+        "responsive": true,
+        "lengthChange": false,
+        "autoWidth": false,
+        "buttons": ["colvis"]
+    }).buttons().container().appendTo('#usertable_wrapper .col-md-6:eq(0)');
 
 
-        //searchdate picker
-        $('#searchdate').datetimepicker({
-            format: 'L'
-        });
-
-        //reservationdate picker
-        $('#reservationdate').datetimepicker({
-            format: 'L'
-        });
+    //searchdate picker
+    $('#searchdate').datetimepicker({
+        format: 'L'
     });
+
+    //reservationdate picker
+    $('#reservationdate').datetimepicker({
+        format: 'L'
+    });
+});
 </script>
