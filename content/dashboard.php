@@ -27,6 +27,7 @@ use function PHPSTORM_META\type;
             <h3> <?= KTgetData::getNumberBoxInDashboard($conn, 'numberofstudents', $classTeacher) != NULL ?  KTgetData::getNumberBoxInDashboard($conn, 'numberofstudents', $classTeacher) : '0'; ?><sup style="font-size: 20px"></sup></h3>
             <p>จำนวนนักเรียนขั้นประถมศึกษาปีที่ <?= $classTeacher; ?></p>
           </div>
+          
           <div class="icon">
             <i class="fas fa-users"></i>
           </div>
