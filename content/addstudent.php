@@ -141,6 +141,7 @@ if (
                             <th>รหัสประจำตัว</th>
                             <th>ชื่อ - นามสกุล</th>
                             <th>Class</th>
+                            <th>ยอดเงินฝากคงเหลือล่าสุด</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -162,6 +163,7 @@ if (
                             <td><?= $getlist_students['ls_prefix']; ?><?= $getlist_students['ls_fname']; ?><?= $getlist_students['ls_lname']; ?>
                             </td>
                             <td>ชั้นประถมศึกษาปีที่ <?= $getlist_students['ls_class']; ?></td>
+                            <td><?= number_format($getlist_students['ls_balance']); ?></td>
                             <td class="project-actions text-center">
                                 <button type="button" class="btn btn-warning btn-sm edit"
                                     data-info="<?= $getlist_students['ls_id']; ?>|x|<?= $getlist_students['ls_student_id']; ?>|x|<?= $getlist_students['ls_prefix']; ?>|x|<?= $getlist_students['ls_fname']; ?>|x|<?= $getlist_students['ls_lname']; ?>|x|<?= $getlist_students['ls_class']; ?>"

@@ -27,6 +27,10 @@ if ($getUserNUM == 1) {
 ?>
 
 
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 

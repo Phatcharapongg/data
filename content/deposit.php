@@ -86,6 +86,13 @@ if (
 
     //---------------START  UPDATE BALANCE NOW BY STUDENT -----------//
 
+    $updateBalanceSQL = "UPDATE list_students SET ";
+    $updateBalanceSQL .= "ls_balance        = '" .  $sumAmount . "' ";
+    $updateBalanceSQL .= ",ls_upby          = '" . $_SESSION['username'] . "' ";
+    $updateBalanceSQL .= ",ls_update        = '" . date("Y-m-d H:i:s") . "' ";
+
+    $updateBalanceSQL .= "WHERE ls_student_id = '" . $studentID . "' ";
+    mysqli_query($conn, $updateBalanceSQL);
 
     //--------------- END UPDATE BALANCE NOW BY STUDENT -----------//
 
@@ -164,16 +171,23 @@ if (
 
         $editDepositSQL .= "WHERE dep_id = '" . $_POST['editID'] . "' ";
         mysqli_query($conn, $editDepositSQL);
-        
-        
+
+
         //---------------START  UPDATE BALANCE NOW BY STUDENT -----------//
-    
-    
+
+        $updateBalanceSQL = "UPDATE list_students SET ";
+        $updateBalanceSQL .= "ls_balance      = '" . $sumBalance . "' ";
+        $updateBalanceSQL .= ",ls_upby       = '" . $_SESSION['username'] . "' ";
+        $updateBalanceSQL .= ",ls_update       = '" . date("Y-m-d H:i:s") . "' ";
+
+        $updateBalanceSQL .= "WHERE ls_student_id = '" . $_POST['editstudentID'] . "' ";
+        mysqli_query($conn, $updateBalanceSQL);
+
         //--------------- END UPDATE BALANCE NOW BY STUDENT -----------//
     }
 
 
-    
+
     header("location: " . $_SESSION['uri'] . "/" . $path . "/pages/main?path=deposit&alert=edit-success");
     exit(0);
 }
@@ -325,24 +339,23 @@ if (isset($_GET['error']) && $_GET['error'] == 'insert-error-not-enough-money') 
                                             <?PHP
                                             if ($getDeposit['dep_amount_in'] != 0) {
                                             ?>
-                                                <span class="text-success">+<?= $getDeposit['dep_amount_in']; ?>.-</span>
+                                                <span class="text-success">+<?=number_format ($getDeposit['dep_amount_in']); ?>.-</span>
                                             <?PHP
                                             } else {
                                             ?>
-                                                <span class="text-danger ml-5">-<?= $getDeposit['dep_amount_out']; ?>.-</span>
+                                                <span class="text-danger ml-5">-<?= number_format($getDeposit['dep_amount_out']); ?>.-</span>
                                             <?PHP
                                             }
                                             ?>
 
                                         </td>
-                                        <td><?= $getDeposit['dep_amount_balance']; ?></td>
+                                        <td><?= number_format ($getDeposit['dep_amount_balance']); ?></td>
 
 
 
                                         <td><?= getNameUser($conn, $getDeposit['dep_insby']); ?></td>
                                         <td><?= KTgetData::convertTHDate($getDeposit['dep_insdt'], 'DMY'); ?></td>
-                                        <td><?= $getDeposit['dep_upby'] != null ? getNameUser($conn, $getDeposit['dep_upby']) : '-'; ?>
-                                        </td>
+                                        <td><?= $getDeposit['dep_upby'] != null ? getNameUser($conn, $getDeposit['dep_upby']) : '-'; ?></td>
                                         <td><?= $getDeposit['dep_updt'] != null ? KTgetData::convertTHDate($getDeposit['dep_updt'], 'DMY') : '-'; ?>
                                         </td>
                                         <td><?= $getDeposit['dep_note'] != '' ? $getDeposit['dep_note'] : '-'; ?></td>

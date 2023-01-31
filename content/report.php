@@ -173,7 +173,7 @@ if (isset($_POST['class']) && $_POST['class'] != '') {
                         <tbody>
                             <?PHP
 
-                            $getDepositByIdSQL = "SELECT * FROM deposit WHERE dep_student_id = '$studenID' AND dep_status != '9' ";
+                            $getDepositByIdSQL = "SELECT * FROM deposit WHERE dep_student_id = '$studenID' AND dep_insdt BETWEEN '$fdate 00:00:00' AND '$ldate 23:59:59' AND dep_status != '9'";
                             $getDepositByIdARR = mysqli_query($conn, $getDepositByIdSQL);
                             $getDepositByIdNUM = mysqli_num_rows($getDepositByIdARR);
                             if ($getDepositByIdNUM > 0) {
@@ -206,16 +206,16 @@ if (isset($_POST['class']) && $_POST['class'] != '') {
                                             <?PHP
                                             if ($dep_amount_in != 0) {
                                             ?>
-                                                <span class="text-success">+<?= $dep_amount_in; ?>.-</span>
+                                                <span class="text-success">+<?= number_format($dep_amount_in); ?>.-</span>
                                             <?PHP
                                             } else {
                                             ?>
-                                                <span class="text-danger ml-5">-<?= $dep_amount_out; ?>.-</span>
+                                                <span class="text-danger ml-5">-<?= number_format($dep_amount_out); ?>.-</span>
                                             <?PHP
                                             }
                                             ?>
                                         </td>
-                                        <td class="text-bold"><?= $dep_amount_balance; ?>.-</td>
+                                        <td class="text-bold"><?= number_format($dep_amount_balance); ?>.-</td>
                                         <td class="text-bold"><?= $dep_note; ?></td>
                                     </tr>
                                 <?PHP
@@ -272,22 +272,13 @@ if (isset($_POST['class']) && $_POST['class'] != '') {
 
 
         //searchdate picker
-        $('#searchdate').datetimepicker({
-            format: 'L'
-        });
-
-        //reservationdate picker
-        $('#reservationdate').datetimepicker({
-            format: 'L'
-        });
-        //searchdate picker
         $('#fdate').datetimepicker({
-            format: 'L'
+            format: 'Y-M-D'
         });
 
         //reservationdate picker
         $('#ldate').datetimepicker({
-            format: 'L'
+            format: 'Y-M-D'
         });
     });
 </script>

@@ -27,7 +27,7 @@ use function PHPSTORM_META\type;
             <h3> <?= KTgetData::getNumberBoxInDashboard($conn, 'numberofstudents', $classTeacher) != NULL ?  KTgetData::getNumberBoxInDashboard($conn, 'numberofstudents', $classTeacher) : '0'; ?><sup style="font-size: 20px"></sup></h3>
             <p>จำนวนนักเรียนขั้นประถมศึกษาปีที่ <?= $classTeacher; ?></p>
           </div>
-          
+
           <div class="icon">
             <i class="fas fa-users"></i>
           </div>
@@ -37,7 +37,7 @@ use function PHPSTORM_META\type;
       <div class="col-lg-4 col-6">
         <div class="small-box bg-danger">
           <div class="inner">
-            <h3> <?= KTgetData::getNumberBoxInDashboard($conn, 'sumAmountByDay', date('Y-m-d')) != NULL ? KTgetData::getNumberBoxInDashboard($conn, 'sumAmountByDay', date('Y-m-d')) : '0'; ?></h3>
+            <h3> <?= KTgetData::getNumberBoxInDashboard($conn, 'sumAmountByDay', date('Y-m-d')) != NULL ? number_format (KTgetData::getNumberBoxInDashboard($conn, 'sumAmountByDay', date('Y-m-d'))) : '0'; ?></h3>
             <p>ยอดรวมเงินฝากในวันนี้ </p>
           </div>
           <div class="icon">
@@ -49,7 +49,7 @@ use function PHPSTORM_META\type;
       <div class="col-lg-4 col-6">
         <div class="small-box bg-primary">
           <div class="inner">
-            <h3> <?= KTgetData::getNumberBoxInDashboard($conn, 'sumAmountAll', 'all') != NULL ?  KTgetData::getNumberBoxInDashboard($conn, 'sumAmountAll', 'all') : '0'; ?></h3>
+            <h3> <?= KTgetData::getNumberBoxInDashboard ($conn, 'sumAmountAll', 'all') != NULL ?  number_format (KTgetData::getNumberBoxInDashboard($conn, 'sumAmountAll', 'all') ): '0'; ?></h3>
             <p>ยอดรวมเงินฝากทั้งหมด</p>
           </div>
           <div class="icon">
@@ -90,127 +90,45 @@ use function PHPSTORM_META\type;
               <i class="ion ion-clipboard mr-1"></i>
               จำนวนการฝากเงินนักเรียนเรียงตามลำดับ
             </h3>
+          </div>
+          <div class="card-body p-0">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th style="width: 50%">ชื่อ-สกุล</th>
+                  <th style="width: 25%">จำนวนเงินฝาก</th>
+                  <th style="width: 25%">ลำดับที่</th>
+                </tr>
+              </thead>
+              <tbody>
 
-            <div class="card-tools">
-              <ul class="pagination pagination-sm">
-                <li class="page-item"><a href="#" class="page-link">&laquo;</a></li>
-                <li class="page-item"><a href="#" class="page-link">1</a></li>
-                <li class="page-item"><a href="#" class="page-link">2</a></li>
-                <li class="page-item"><a href="#" class="page-link">3</a></li>
-                <li class="page-item"><a href="#" class="page-link">&raquo;</a></li>
-              </ul>
-            </div>
-          </div>
-          <!-- /.card-header -->
-          <div class="card-body">
-            <ul class="todo-list" data-widget="todo-list">
-              <li>
-                <!-- drag handle -->
-                <span class="handle">
-                  <i class="fas fa-ellipsis-v"></i>
-                  <i class="fas fa-ellipsis-v"></i>
-                </span>
-                <!-- checkbox -->
-                <div class="icheck-primary d-inline ml-2">
-                  <input type="checkbox" value="" name="todo1" id="todoCheck1">
-                  <label for="todoCheck1"></label>
-                </div>
-                <!-- todo text -->
-                <span class="text">Design a nice theme</span>
-                <!-- Emphasis label -->
-                <small class="badge badge-danger"><i class="far fa-clock"></i> 2 mins</small>
-                <!-- General tools such as edit or delete-->
-                <div class="tools">
-                  <i class="fas fa-edit"></i>
-                  <i class="fas fa-trash-o"></i>
-                </div>
-              </li>
-              <li>
-                <span class="handle">
-                  <i class="fas fa-ellipsis-v"></i>
-                  <i class="fas fa-ellipsis-v"></i>
-                </span>
-                <div class="icheck-primary d-inline ml-2">
-                  <input type="checkbox" value="" name="todo2" id="todoCheck2" checked>
-                  <label for="todoCheck2"></label>
-                </div>
-                <span class="text">Make the theme responsive</span>
-                <small class="badge badge-info"><i class="far fa-clock"></i> 4 hours</small>
-                <div class="tools">
-                  <i class="fas fa-edit"></i>
-                  <i class="fas fa-trash-o"></i>
-                </div>
-              </li>
-              <li>
-                <span class="handle">
-                  <i class="fas fa-ellipsis-v"></i>
-                  <i class="fas fa-ellipsis-v"></i>
-                </span>
-                <div class="icheck-primary d-inline ml-2">
-                  <input type="checkbox" value="" name="todo3" id="todoCheck3">
-                  <label for="todoCheck3"></label>
-                </div>
-                <span class="text">Let theme shine like a star</span>
-                <small class="badge badge-warning"><i class="far fa-clock"></i> 1 day</small>
-                <div class="tools">
-                  <i class="fas fa-edit"></i>
-                  <i class="fas fa-trash-o"></i>
-                </div>
-              </li>
-              <li>
-                <span class="handle">
-                  <i class="fas fa-ellipsis-v"></i>
-                  <i class="fas fa-ellipsis-v"></i>
-                </span>
-                <div class="icheck-primary d-inline ml-2">
-                  <input type="checkbox" value="" name="todo4" id="todoCheck4">
-                  <label for="todoCheck4"></label>
-                </div>
-                <span class="text">Let theme shine like a star</span>
-                <small class="badge badge-success"><i class="far fa-clock"></i> 3 days</small>
-                <div class="tools">
-                  <i class="fas fa-edit"></i>
-                  <i class="fas fa-trash-o"></i>
-                </div>
-              </li>
-              <li>
-                <span class="handle">
-                  <i class="fas fa-ellipsis-v"></i>
-                  <i class="fas fa-ellipsis-v"></i>
-                </span>
-                <div class="icheck-primary d-inline ml-2">
-                  <input type="checkbox" value="" name="todo5" id="todoCheck5">
-                  <label for="todoCheck5"></label>
-                </div>
-                <span class="text">Check your messages and notifications</span>
-                <small class="badge badge-primary"><i class="far fa-clock"></i> 1 week</small>
-                <div class="tools">
-                  <i class="fas fa-edit"></i>
-                  <i class="fas fa-trash-o"></i>
-                </div>
-              </li>
-              <li>
-                <span class="handle">
-                  <i class="fas fa-ellipsis-v"></i>
-                  <i class="fas fa-ellipsis-v"></i>
-                </span>
-                <div class="icheck-primary d-inline ml-2">
-                  <input type="checkbox" value="" name="todo6" id="todoCheck6">
-                  <label for="todoCheck6"></label>
-                </div>
-                <span class="text">Let theme shine like a star</span>
-                <small class="badge badge-secondary"><i class="far fa-clock"></i> 1 month</small>
-                <div class="tools">
-                  <i class="fas fa-edit"></i>
-                  <i class="fas fa-trash-o"></i>
-                </div>
-              </li>
-            </ul>
-          </div>
-          <!-- /.card-body -->
-          <div class="card-footer clearfix">
-            <button type="button" class="btn btn-primary float-right"><i class="fas fa-plus"></i> Add
-              item</button>
+                <?PHP
+                $gettopSQL = "SELECT * FROM list_students WHERE ls_class = '$classTeacher' ORDER BY ls_balance DESC LIMIT 10";
+                $gettopARR = mysqli_query($conn, $gettopSQL);
+                $gettopNUM = mysqli_num_rows($gettopARR);
+                if ($gettopNUM > 0) {
+                  $i = 1;
+               
+                  foreach ($gettopARR as $gettop) {
+                    $topfullname = $gettop['ls_prefix'] . ' ' .  $gettop['ls_fname'] . ' ' . $gettop['ls_lname'];
+                    // echo "<pre>";
+                    // print_r($gettop);
+                    // echo "</pre>";
+                ?>
+                    <tr>
+                      <td><?= $topfullname; ?> </td>
+                      <td><?= number_format ($gettop['ls_balance']); ?></td>
+                      <td><?= $i; ?></td>
+                    </tr>
+
+                <?PHP
+                    $i++;
+                  }
+                }
+                ?>
+
+              </tbody>
+            </table>
           </div>
         </div>
 

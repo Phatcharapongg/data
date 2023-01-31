@@ -14,11 +14,12 @@ if (isset($_POST['class']) && $_POST['class'] != '') {
 } else if (isset($_POST['student']) && $_POST['student'] != '') {
     $dataStuden     = explode("|x|", $_POST['student']);
     $studenID       = $dataStuden[0];
+    // echo $studenID;
     $studenFullname = $dataStuden[1];
     $classNumber    = $dataStuden[2];
     $selectClass    = 2;
-    $fdate = $_POST['fdate'];
-    $ldate = $_POST['ldate'];
+    $fdate          = $_POST['fdate'];
+    $ldate          = $_POST['ldate'];
 } else {
     $selectClass = 0;
 }
@@ -225,9 +226,10 @@ if (isset($_POST['class']) && $_POST['class'] != '') {
                     <tbody>
                         <?PHP
 
-                        $getDepositByIdSQL = "SELECT * FROM deposit WHERE dep_student_id = '$studenID' AND dep_status != '9' ";
+                        $getDepositByIdSQL = "SELECT * FROM deposit WHERE dep_student_id = '$studenID' AND dep_insdt BETWEEN '$fdate 00:00:00' AND '$ldate 23:59:59' AND dep_status != '9' ";
                         $getDepositByIdARR = mysqli_query($conn, $getDepositByIdSQL);
                         $getDepositByIdNUM = mysqli_num_rows($getDepositByIdARR);
+                        // echo $getDepositByIdSQL;
                         if ($getDepositByIdNUM > 0) {
                             foreach ($getDepositByIdARR as $getDepositById) {
                                 $dep_amount_in      =  $getDepositById['dep_amount_in'];
@@ -258,16 +260,16 @@ if (isset($_POST['class']) && $_POST['class'] != '') {
                                         <?PHP
                                         if ($dep_amount_in != 0) {
                                         ?>
-                                            <span class="text-success">+<?= $dep_amount_in; ?>.-</span>
+                                            <span class="text-success">+<?= number_format($dep_amount_in); ?>.-</span>
                                         <?PHP
                                         } else {
                                         ?>
-                                            <span class="text-danger ml-5">-<?= $dep_amount_out; ?>.-</span>
+                                            <span class="text-danger ml-5">-<?= number_format($dep_amount_out); ?>.-</span>
                                         <?PHP
                                         }
                                         ?>
                                     </td>
-                                    <td class="text-bold"><?= $dep_amount_balance; ?>.-</td>
+                                    <td class="text-bold"><?= number_format($dep_amount_balance); ?>.-</td>
                                     <td class="text-bold"><?= $dep_note; ?></td>
                                 </tr>
                             <?PHP
@@ -284,7 +286,7 @@ if (isset($_POST['class']) && $_POST['class'] != '') {
                     <tfoot>
                         <tr>
                             <td class="text-bold" colspan="4" style="text-align: right;">จำนวนเงินสะสม</td>
-                            <td class="text-bold"><?= isset($dep_amount_balance) ? $dep_amount_balance : '0'; ?> บาท</td>
+                            <td class="text-bold"><?= isset($dep_amount_balance) ? number_format($dep_amount_balance) : '0'; ?> บาท</td>
                         </tr>
                     </tfoot>
                 </table>
@@ -385,12 +387,12 @@ if (isset($_POST['class']) && $_POST['class'] != '') {
             //searchdate picker
 
             $('#fdate').datetimepicker({
-                format: 'L'
+                format: 'Y-M-D'
             });
 
             //reservationdate picker
             $('#ldate').datetimepicker({
-                format: 'L'
+                format: 'Y-M-D'
             });
         });
     </script>
