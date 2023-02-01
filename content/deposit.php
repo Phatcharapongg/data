@@ -34,7 +34,7 @@ if (
                 if ($amount <  $NowBalance) {
                     $sumAmount =  $NowBalance - $amount;
                 } else {
-                    header("location: " . $_SESSION['uri'] . "/" . $path . "/pages/main?path=deposit&error=insert-error-not-enough-money");
+                    header("location: " . $_SESSION['uri'] . "/" . $path . "/pages/main.php?path=deposit&error=insert-error-not-enough-money");
                     exit(0);
                 }
             }
@@ -44,7 +44,7 @@ if (
             $sumAmount = $sumAmount + $amount;
         } else {
             // echo 'เงินไม่พอถอน';
-            header("location: " . $_SESSION['uri'] . "/" . $path . "/pages/main?path=deposit&error=insert-error-not-enough-money");
+            header("location: " . $_SESSION['uri'] . "/" . $path . "/pages/main.php?path=deposit&error=insert-error-not-enough-money");
             exit(0);
         }
     }
@@ -96,7 +96,7 @@ if (
 
     //--------------- END UPDATE BALANCE NOW BY STUDENT -----------//
 
-    header("location: " . $_SESSION['uri'] . "/" . $path . "/pages/main?path=deposit&alert=insert-success");
+    header("location: " . $_SESSION['uri'] . "/" . $path . "/pages/main.php?path=deposit&alert=insert-success");
     exit(0);
 }
 //----------------------------------------------------------------------------------------------- END MODAL ADD
@@ -188,7 +188,7 @@ if (
 
 
 
-    header("location: " . $_SESSION['uri'] . "/" . $path . "/pages/main?path=deposit&alert=edit-success");
+    header("location: " . $_SESSION['uri'] . "/" . $path . "/pages/main.php?path=deposit&alert=edit-success");
     exit(0);
 }
 
@@ -211,7 +211,7 @@ if (
 
     $delDepositSQL .= "WHERE dep_id = '" . $_POST['idDel'] . "' ";
     mysqli_query($conn, $delDepositSQL);
-    header("location: " . $_SESSION['uri'] . "/" . $path . "/pages/main?path=deposit&alert=delete-success");
+    header("location: " . $_SESSION['uri'] . "/" . $path . "/pages/main.php?path=deposit&alert=delete-success");
     exit(0);
 
     // echo '<pre>';
@@ -265,7 +265,7 @@ if (isset($_GET['error']) && $_GET['error'] == 'insert-error-not-enough-money') 
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="<?= $_SESSION['uri']; ?>/<?= $path; ?>/pages/main?path=dashboard">Home</a></li>
+                    <li class="breadcrumb-item"><a href="<?= $_SESSION['uri']; ?>/<?= $path; ?>/pages/main.php?path=dashboard">Home</a></li>
                     <li class="breadcrumb-item active">ฝากเงิน</li>
                 </ol>
             </div>

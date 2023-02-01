@@ -1,8 +1,3 @@
-<?PHP
-
-use function PHPSTORM_META\type;
-
-?>
 <section class="content-header">
   <div class="container-fluid">
     <div class="row mb-2">
@@ -11,7 +6,7 @@ use function PHPSTORM_META\type;
       </div>
       <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
-          <li class="breadcrumb-item"><a href="<?= $_SESSION['uri']; ?>/<?= $path; ?>/pages/main?path=dashboard">หน้าแรก</a></li>
+          <li class="breadcrumb-item"><a href="<?= $_SESSION['uri']; ?>/<?= $path; ?>/pages/main.php?path=dashboard">หน้าแรก</a></li>
           <li class="breadcrumb-item active">หน้าหลัก</li>
         </ol>
       </div>
@@ -37,7 +32,7 @@ use function PHPSTORM_META\type;
       <div class="col-lg-4 col-6">
         <div class="small-box bg-danger">
           <div class="inner">
-            <h3> <?= KTgetData::getNumberBoxInDashboard($conn, 'sumAmountByDay', date('Y-m-d')) != NULL ? number_format (KTgetData::getNumberBoxInDashboard($conn, 'sumAmountByDay', date('Y-m-d'))) : '0'; ?></h3>
+            <h3> <?= KTgetData::getNumberBoxInDashboard($conn, 'sumAmountByDay', date('Y-m-d')) != NULL ? number_format(KTgetData::getNumberBoxInDashboard($conn, 'sumAmountByDay', date('Y-m-d'))) : '0'; ?></h3>
             <p>ยอดรวมเงินฝากในวันนี้ </p>
           </div>
           <div class="icon">
@@ -49,7 +44,7 @@ use function PHPSTORM_META\type;
       <div class="col-lg-4 col-6">
         <div class="small-box bg-primary">
           <div class="inner">
-            <h3> <?= KTgetData::getNumberBoxInDashboard ($conn, 'sumAmountAll', 'all') != NULL ?  number_format (KTgetData::getNumberBoxInDashboard($conn, 'sumAmountAll', 'all') ): '0'; ?></h3>
+            <h3> <?= KTgetData::getNumberBoxInDashboard($conn, 'sumAmountAll', 'all') != NULL ?  number_format(KTgetData::getNumberBoxInDashboard($conn, 'sumAmountAll', 'all')) : '0'; ?></h3>
             <p>ยอดรวมเงินฝากทั้งหมด</p>
           </div>
           <div class="icon">
@@ -108,7 +103,7 @@ use function PHPSTORM_META\type;
                 $gettopNUM = mysqli_num_rows($gettopARR);
                 if ($gettopNUM > 0) {
                   $i = 1;
-               
+
                   foreach ($gettopARR as $gettop) {
                     $topfullname = $gettop['ls_prefix'] . ' ' .  $gettop['ls_fname'] . ' ' . $gettop['ls_lname'];
                     // echo "<pre>";
@@ -117,7 +112,7 @@ use function PHPSTORM_META\type;
                 ?>
                     <tr>
                       <td><?= $topfullname; ?> </td>
-                      <td><?= number_format ($gettop['ls_balance']); ?></td>
+                      <td><?= number_format($gettop['ls_balance']); ?></td>
                       <td><?= $i; ?></td>
                     </tr>
 

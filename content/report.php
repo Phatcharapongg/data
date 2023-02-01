@@ -25,7 +25,7 @@ if (isset($_POST['class']) && $_POST['class'] != '') {
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="<?= $_SESSION['uri']; ?>/<?= $path; ?>/pages/main?path=dashboard">Home</a></li>
+                    <li class="breadcrumb-item"><a href="<?= $_SESSION['uri']; ?>/<?= $path; ?>/pages/main.php?path=dashboard">Home</a></li>
                     <li class="breadcrumb-item active">รายงาน</li>
                 </ol>
             </div>

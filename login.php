@@ -51,22 +51,22 @@ if (
                     // เก็บค่า username ไว้ใน $_SESSION
                     $_SESSION['username'] = $getStatus['usr_username'];
                     //และสั่งให้ไปหน้า main ต่อ
-                    header("location:" . $_SESSION['uri'] . "/" . $path . "/pages/main");
+                    header("location:" . $_SESSION['uri'] . "/" . $path . "/pages/main.php");
                     exit(0);
                 }
             } else {
                 // ถ้าไม่เจอให้ Alert บอกว่าuserของคุณยังไม่ได้ถูกอนุมัติการใช้งาน กรุณาติดต่อแอดมิน
-                header("location:" . $_SESSION['uri'] . "/" . $path . "/login?error=status&u=" . $username);
+                header("location:" . $_SESSION['uri'] . "/" . $path . "/login.php?error=status&u=" . $username);
                 exit(0);
             }
         } else {
             // ถ้าไม่เจอให้ Alert บอกว่าpassword ผิด
-            header("location:" . $_SESSION['uri'] . "/" . $path . "/login?error=password&u=" . $username);
+            header("location:" . $_SESSION['uri'] . "/" . $path . "/login.php?error=password&u=" . $username);
             exit(0);
         }
     } else {
         // ถ้าไม่เจอให้ Alert บอกว่าuser ผิด
-        header("location:" . $_SESSION['uri'] . "/" . $path . "/login?error=username&u=" . $username);
+        header("location:" . $_SESSION['uri'] . "/" . $path . "/login.php?error=username&u=" . $username);
         exit(0);
     }
 }

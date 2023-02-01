@@ -21,7 +21,7 @@ if ($getUserNUM == 1) {
     }
 } else {
     session_destroy();
-    header("location: " . $_SESSION['uri'] . "/" . $path . '/login?f=d');
+    header("location: " . $_SESSION['uri'] . "/" . $path . '/login.php');
     exit(0);
 }
 ?>
@@ -95,7 +95,7 @@ if ($getUserNUM == 1) {
                     <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a href="<?= $_SESSION['uri']; ?>/<?= $path; ?>/pages/main?path=dashboard" class="nav-link">Home</a>
+                    <a href="<?= $_SESSION['uri']; ?>/<?= $path; ?>/pages/main.php?path=dashboard" class="nav-link">Home</a>
                 </li>
             </ul>
 
@@ -107,7 +107,7 @@ if ($getUserNUM == 1) {
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="<?= $_SESSION['uri']; ?>/<?= $path; ?>/logout">
+                    <a class="nav-link" href="<?= $_SESSION['uri']; ?>/<?= $path; ?>/logout.php">
                         <i class="fas fa-sign-out-alt"></i>
                     </a>
                 </li>
@@ -118,7 +118,7 @@ if ($getUserNUM == 1) {
         <!-- Main Sidebar Container -->
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
             <!-- Brand Logo -->
-            <a href="<?= $_SESSION['uri']; ?>/<?= $path; ?>/pages/main?path=dashboard" class="brand-link">
+            <a href="<?= $_SESSION['uri']; ?>/<?= $path; ?>/pages/main.php?path=dashboard" class="brand-link">
                 <img src="../dist/img/2.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
                 <span class="brand-text font-weight-light">Student Deposit</span>
             </a>
@@ -131,7 +131,7 @@ if ($getUserNUM == 1) {
                         <img src="../dist/img/default.jpg" class="img-circle elevation-2" alt="User Image">
                     </div>
                     <div class="info">
-                        <a href="<?= $_SESSION['uri']; ?>/<?= $path; ?>/pages/main?path=dashboard" class="d-block"><?= strtoupper($fullname); ?></a>
+                        <a href="<?= $_SESSION['uri']; ?>/<?= $path; ?>/pages/main.php?path=dashboard" class="d-block"><?= strtoupper($fullname); ?></a>
                     </div>
                 </div>
 
@@ -153,13 +153,13 @@ if ($getUserNUM == 1) {
 
                         <!-- เช๊คว่ามีค่าหรือเปล่ากดแถบเลือกให้เป็นสี active -->
                         <?PHP
-                        if (isset($_GET['path']) && $_GET['path'] == 'controlUser') {
+                        if (isset($_GET['path']) && $_GET['path'] == 'controlUser.php') {
                             $controlUser = 'active';
-                        } else if (isset($_GET['path']) && $_GET['path'] == 'report') {
+                        } else if (isset($_GET['path']) && $_GET['path'] == 'report.php') {
                             $report = 'active';
-                        } else if (isset($_GET['path']) && $_GET['path'] == 'deposit') {
+                        } else if (isset($_GET['path']) && $_GET['path'] == 'deposit.php') {
                             $deposit = 'active';
-                        } else if (isset($_GET['path']) && $_GET['path'] == 'addstudent') {
+                        } else if (isset($_GET['path']) && $_GET['path'] == 'addstudent.php') {
                             $addstudent = 'active';
                         } else {
                             $controlUser = '';
@@ -171,7 +171,7 @@ if ($getUserNUM == 1) {
                         <!-- หน้าต่างๆในแถบเมนู -->
                         <?PHP if ($usr_username == 'ict1') { ?>
                             <li class="nav-item">
-                                <a href="<?= $_SESSION['uri']; ?>/<?= $path; ?>/pages/main?path=controlUser" class="nav-link <?= $controlUser; ?>">
+                                <a href="<?= $_SESSION['uri']; ?>/<?= $path; ?>/pages/main.php?path=controlUser" class="nav-link <?= $controlUser; ?>">
                                     <i class="nav-icon fas fa-user-cog"></i>
                                     <p>
                                         ควบคุมผู้ใช้งาน
@@ -180,7 +180,7 @@ if ($getUserNUM == 1) {
                             </li>
                         <?PHP } ?>
                         <li class="nav-item">
-                            <a href="<?= $_SESSION['uri']; ?>/<?= $path; ?>/pages/main?path=deposit" class="nav-link <?= $deposit; ?>">
+                            <a href="<?= $_SESSION['uri']; ?>/<?= $path; ?>/pages/main.php?path=deposit" class="nav-link <?= $deposit; ?>">
                                 <i class="nav-icon fas fa-coins"></i>
                                 <p>
                                     ฝาก-ถอนเงิน
@@ -188,7 +188,7 @@ if ($getUserNUM == 1) {
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="<?= $_SESSION['uri']; ?>/<?= $path; ?>/pages/main?path=report" class="nav-link <?= $report; ?>">
+                            <a href="<?= $_SESSION['uri']; ?>/<?= $path; ?>/pages/main.php?path=report" class="nav-link <?= $report; ?>">
                                 <i class="nav-icon fas fa-paste"></i>
                                 <p>
                                     รายงานการฝาก-ถอนเงิน
@@ -196,7 +196,7 @@ if ($getUserNUM == 1) {
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="<?= $_SESSION['uri']; ?>/<?= $path; ?>/pages/main?path=addstudent" class="nav-link <?= $addstudent; ?>">
+                            <a href="<?= $_SESSION['uri']; ?>/<?= $path; ?>/pages/main.php?path=addstudent" class="nav-link <?= $addstudent; ?>">
                                 <i class="nav-icon fas fa-user-plus"></i>
                                 <p>
                                     เพิ่ม,แก้ไขข้อมูลนักเรียน

@@ -36,7 +36,7 @@ if (
     // echo  'sql : ' . $InsertuserSQL;
     mysqli_query($conn, $InsertuserSQL);
 
-    header("location: " . $_SESSION['uri'] . "/" . $path . "/pages/main?path=controlUser&alert=insert-success");
+    header("location: " . $_SESSION['uri'] . "/" . $path . "/pages/main.php?path=controlUser&alert=insert-success");
     exit(0);
 }
 //----------------------------------------------------------------------------------------------- END MODAL ADDUSER
@@ -77,7 +77,7 @@ if (
 
     // echo 'sql : ' . $edituserSQL;
     mysqli_query($conn, $edituserSQL);
-    header("location: " . $_SESSION['uri'] . "/" . $path . "/pages/main?path=controlUser&alert=edit-successNEW");
+    header("location: " . $_SESSION['uri'] . "/" . $path . "/pages/main.php?path=controlUser&alert=edit-successNEW");
     exit(0);
 }
 // ----------------------------------------------------------------------------------------------- END MODAL EDIT
@@ -95,7 +95,7 @@ if (
     $upStatusUserSQL .= "usr_status  = '" . $_POST['upValue'] . "' ";
     $upStatusUserSQL .= "WHERE usr_id = '" . $_POST['upId'] . "' ";
     mysqli_query($conn, $upStatusUserSQL);
-    header("location: " . $_SESSION['uri'] . "/" . $path . "/pages/main?path=controlUser&alert=upstatus-success");
+    header("location: " . $_SESSION['uri'] . "/" . $path . "/pages/main.php?path=controlUser&alert=upstatus-success");
     exit(0);
 }
 
@@ -116,7 +116,7 @@ if (
 
     $delUserSQL = "DELETE FROM user WHERE usr_id = '" . $_POST['idDel'] . "'";
     mysqli_query($conn, $delUserSQL);
-    header("location: " . $_SESSION['uri'] . "/" . $path . "/pages/main?path=controlUser&alert=delete-success");
+    header("location: " . $_SESSION['uri'] . "/" . $path . "/pages/main.php?path=controlUser&alert=delete-success");
     exit(0);
 }
 //----------------------------------------------------------------------------------------------- END MODAL DELETE
@@ -136,7 +136,7 @@ if (
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="<?= $_SESSION['uri']; ?>/<?= $path; ?>/pages/main?path=dashboard">Home</a></li>
+                    <li class="breadcrumb-item"><a href="<?= $_SESSION['uri']; ?>/<?= $path; ?>/pages/main.php?path=dashboard">Home</a></li>
                     <li class="breadcrumb-item active">Control User</li>
                 </ol>
             </div>

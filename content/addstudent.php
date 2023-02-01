@@ -26,7 +26,7 @@ if (
     // echo 'sql : ' . $editlist_studentsSQL;
     mysqli_query($conn, $Insertlist_studentsSQL);
 
-    header("location: " . $_SESSION['uri'] . "/" . $path . "/pages/main?path=addstudent&alert=insertstudents-success");
+    header("location: " . $_SESSION['uri'] . "/" . $path . "/pages/main.php?path=addstudent&alert=insertstudents-success");
     exit(0);
 }
 //    echo "<pre>";
@@ -61,7 +61,7 @@ if (
     //   echo 'sql : ' . $editlist_studentsSQL;
 
     mysqli_query($conn, $editlist_studentsSQL);
-    header("location: " . $_SESSION['uri'] . "/" . $path . "/pages/main?path=addstudent&alert=edit-success");
+    header("location: " . $_SESSION['uri'] . "/" . $path . "/pages/main.php?path=addstudent&alert=edit-success");
 
 
 
@@ -88,7 +88,7 @@ if (
 
     $dellist_studentsSQL = "DELETE FROM list_students WHERE ls_id = '" . $_POST['idDel'] . "'";
     mysqli_query($conn, $dellist_studentsSQL);
-    header("location: " . $_SESSION['uri'] . "/" . $path . "/pages/main?path=addstudent&alert=delete-success");
+    header("location: " . $_SESSION['uri'] . "/" . $path . "/pages/main.php?path=addstudent&alert=delete-success");
     exit(0);
 }
 
@@ -109,7 +109,7 @@ if (
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a
-                            href="<?= $_SESSION['uri']; ?>/<?= $path; ?>/pages/main?path=dashboard">Home</a></li>
+                            href="<?= $_SESSION['uri']; ?>/<?= $path; ?>/pages/main.php?path=dashboard">Home</a></li>
                     <li class="breadcrumb-item active"> เพิ่ม,แก้ไขข้อมูลนักเรียน
                     </li>
                 </ol>
