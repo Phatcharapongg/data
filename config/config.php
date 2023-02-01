@@ -5,7 +5,7 @@ date_default_timezone_set("Asia/Bangkok");
 $dataNow = date("Y-m-d H:i:s");
 
 $_SESSION['uri'] = 'http://swdata.srisangworn.go.th';
-$path = 'Deposit';
+$path = 'deposit';
 
 $servername = "192.168.0.32";
 $username = "ict009";
