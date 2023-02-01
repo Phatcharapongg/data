@@ -7,9 +7,9 @@ $dataNow = date("Y-m-d H:i:s");
 $_SESSION['uri'] = 'http://localhost';
 $path = 'deposit';
 
-$servername = "localhost";
-$username = "root";
-$password = "";
+$servername = "192.168.0.32";
+$username = "ict009";
+$password = "Ss0810432245";
 $dbname = "deposit";
 
 // Create Connection
