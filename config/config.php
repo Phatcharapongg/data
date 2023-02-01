@@ -21,7 +21,6 @@ if (!$conn) {
 }
 
 
-
 class KTgetData
 {
 
