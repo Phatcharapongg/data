@@ -4,7 +4,7 @@ date_default_timezone_set("Asia/Bangkok");
 
 $dataNow = date("Y-m-d H:i:s");
 
-$_SESSION['uri'] = 'http://localhost';
+$_SESSION['uri'] = 'https://damp-woodland-93661.herokuapp.com';
 $path = 'deposit';
 
 $servername = "localhost";
