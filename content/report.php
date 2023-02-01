@@ -232,7 +232,7 @@ if (isset($_POST['class']) && $_POST['class'] != '') {
                         <tfoot>
                             <tr>
                                 <td class="text-bold" colspan="4" style="text-align: right;">จำนวนเงินสะสม</td>
-                                <td class="text-bold"><?= isset($dep_amount_balance) ? $dep_amount_balance : '0'; ?> บาท</td>
+                                <td class="text-bold"><?= isset($dep_amount_balance) ? number_format($dep_amount_balance) : '0'; ?> บาท</td>
                             </tr>
                         </tfoot>
                     </table>
@@ -253,7 +253,7 @@ if (isset($_POST['class']) && $_POST['class'] != '') {
                 $TelTeacher =  $getTeacher['usr_tel'];
             }
             ?>
-            <h6 class="text-bold">ครู <?= $fullnameTeacher; ?> สามารถติดต่อได้ที่ เบอร์ <?= $TelTeacher; ?></h6>
+            <h6 class="text-bold">ครู <?= $fullnameTeacher; ?> สามารถติดต่อได้ที่ เบอร์ <?= KTgetData::formatNumber( $TelTeacher); ?></h6>
 
         <?PHP  } ?>
     </div>

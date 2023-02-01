@@ -307,7 +307,7 @@ if (isset($_POST['class']) && $_POST['class'] != '') {
                     $TelTeacher =  $getTeacher['usr_tel'];
                 }
                 ?>
-                <h6 class="text-bold">ครู <?= $fullnameTeacher; ?> สามารถติดต่อได้ที่ เบอร์ <?= $TelTeacher; ?></h6>
+                <h6 class="text-bold">ครู <?= $fullnameTeacher; ?> สามารถติดต่อได้ที่ เบอร์ <?= KTgetData::formatNumber($TelTeacher); ?></h6>
 
         </div>
     <?PHP  } ?>
