@@ -47,9 +47,9 @@ if (isset($_POST['class']) && $_POST['class'] != '') {
         ?>
             <center>
                 <h4 class="text-bold">( ชั้นประถมศึกษาปีที่ 1 - 6 ) </h4>
-                <div class="col-6">
+                <div class="col-sm-12 col-md-8 col-lg-8 col-xl-6">
                     <form action="" method="POST">
-                        <div class="col-12">
+                        <div class="col-sm-12 col-md-12 col-lg-12">
                             <select class="form-control select2bs4 " id='class' name="class">
                                 <option value="">กรุณาเลือกชั้นเรียน</option>
                                 <option value='1/1'>ชั้นประถมศึกษาปีที่ 1/1</option>
@@ -73,7 +73,7 @@ if (isset($_POST['class']) && $_POST['class'] != '') {
                             </select>
 
                         </div>
-                        <div class="col-3">
+                        <div class="col-4">
                             <button type="submit" id="btns" class='btn btn-primary btn-block mt-3'>ค้นหา</button>
 
                         </div>
