@@ -50,12 +50,12 @@ class KTgetData
                 return 0;
             }
         } else {
-            $getSAMASQL = "SELECT SUM(dep_amount_in) AS sumAmountAll FROM deposit WHERE dep_status != '9'";
+            $getSAMASQL = "SELECT SUM(ls_balance) AS sum FROM list_students WHERE ls_class = '".$data."' ";
             $getSAMAARR = mysqli_query($conn, $getSAMASQL);
             $getSAMANUM = mysqli_num_rows($getSAMAARR);
             if ($getSAMANUM > 0) {
                 foreach ($getSAMAARR as  $getSAMA) {
-                    return $getSAMA['sumAmountAll'];
+                    return $getSAMA['sum'];
                 }
             } else {
                 return 0;

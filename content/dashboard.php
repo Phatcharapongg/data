@@ -44,7 +44,7 @@
       <div class="col-lg-4 col-6">
         <div class="small-box bg-primary">
           <div class="inner">
-            <h3> <?= KTgetData::getNumberBoxInDashboard($conn, 'sumAmountAll', 'all') != NULL ?  number_format(KTgetData::getNumberBoxInDashboard($conn, 'sumAmountAll', 'all')) : '0'; ?></h3>
+            <h3> <?= KTgetData::getNumberBoxInDashboard($conn, 'sumAmountAll', $classTeacher) != NULL ?  number_format(KTgetData::getNumberBoxInDashboard($conn, 'sumAmountAll', $classTeacher)) : '0'; ?></h3>
             <p>ยอดรวมเงินฝากทั้งหมด</p>
           </div>
           <div class="icon">
