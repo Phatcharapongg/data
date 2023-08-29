@@ -4,14 +4,18 @@ date_default_timezone_set("Asia/Bangkok");
 
 $dataNow = date("Y-m-d H:i:s");
 
-$_SESSION['uri'] = 'http://swdata.srisangworn.go.th';
-// $_SESSION['uri'] = 'http://localhost';
+// $_SESSION['uri'] = 'http://swdata.srisangworn.go.th';
+$_SESSION['uri'] = 'http://localhost';
 $path = 'deposit';
 
 $servername = "192.168.0.32";
 $username = "ict009";
 $password = "Ss0810432245";
 $dbname = "deposit";
+// $servername = "localhost";
+// $username = "root";
+// $password = "";
+// $dbname = "test";
 
 // Create Connection
 $conn = mysqli_connect($servername, $username, $password, $dbname);
