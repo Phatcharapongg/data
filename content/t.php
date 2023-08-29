@@ -1,133 +1,7 @@
-<?PHP
-//Connect DB 
-require('config/config.php');
-
-// echo "<pre>";
-// print_r($_POST);
-// echo "</pre>";
-
-$selectClass = 0;
-
-if (isset($_POST['class']) && $_POST['class'] != '') {
-    $class = $_POST['class'];
-    $selectClass = 1;
-} else if (isset($_POST['student']) && $_POST['student'] != '') {
-    $dataStuden     = explode("|x|", $_POST['student']);
-    $studenID       = $dataStuden[0];
-    // echo $studenID;
-    $studenFullname = $dataStuden[1];
-    $classNumber    = $dataStuden[2];
-    $selectClass    = 2;
-    $fdate          = $_POST['fdate'];
-    $ldate          = $_POST['ldate'];
-} else {
-    $selectClass = 0;
-}
-?>
-
-
-
-
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   
-    <title>หน้าเว็บหลัก</title>
-
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
-    <!-- Ionicons -->
-    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-    <!-- DataTables -->
-    <link rel="stylesheet" href="plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
-    <link rel="stylesheet" href="plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
-    <link rel="stylesheet" href="plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
-    <!-- Toastr -->
-    <link rel="stylesheet" href="plugins/toastr/toastr.min.css">
-    <!-- Select2 -->
-    <link rel="stylesheet" href="plugins/select2/css/select2.min.css">
-    <link rel="stylesheet" href="plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
-    <!-- SweetAlert2 -->
-    <link rel="stylesheet" href="plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
-    <!-- Tempusdominus Bootstrap 4 -->
-    <link rel="stylesheet" href="plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
-    <!-- iCheck -->
-    <link rel="stylesheet" href="plugins/icheck-bootstrap/icheck-bootstrap.min.css">
-    <!-- JQVMap -->
-    <link rel="stylesheet" href="plugins/jqvmap/jqvmap.min.css">
-    <!-- fullCalendar -->
-    <link rel="stylesheet" href="plugins/fullcalendar/main.css">
-    <!-- Theme style -->
-    <link rel="stylesheet" href="dist/css/adminlte.min.css">
-    <!-- overlayScrollbars -->
-    <link rel="stylesheet" href="plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
-    <!-- Daterange picker -->
-    <link rel="stylesheet" href="plugins/daterangepicker/daterangepicker.css">
-    <!-- summernote -->
-    <link rel="stylesheet" href="plugins/summernote/summernote-bs4.min.css">
-    <!-- pace-progress -->
-    <!-- <link rel="stylesheet" href="plugins/pace-progress/themes/อยากได้สีอะไร ใส่ตรงนี้/pace-theme-flat-top.css"> -->
-    <link rel="stylesheet" href="plugins/pace-progress/themes/red/pace-theme-flat-top.css">
-    <!-- fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@100;200;300&display=swap" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.4.24/sweetalert2.all.js"></script>
-    <!-- jQuery -->
-    <script src="plugins/jquery/jquery.min.js"></script>
-
-</head>
-
-<body class="layout-top-nav " style="background-color:background: rgb(236,231,255);
-background: linear-gradient(90deg, rgba(236,231,255,1) 0%, rgba(255,255,255,1) 49%, rgba(225,219,255,1) 100%);;" >
-
-
-    <nav class="main-header navbar navbar-expand-md navbar-light navbar-white">
-        <div class="container">
-            <a href="../../index3.html" class="navbar-brand">
-                <img src="dist/img/888.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-2"
-                    style="opacity: .8" />
-
-            </a>
-            <button class="navbar-toggler order-1" type="button" data-toggle="collapse" data-target="#navbarCollapse"
-                aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse order-3" id="navbarCollapse">
-
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a href="index.php" class="nav-link"><b>Home</b></a>
-                    </li>
-
-
-                </ul>
-
-
-                <ul class="order-1 order-md-3 navbar-nav navbar-no-expand ml-auto">
-
-                    <li class="nav-item dropdown">
-                    <a href="invoice-print.html" rel="noopener" target="_blank" class="btn btn-default"><i class="fas fa-print"></i> Print</a>
-                        
-                    </li>
-                    <a class="nav-link" data-widget="fullscreen" href="#" role="button">
-                            <i class="fas fa-expand-arrows-alt"></i>
-                        </a>
-                      
-                </ul>
-            </div>
-    </nav>
-
-
-
-    <div class="contect mt-5">
+<div class="contect">
         <div class="container">
             <center>
-                <h3 class="text-bold">รายการบันทึกฝากออมเงินของนักเรียน</h3>
+                <h3 class="text-bold">บันทึกรายการฝากออมเงินของนักเรียน</h3>
             </center>
 
             <br>
@@ -167,7 +41,6 @@ background: linear-gradient(90deg, rgba(236,231,255,1) 0%, rgba(255,255,255,1) 4
                             <button type="submit" id="btns" class='btn btn-info btn-block mb-3'>ค้นหา</button>
                         </div>
                     </div>
-                </div>
             </form>
 
             <script>
@@ -181,13 +54,8 @@ background: linear-gradient(90deg, rgba(236,231,255,1) 0%, rgba(255,255,255,1) 4
             });
             </script>
 
-            <footer class="main-footer">
-                <div class="float-right d-none d-sm-block">
-                    <b>Version</b> 3.2.0
-                </div>
-                <strong>Copyright &copy; 2022 <a href="#">Phatcharapong Timmanee</a>.</strong> All rights
-                reserved.
-            </footer>
+
+
             <?PHP } else if ($selectClass == 1) { ?>
             <?PHP
 
@@ -243,14 +111,6 @@ background: linear-gradient(90deg, rgba(236,231,255,1) 0%, rgba(255,255,255,1) 4
                     </div>
                 </div>
             </form>
-
-            <footer class="main-footer">
-                <div class="float-right d-none d-sm-block">
-                    <b>Version</b> 3.2.0
-                </div>
-                <strong>Copyright &copy; 2022 <a href="#">Phatcharapong Timmanee</a>.</strong> All rights
-                reserved.
-            </footer>
             <?PHP } ?>
 
 
@@ -353,7 +213,6 @@ background: linear-gradient(90deg, rgba(236,231,255,1) 0%, rgba(255,255,255,1) 4
                     </tr>
                 </tfoot>
             </table>
-
             <?PHP  } ?>
 
 
@@ -371,19 +230,10 @@ background: linear-gradient(90deg, rgba(236,231,255,1) 0%, rgba(255,255,255,1) 4
                     $TelTeacher =  $getTeacher['usr_tel'];
                 }
                 ?>
-            <h6 class="text-bold">หาพบปัญหาสามารถติดต่อได้ที่ครู <?= $fullnameTeacher; ?> เบอร์ติดต่อ
+            <h6 class="text-bold">ครู <?= $fullnameTeacher; ?> สามารถติดต่อได้ที่ เบอร์
                 <?= KTgetData::formatNumber($TelTeacher); ?></h6>
 
-            <footer class="main-footer">
-                <div class="float-right d-none d-sm-block">
-                    <b>Version</b> 3.2.0
-                </div>
-                <strong>Copyright &copy; 2022 <a href="#">Phatcharapong Timmanee</a>.</strong> All rights
-                reserved.
-            </footer>
         </div>
-
-
         <?PHP  } ?>
 
         <script src="sweetalert2.all.min.js"></script>
@@ -471,10 +321,39 @@ background: linear-gradient(90deg, rgba(236,231,255,1) 0%, rgba(255,255,255,1) 4
         });
         </script>
 
-    </div>
+
+<nav class="navbar navbar-expand-md navbar-light navbar-white">
+        <div class="container">
+            <a href="#" class="navbar-brand">
+                <!-- <img src="./dist/img/default.jpg" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
+                    style="opacity: .8"> -->
+                <span class="brand-text font-weight-light">AdminLTE 3</span>
+            </a>
+            <button class="navbar-toggler order-1" type="button" data-toggle="collapse" data-target="#navbarCollapse"
+                aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse order-3" id="navbarCollapse">
+
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a href="index3.html" class="nav-link">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">Contact</a>
+                    </li>
+
+                </ul>
 
 
+            </div>
 
-</body>
-
-</html>
+            <ul class="order-1 order-md-3 navbar-nav navbar-no-expand ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
+                        <i class="fas fa-th-large"></i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
