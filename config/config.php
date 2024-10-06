@@ -8,14 +8,19 @@ $dataNow = date("Y-m-d H:i:s");
 $_SESSION['uri'] = 'http://localhost';
 $path = 'deposit';
 
-$servername = "192.168.0.32";
-$username = "ict009";
-$password = "Ss0810432245";
-$dbname = "deposit";
+$servername = "192.168.0.32"; //ฐานข้อมูลของโรงพยาบาลศรีสังวร : DB 0.32 //
+$username = "ict009";         //Username : ict009 พี่ฟลุ๊ค //
+$password = "Ss0810432245";   //password : Ss0810432245 //
+$dbname = "deposit";          //ชื่อโปรเจ๊ค  : Deposit //
+
+//$dbneam = "deposit1";
+
 // $servername = "localhost";
 // $username = "root";
 // $password = "";
 // $dbname = "test";
+
+
 
 // Create Connection
 $conn = mysqli_connect($servername, $username, $password, $dbname);
